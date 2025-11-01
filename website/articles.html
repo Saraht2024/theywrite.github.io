@@ -1,0 +1,3070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah T - Articles</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.7;
+            color: #252525;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .wide-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            border-bottom: 1px solid rgba(170, 170, 170, 0.3);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #252525;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid #aaa;
+            padding: 8px 16px;
+            color: #777;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: #252525;
+            color: #fff;
+            border-color: #252525;
+        }
+
+        /* Article Navigation */
+        .article-nav {
+            background: #fafafa;
+            padding: 100px 0 40px;
+            border-bottom: 1px solid rgba(170, 170, 170, 0.2);
+        }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .article-card {
+            background: #fff;
+            border: 1px solid rgba(170, 170, 170, 0.2);
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .article-category {
+            display: inline-block;
+            background: #252525;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .article-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #252525;
+            font-weight: 600;
+        }
+
+        .article-card .meta {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-card .excerpt {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Individual Article Styles */
+        .article {
+            display: none;
+            padding: 120px 0 80px;
+        }
+
+        .article.active {
+            display: block;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(170, 170, 170, 0.2);
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #252525;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .article-meta {
+            color: #777;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .article-content p {
+            margin-bottom: 1.8rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #252525;
+            margin: 2.5rem 0 1.5rem 0;
+            line-height: 1.3;
+        }
+
+        .article-content h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #252525;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .article-content blockquote {
+            background: #252525;
+            color: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            border-left: 4px solid #777;
+        }
+
+        .article-content em {
+            color: #777;
+            font-style: italic;
+        }
+
+        .article-content strong {
+            font-weight: 700;
+            color: #252525;
+        }
+
+        .drop-cap {
+            float: left;
+            font-size: 4.5rem;
+            line-height: 1;
+            padding-right: 12px;
+            padding-top: 8px;
+            font-weight: bold;
+            color: #252525;
+        }
+
+        .large-first-letter {
+            float: left;
+            font-size: 3.5rem;
+            line-height: 1;
+            padding-right: 8px;
+            padding-top: 4px;
+            color: #999;
+            font-weight: 300;
+        }
+
+        .highlight-box {
+            background: #252525;
+            color: white;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .pull-quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #555;
+            text-align: center;
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border-top: 2px solid #252525;
+            border-bottom: 2px solid #252525;
+        }
+
+        /* Navigation between articles */
+        .article-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(170, 170, 170, 0.2);
+        }
+
+        .nav-article {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .nav-article:hover {
+            background: #fafafa;
+        }
+
+        .nav-article.prev {
+            text-align: left;
+        }
+
+        .nav-article.next {
+            text-align: right;
+        }
+
+        .nav-label {
+            font-size: 0.9rem;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-title {
+            font-size: 1.1rem;
+            color: #252525;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #252525;
+            color: #fff;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 2rem;
+            }
+            
+            .article-content {
+                font-size: 1rem;
+            }
+            
+            .drop-cap {
+                font-size: 3.5rem;
+                padding-right: 8px;
+            }
+            
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .article-navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-article.prev,
+            .nav-article.next {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .article {
+                padding: 100px 0 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="wide-container">
+            <a href="#" class="logo">Sarah T</a>
+            <a href="#" class="back-btn" onclick="showArticleList()">← All Articles</a>
+        </nav>
+    </header>
+
+    <!-- Article Navigation (Default View) -->
+    <section class="article-nav" id="articleList">
+        <div class="wide-container">
+            <h1 style="text-align: center; font-size: 2.5rem; font-weight: 300; margin-bottom: 3rem; color: #252525;">All Articles</h1>
+            <div class="article-grid">
+                
+                <div class="article-card" onclick="showArticle('alone-but-not-alone')">
+                    <span class="article-category">Personal</span>
+                    <h3>To the Ones Who Are On Their Own (But Not Alone)</h3>
+                    <p class="meta">Personal Essay • 5 min read</p>
+                    <p class="excerpt">This is for the nights when it's too quiet. When the world seems made for two and you find yourself there, only you...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('asia-hurts')">
+                    <span class="article-category">Travel</span>
+                    <h3>I Want to Go to Asia So Bad, It Hurts</h3>
+                    <p class="meta">Travel Essay • March 2024</p>
+                    <p class="excerpt">There are moments when it comes like a wave: this gentle, relentless ache to go away. Not just anywhere, but Asia...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('mutual-heights')">
+                    <span class="article-category">Architecture</span>
+                    <h3>Mutual Heights: Cape Town's Stone Monolith</h3>
+                    <p class="meta">Architecture Review • February 2024</p>
+                    <p class="excerpt">At the very heart of Cape Town's city centre, you'll discover a stone monolith. It rises with unmanufactured self-confidence...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('why-i-write')">
+                    <span class="article-category">Personal</span>
+                    <h3>Why I Write: Some Feelings Just Can't Be Expressed in Conversation</h3>
+                    <p class="meta">Published January 2024</p>
+                    <p class="excerpt">Some prefer to hash things out. Some cry. Some sprint until their legs ache. Me? I write...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('dating-apps')">
+                    <span class="article-category">Lifestyle</span>
+                    <h3>Why I Don't Date on Apps</h3>
+                    <p class="meta">Relationships • 4 min read</p>
+                    <p class="excerpt">I'm not better than you. I'm not smarter, or holding onto some outdated, pre-swipe ideal of love for moral high ground...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('therapeutic-things')">
+                    <span class="article-category">Wellness</span>
+                    <h3>Things I Find Therapeutic That Are Free</h3>
+                    <p class="meta">Self-Care • January 2024</p>
+                    <p class="excerpt">There are days when everything has a price: time, energy, sanity. Those are the days I seek out the quiet, simple things...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('mykonos-cape')">
+                    <span class="article-category">Travel</span>
+                    <span class="article-category">French</span>
+                    <h3>48 heures à Mykonos (celui du Cap, pas celui avec les influenceurs)</h3>
+                    <p class="meta">Travel • French • March 2024</p>
+                    <p class="excerpt">Pas besoin de passeport. Club Mykonos, c'est l'autre Mykonos. Celui où tu te réveilles avec une vue sur un lagon tranquille...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('employee-resign')">
+                    <span class="article-category">Career</span>
+                    <h3>How to Make an Employee Resign: A Manager's Guide</h3>
+                    <p class="meta">Career Satire • March 2024</p>
+                    <p class="excerpt">Let's say you have someone on your payroll who just… lingers. This is how the experts absolutely do not recommend you do it...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('people-great')">
+                    <span class="article-category">Personal</span>
+                    <h3>In Fact, People Are Pretty Great Sometimes</h3>
+                    <p class="meta">Personal • February 2024</p>
+                    <p class="excerpt">Every so often, it feels like everything's falling apart faster than you can keep up. And then, something indescribably beautiful happens...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('freelance-mistakes')">
+                    <span class="article-category">Career</span>
+                    <h3>17 Ways I Screwed Up My First Year as a Freelance Copywriter</h3>
+                    <p class="meta">Career • February 2024</p>
+                    <p class="excerpt">This isn't one of those 'everything's content' posts. I just finally got tired of acting like I knew what I was doing...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('undiagnosed')">
+                    <span class="article-category">Personal</span>
+                    <h3>Undiagnosed but Something Is Definitely Wrong</h3>
+                    <p class="meta">Personal • February 2024</p>
+                    <p class="excerpt">I met someone wearing a shirt that read: 'Undiagnosed but something is definitely wrong.' Many of us could wear that shirt...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('looking-expensive')">
+                    <span class="article-category">Lifestyle</span>
+                    <h3>Looking Expensive Without Breaking the Bank</h3>
+                    <p class="meta">Style • December 2024</p>
+                    <p class="excerpt">Being chic does not mean blowing your paycheck at designer names. It's not about spending more money, but where you are spending it...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('cape-town-charm')">
+                    <span class="article-category">Travel</span>
+                    <h3>Cape Town's Unpredictable Charm Will Make You Want to Stay</h3>
+                    <p class="meta">Travel Essay • March 2024</p>
+                    <p class="excerpt">Let's skip the clichés. You've seen enough drone footage of Table Mountain. The truth is, Cape Town transcends photography...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('nfts-sandwich')">
+                    <span class="article-category">Tech</span>
+                    <h3>NFTs, Explained with a Sandwich</h3>
+                    <p class="meta">Tech Explainer • March 2024</p>
+                    <p class="excerpt">Let's address this upfront: NFTs are complicated. But what if we tried to explain it using a sandwich? No theory, no techno-speak...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('smart-home-apartment')">
+                    <span class="article-category">Tech</span>
+                    <h3>How to Convert Your Apartment into a Smart Home Without Breaking the Bank</h3>
+                    <p class="meta">Tech Guide • March 2024</p>
+                    <p class="excerpt">I always thought a "smart home" meant you needed a three-story house with all the works. Me? I live in a one-bedroom apartment...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('mortal-kombat-resilience')">
+                    <span class="article-category">Gaming</span>
+                    <h3>What Mortal Kombat Taught Me About Resilience</h3>
+                    <p class="meta">Gaming Essay • March 2024</p>
+                    <p class="excerpt">I once threw a controller against the wall due to Mortal Kombat. Years later, I've realized this game taught me how to pick myself up...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('holyrood-building')">
+                    <span class="article-category">Architecture</span>
+                    <h3>Holyrood: Cape Town's Quietly Iconic Residence</h3>
+                    <p class="meta">Architecture • March 2024</p>
+                    <p class="excerpt">Holyrood might not jump out at you from maps, but it has something strangely interesting going on. A faded glamour that can't be replicated...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('job-interview-french')">
+                    <span class="article-category">Career</span>
+                    <span class="article-category">French</span>
+                    <h3>Comment réussir son entretien d'embauche (même si tu es un peu perdu)</h3>
+                    <p class="meta">Career • French • March 2024</p>
+                    <p class="excerpt">Alors voilà, tu es en pleine recherche d'un emploi. Et qui dit recherche, dit forcément entretien d'embauche. Ça fait un peu peur, non?</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('versailles-luxury')">
+                    <span class="article-category">Travel</span>
+                    <h3>Versailles Luxury Suites and Apartments: Cape Town's Coastside Chic</h3>
+                    <p class="meta">Travel Review • March 2024</p>
+                    <p class="excerpt">Versailles offers a serene, luxurious escape amidst the Atlantic Seaboard, gracefully blending old-world charm with modern convenience...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('sustainability-2025')">
+                    <span class="article-category">Environment</span>
+                    <h3>What Sustainability Really Means in 2025: No Catchphrases, Just Change</h3>
+                    <p class="meta">Environment • March 2024</p>
+                    <p class="excerpt">In 2025, sustainability isn't trend reporting or marketing jargon. It's how you build, how you lead, and how you stay relevant...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('save-money-economy')">
+                    <span class="article-category">Finance</span>
+                    <h3>How to Save Money in This Economy, According to No One Who's Done It</h3>
+                    <p class="meta">Finance Satire • March 2024</p>
+                    <p class="excerpt">Apparently, we're all supposed to be saving money right now. Meanwhile, bread costs R50 and groceries cost more than rent used to...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('disa-park')">
+                    <span class="article-category">Architecture</span>
+                    <h3>The Towers in the Mist: Taking a Closer Look at Disa Park</h3>
+                    <p class="meta">Architecture • March 2024</p>
+                    <p class="excerpt">If you've ever driven along the M3 just as the mist rolls in over Table Mountain, you've probably seen them. Three tall, bold towers, tucked like sentinels against the slopes...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('cape-town-breaking')">
+                    <span class="article-category">Opinion</span>
+                    <h3>Cape Town Is Beautiful. And Sort of Breaking Its Own People</h3>
+                    <p class="meta">Opinion • March 2024</p>
+                    <p class="excerpt">Cape Town is beautiful, that's beyond debate. But here's what's more difficult to say aloud: it is also becoming uninhabitable for its own people...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('skipping-breakfast')">
+                    <span class="article-category">Personal</span>
+                    <h3>I Keep on Skipping the One Meal I Oath Is My Favorite</h3>
+                    <p class="meta">Personal • March 2024</p>
+                    <p class="excerpt">I love breakfast, I mean, I truly, deeply love it. But here's what's totally insane: I steer clear of it. Far too often for someone who calls it their top pick...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('lego-gift')">
+                    <span class="article-category">Lifestyle</span>
+                    <h3>Why LEGO Could Be the Best Gift You Ever Get an Adult</h3>
+                    <p class="meta">Lifestyle • March 2024</p>
+                    <p class="excerpt">To most of us, LEGO is synonymous with childhood. But here's the thing: LEGO isn't just for young people. It never was. It's likely one of the greatest things you can offer an adult...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('knysna-trip-new')">
+                    <span class="article-category">Travel</span>
+                    <h3>A Trip to Knysna</h3>
+                    <p class="meta">Travel • March 2024</p>
+                    <p class="excerpt">Some places leave you speechless. Others make you slow down. Knysna does both, gently and consistently, defying typical marketing approaches...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('le-cap')">
+                    <span class="article-category">Travel</span>
+                    <span class="article-category">French</span>
+                    <h3>Le Cap</h3>
+                    <p class="meta">Travel • French • February 2024</p>
+                    <p class="excerpt">Je suis arrivé, j'ai apprécié, et je suis resté. Au début, ce n'était pas du tout prévu comme ça. C'était juste pour des études universitaires...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('franglais')">
+                    <span class="article-category">French</span>
+                    <h3>Franglais pour les nuls</h3>
+                    <p class="meta">French • February 2024</p>
+                    <p class="excerpt">Ton cerveau pense en anglais, mais ta bouche improvise en français. Bienvenue dans le grand bain du franglais...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('dire-non')">
+                    <span class="article-category">Personal</span>
+                    <span class="article-category">French</span>
+                    <h3>Apprenez à dire non (sans y laisser votre dignité)</h3>
+                    <p class="meta">Personal • French • February 2024</p>
+                    <p class="excerpt">Dans la vie, il y a des situations où la réponse est évidente. Mais parfois, un simple "non" ne suffit pas. Pas la première fois. Ni la deuxième...</p>
+                </div>
+
+                <div class="article-card" onclick="showArticle('lettre-retard')">
+                    <span class="article-category">Personal</span>
+                    <span class="article-category">French</span>
+                    <h3>Lettre ouverte à toi, qui est "en retard"</h3>
+                    <p class="meta">Personal • French • February 2024</p>
+                    <p class="excerpt">Tu n'as pas coché toutes les cases à vingt ans. Tu n'as pas trouvé ta voie en six mois. Et tu te dis peut-être que c'est grave. Ce n'est pas grave...</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Individual Articles -->
+
+    <!-- Article: To the Ones Who Are On Their Own (But Not Alone) -->
+    <article class="article" id="alone-but-not-alone">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Personal</span>
+                <h1 class="article-title">To the Ones Who Are On Their Own (But Not Alone)</h1>
+                <p class="article-meta">Personal Essay • 5 min read • March 15, 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">H</span>ello to you. This is for the nights when it's too quiet. When the world seems made for two and you find yourself there, only you. When every couple walking hand in hand makes your chest ache a little.</p>
+
+                <p>This is for the Friday evenings when your phone goes silent and you wonder if this is what loneliness feels like, or if it's just the space between what was and what might be.</p>
+
+                <blockquote>
+                    "You have not been overlooked. You have not wasted your time. You are not too much. And you are most definitely not 'not enough'."
+                </blockquote>
+
+                <p>Being single is not a waiting room. It is not the in-between nor the pause that precedes the actual thing happening. It is the thing itself. It's real. It counts. It's yours.</p>
+
+                <p>You are not half of anything. You are not incomplete. You are not a rough draft waiting for someone else to edit you into something better. You are the full story, written in your own handwriting, with plot twists that surprise even you.</p>
+
+                <h2>The Art of Being Alone</h2>
+
+                <p>There's an art to being alone that no one teaches you. It's not the same as loneliness, though sometimes they blur together like watercolors in the rain. Being alone is active. It's choosing yourself, again and again, even when the world suggests that two is better than one.</p>
+
+                <p>You learn things about yourself that you never knew when someone else was in the room. You discover that you actually like your own company. That your thoughts are interesting. That your dreams don't need validation to be valid.</p>
+
+                <div class="highlight-box">
+                    You learn that you can take yourself to dinner, to movies, to new cities. You can be your own plus-one to life.
+                </div>
+
+                <p>Some nights, you'll feel the weight of it. The silence will feel too loud, the bed too big, the apartment too still. Those nights are real too. They don't cancel out the good ones. They're just part of the story you're writing.</p>
+
+                <h2>You Are Not Waiting</h2>
+
+                <p>This is not a consolation prize. This is not the universe's way of preparing you for something better. This is your life, happening right now, in real time. Full and valid and complete.</p>
+
+                <p>Every day you choose to show up for yourself is a day that counts. Every small joy you find on your own is proof that happiness doesn't require a witness to be real. Every challenge you face and overcome alone builds a strength that no one can take away from you.</p>
+
+                <p>You are not practicing for the main event. <em>This is the main event.</em></p>
+
+                <div class="pull-quote">
+                    "Your single story is not a rough draft. It's a first edition, signed by you, worth reading cover to cover."
+                </div>
+
+                <p>So here's to the ones who are on their own but not alone. To the ones who have learned that solitude and loneliness are not the same thing. To the ones who have made peace with their own company and found it surprisingly good.</p>
+
+                <p>You are not waiting for your life to begin. You are not incomplete. You are not too much or not enough. You are exactly where you need to be, writing exactly the story that needs to be written.</p>
+
+                <p>And that story? It's beautiful, even if no one else is reading it yet.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('looking-expensive')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Looking Expensive Without Breaking the Bank</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('asia-hurts')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">I Want to Go to Asia So Bad, It Hurts</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: I Want to Go to Asia So Bad, It Hurts -->
+    <article class="article" id="asia-hurts">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Travel</span>
+                <h1 class="article-title">I Want to Go to Asia So Bad, It Hurts</h1>
+                <p class="article-meta">Travel Essay • March 12, 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p>There are moments when it comes like a wave: this gentle, relentless ache to go away. Not just anywhere, but Asia. The places I hear about all the time. The places I dream about without even realizing it.</p>
+
+                <p>It's not escape. Not really. It's something else. Something deeper. A pull. A desire.</p>
+
+                <div class="highlight-box">
+                    It's not about running away from something. It's about running toward something I can't quite name yet.
+                </div>
+
+                <p>I yearn to eat soup on a plastic stool in a hot alley with the city thrumming in my ear. I yearn to lose myself on purpose in Tokyo alleys, camera strap around my neck, heart beating faster than usual.</p>
+
+                <h2>The Dreams That Visit at Night</h2>
+
+                <p>I dream of Bangkok markets where the air is thick with spices and stories. Where vendors call out in languages that sound like music to my untrained ear. Where every corner promises something new, something I've never seen before.</p>
+
+                <p>I dream of Vietnamese coffee dripping slowly while I sit and watch the world wake up. Of train rides through landscapes so different from home that they might as well be from another planet. Of temples where the air feels different, charged with something ancient and peaceful.</p>
+
+                <p>Seoul at midnight. The neon signs reflecting in puddles, the city that never seems to sleep, the feeling of being small in the best possible way. The street food that steams in the cold air, warming your hands and your heart simultaneously.</p>
+
+                <h2>More Than Just Tourism</h2>
+
+                <p><span class="large-first-letter">I</span>t's not about checking places off a list. It's not about the perfect Instagram shot or collecting passport stamps like trophies. It's about something more fundamental than that.</p>
+
+                <p>It's about wanting to understand how life can be lived differently. How people find joy in ways I've never considered. How the same human experiences - love, loss, hope, fear - play out against completely different backdrops.</p>
+
+                <blockquote>
+                    "I want to be the kind of person who has been changed by places, not just visited them."
+                </blockquote>
+
+                <p>I want to learn chopstick etiquette from a grandmother who doesn't speak my language but teaches me anyway. I want to get lost in translation and find myself in the gaps between words.</p>
+
+                <h2>The Ache of Waiting</h2>
+
+                <p>Some days, the wanting feels almost physical. Like homesickness, but for places I've never been. For people I haven't met yet. For versions of myself that can only exist in those spaces, breathing that air, walking those streets.</p>
+
+                <p>I scroll through photos and videos, living vicariously through strangers' adventures, and feel this strange mix of inspiration and emptiness. They're doing it. They're there, in the places I dream about, living the experiences I crave.</p>
+
+                <p>But I know that when I finally go - <em>when</em>, not if - it won't be quite like the dreams. It will be better in some ways, harder in others. More real, more complicated, more beautiful than any fantasy could capture.</p>
+
+                <div class="pull-quote">
+                    "The Asia in my dreams is perfect. The Asia I'll visit will be real. And real is always more interesting than perfect."
+                </div>
+
+                <p>Until then, I collect stories. I learn phrases in languages I can't speak yet. I practice using chopsticks and research night markets and train routes. I prepare my heart for the expansion that I know is coming.</p>
+
+                <p>Because someday - maybe sooner than I think - I'll board that plane. I'll watch the familiar landscape shrink below me and feel my world grow larger with each mile. I'll arrive tired and overwhelmed and exhilarated, ready to transform this ache into experience.</p>
+
+                <p>And when I do, I know that the person who comes back won't be quite the same as the one who left. That's what I'm really yearning for, I think. Not just to see Asia, but to let Asia see me. To let it change me in ways I can't predict or control.</p>
+
+                <p>The ache will be worth it. All of this waiting will be worth it.</p>
+
+                <p>I just need to keep believing that.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('alone-but-not-alone')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">To the Ones Who Are On Their Own (But Not Alone)</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('mutual-heights')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Mutual Heights: Cape Town's Stone Monolith</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Mutual Heights -->
+    <article class="article" id="mutual-heights">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Architecture</span>
+                <h1 class="article-title">Mutual Heights: Cape Town's Stone Monolith</h1>
+                <p class="article-meta">Architecture Review • February 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/Mutual+Heights_Shot+06_Z3A9476.jpg.webp" alt="Mutual Heights Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p>At the very heart of Cape Town's city centre, you'll discover a stone monolith. It rises with an unmanufactured self-confidence, devoid of glass curtain walls or gleaming polished chrome. Only strength, detail, and a commanding presence define Mutual Heights.</p>
+
+                <p>Constructed in 1940 as Old Mutual's headquarters, this building was never meant to be subdued. Once the continent's tallest, it wore that title like a badge of pride. Every detail is measured: the carved panels, the shining brass, the marble foyer that still retains its reputation decades later.</p>
+
+                <h2>Architecture as Statement</h2>
+
+                <p><span class="drop-cap">W</span>alk past it and you can feel it. That old world opulence. The kind of detail missing in new buildings today. Art Deco, yes. But with a local heartbeat. Look carefully and you will find carved panels that tell stories. Depictions of South African life. Industry. Culture.</p>
+
+                <p>The building doesn't apologize for taking up space. It doesn't try to blend in or defer to its neighbors. It stands there, solid and unyielding, a testament to an era when buildings were meant to last centuries, not decades.</p>
+
+                <blockquote>
+                    "In a city increasingly dominated by glass and steel, Mutual Heights remains defiantly itself - a reminder of what permanence looks like."
+                </blockquote>
+
+                <p>The facade tells a story in stone. Each carving, each relief, each carefully considered detail speaks to craftsmanship that has become almost extinct. This was architecture as art, building as sculpture, construction as cultural statement.</p>
+
+                <h2>The Details That Matter</h2>
+
+                <p>Step inside and the marble foyer envelops you. The floor patterns, geometric and precise, lead your eye upward to coffered ceilings that seem to float despite their obvious weight. The brass fixtures, now polished to a warm glow, catch the light streaming through tall windows.</p>
+
+                <p>The elevators, original and meticulously maintained, are works of art in themselves. The buttons, the indicators, the gentle mechanical hum - everything speaks to an era when even utilitarian elements were crafted with beauty in mind.</p>
+
+                <div class="highlight-box">
+                    Every surface tells a story. Every detail serves both function and beauty. This is architecture before the false choice between practical and beautiful.
+                </div>
+
+                <h2>Context and Legacy</h2>
+
+                <p>Mutual Heights exists in conversation with Cape Town itself. The building's height was once a bold statement against the sprawling, low-rise character of the city. Today, surrounded by newer, taller structures, it holds its own through sheer presence rather than scale.</p>
+
+                <p>The Art Deco movement found unique expression here, filtered through South African sensibilities and materials. The result is something distinctly local yet unmistakably of its international moment - a building that could only exist in Cape Town, yet speaks a global architectural language.</p>
+
+                <p>From street level, you understand immediately that this building takes itself seriously. It doesn't court approval or beg attention. It simply exists, confident in its own worth, secure in its place in the urban fabric.</p>
+
+                <h2>Preservation and Purpose</h2>
+
+                <p>The fact that Mutual Heights has survived and thrived speaks to something beyond mere historic value. The building works. It serves contemporary needs while honoring its original purpose. The spaces adapt without compromising their character.</p>
+
+                <p>Modern tenants occupy offices that retain their vintage character. The building has found ways to incorporate contemporary technology without sacrificing its architectural integrity. Wi-Fi and air conditioning coexist peacefully with original terrazzo floors and brass fixtures.</p>
+
+                <div class="pull-quote">
+                    "The best historic buildings don't become museums. They remain vital, working parts of the living city."
+                </div>
+
+                <p>Walking through Mutual Heights today, you sense the layers of time. The original vision, executed with such precision and care. The decades of use that have worn smooth the marble steps but haven't diminished the building's dignity. The careful maintenance that honors original intent while meeting contemporary needs.</p>
+
+                <p>This is what we lose when we tear down old buildings to make way for the new. Not just structures, but statements. Not just square footage, but stories carved in stone and cast in bronze.</p>
+
+                <p>Mutual Heights stands as a reminder that buildings can be both functional and beautiful, both practical and inspiring. That architecture can serve commerce while elevating the human spirit. That the built environment shapes us even as we shape it.</p>
+
+                <p>In a city of stunning natural beauty, Mutual Heights proves that human-made beauty has its own power, its own right to exist, its own story to tell. It reminds us that Cape Town is not just mountains and ocean, but also marble and brass, stone and steel, dreams made manifest in the urban landscape.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('asia-hurts')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">I Want to Go to Asia So Bad, It Hurts</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('why-i-write')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Why I Write: Some Feelings Just Can't Be Expressed in Conversation</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Why I Write -->
+    <article class="article" id="why-i-write">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Personal</span>
+                <h1 class="article-title">Why I Write: Some Feelings Just Can't Be Expressed in Conversation</h1>
+                <p class="article-meta">Published January 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/pexels-pixabay-265152.jpg" alt="Why I Write Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p><span class="large-first-letter">S</span>ome prefer to hash things out. Some cry. Some sprint until their legs ache. Me? I write.</p>
+
+                <p>I do it when <em>the silence is too loud</em>. When words in my head start to stack up like books on the nightstand. When something small happens and, for no apparent reason, it won't leave me alone.</p>
+
+                <p><strong>Writing gives shape to feelings that conversations can't always hold.</strong> It slows everything down, allowing me to catch up with myself. Some days it's just one sentence. Some days it's everything I couldn't say out loud.</p>
+
+                <h2>The Things We Can't Say</h2>
+
+                <p>There are thoughts too fragile for speaking. Ideas that would shatter in the air between two people, too delicate for the messiness of dialogue, too personal for the performance that conversation sometimes becomes.</p>
+
+                <p>Writing is where I meet myself without an audience. Where I can be completely honest because no one else is listening. Where I can explore the corners of my mind that I'm not ready to show anyone else.</p>
+
+                <blockquote>
+                    "On paper, I am braver than I am in person. More honest than I am in conversation. More myself than I am anywhere else."
+                </blockquote>
+
+                <p>Some feelings are too big for words, but paradoxically, writing helps me find smaller words to hold them. Breaking down the overwhelming into manageable pieces. Making the abstract concrete, the chaotic organized.</p>
+
+                <h2>The Rhythm of Thought</h2>
+
+                <p>There's a rhythm to writing that matches the rhythm of thinking better than speech ever could. The pauses between sentences mirror the pauses between thoughts. The revision process mirrors how understanding deepens over time.</p>
+
+                <p>In conversation, once words are spoken, they're gone. They hang in the air for a moment and then disappear, taking their meaning with them. But written words stay. They wait patiently while you figure out what you really meant to say.</p>
+
+                <div class="highlight-box">
+                    Writing is thinking made visible. It's the mind working through problems in real time, leaving a trail for others to follow.
+                </div>
+
+                <p>I write to discover what I think about things I didn't know I had opinions about. The act of putting words on paper reveals thoughts I didn't know I was having, connections I didn't know I was making.</p>
+
+                <h2>The Solitude of Creation</h2>
+
+                <p>Writing is inherently solitary, and I've learned to love that solitude. It's not lonely - it's focused. It's just me and the blank page, figuring things out together.</p>
+
+                <p>There's no pressure to be interesting or funny or wise. No need to fill awkward silences or worry about how my face looks while I'm thinking. Just the pure act of translating internal experience into external form.</p>
+
+                <p>Sometimes I write things I would never say. Sometimes I write things I wish I could say but don't know how. Sometimes I write things I don't even fully understand, hoping that the act of writing will help me understand them.</p>
+
+                <h2>The Democracy of the Page</h2>
+
+                <p>On paper, all thoughts are equal. The profound and the mundane sit side by side, waiting to be sorted out later. Writing doesn't judge. It doesn't interrupt. It doesn't offer solutions before I've finished explaining the problem.</p>
+
+                <p>The page accepts everything: the false starts, the contradictions, the moments when I change my mind mid-sentence. It holds space for uncertainty, for complexity, for the messy process of figuring things out.</p>
+
+                <div class="pull-quote">
+                    "Writing is how I make sense of the world, one word at a time. It's how I find order in chaos, meaning in confusion."
+                </div>
+
+                <p>I write because some conversations can only happen with yourself. Because some truths can only be discovered in solitude. Because some feelings can only be fully felt when you take the time to trace their outlines with words.</p>
+
+                <h2>The Gift of Expression</h2>
+
+                <p>Not everyone writes, but everyone has thoughts and feelings that are difficult to express. Writing has taught me that those difficult-to-express things are often the most important things. They're worth the effort it takes to find the right words.</p>
+
+                <p>When I write, I'm not trying to be a writer. I'm just trying to be human in a more complete way. To honor the full range of my experience by giving it form and substance.</p>
+
+                <p>Writing is my way of paying attention to my own life. Of treating my thoughts and feelings as worthy of consideration, worthy of care, worthy of the time it takes to get them right.</p>
+
+                <p>It's how I love myself, one sentence at a time.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('mutual-heights')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Mutual Heights: Cape Town's Stone Monolith</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('dating-apps')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Why I Don't Date on Apps</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Why I Don't Date on Apps -->
+    <article class="article" id="dating-apps">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Lifestyle</span>
+                <h1 class="article-title">Why I Don't Date on Apps</h1>
+                <p class="article-meta">Relationships • 4 min read</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">L</span>et's start here: I'm not better than you. I'm not smarter, or holding onto some outdated, pre-swipe ideal of love for moral high ground. I just never downloaded one.</p>
+
+                <p>And that's not some holier-than-thou declaration. It's just how it happened. Or didn't happen, as the case may be.</p>
+
+                <blockquote>
+                    "I like the mess of real life. I like bumping into someone when I least expect it, even if it doesn't go anywhere."
+                </blockquote>
+
+                <p>Apps fulfill their purpose. You tap the screen. You look at a face. You select based on an image and maybe six words honed over three lattes. But to me, dating websites have always been like trying to read someone through the keyhole of their profile.</p>
+
+                <h2>The Algorithm of Attraction</h2>
+
+                <p>There's something about the algorithmic approach to love that feels wrong to me. Not morally wrong, just... incomplete. Like trying to solve a poem with mathematics. The variables are too complex, too nuanced, too human for clean categorization.</p>
+
+                <p>How do you quantify chemistry? How do you swipe your way to the specific brand of weirdness that complements your own? How do you program an algorithm to recognize the kind of laugh that makes your heart skip?</p>
+
+                <div class="highlight-box">
+                    Love has always been analog in a digital world. It's messy and unpredictable and doesn't follow user interface best practices.
+                </div>
+
+                <p>I've watched friends spend hours crafting the perfect profile, selecting photos that tell just the right story, writing bios that strike the perfect balance between witty and approachable. It's performance art, and good performance art at that. But it's still performance.</p>
+
+                <h2>The Serendipity of Real Life</h2>
+
+                <p>I'm drawn to the randomness of meeting someone in line for coffee, or getting lost in conversation with a stranger at a bookstore. There's something beautiful about the unplanned nature of it all.</p>
+
+                <p>The universe, or chaos, or whatever you want to call it, putting two people in the same place at the same time, both of them open to possibility without specifically looking for it. That feels more romantic to me than matching based on mutual interest in hiking and The Office.</p>
+
+                <p>Maybe it's inefficient. Maybe it's limiting my options. Maybe I'm missing out on connections that would have been perfect if only I'd been willing to swipe right. But efficiency has never been the point of love, has it?</p>
+
+                <h2>The Full Spectrum of Human</h2>
+
+                <p>When you meet someone in person first, you get the whole package immediately. The way they move through space. How they treat the barista. The laugh that's too loud or too quiet. The nervous habit they don't know they have.</p>
+
+                <p>You can't curate real-life interaction the way you can curate a profile. There's no filter for awkward pauses or editing option for unfortunate phrasing. You get the unvarnished version of a person, and they get the unvarnished version of you.</p>
+
+                <blockquote>
+                    "I want to fall for someone's flaws before I even know they're flaws. I want the messy, unfiltered, real-time version of connection."
+                </blockquote>
+
+                <p>That vulnerability feels essential to me. The risk of showing up as yourself, without preparation or optimization, and seeing if someone else responds to that authentic self.</p>
+
+                <h2>The Pressure of Choice</h2>
+
+                <p>There's something overwhelming about infinite options. Dating apps present you with an endless scroll of possibilities, which can make it hard to be present with any single possibility. There's always someone else to swipe to, always another profile to consider.</p>
+
+                <p>In real life, when you meet someone interesting, you don't have access to a catalog of alternatives. You're forced to be present with that person, that conversation, that moment. You can't comparison shop for better cheekbones or wittier banter.</p>
+
+                <div class="highlight-box">
+                    Sometimes constraints create better art than unlimited freedom. Sometimes fewer choices lead to better choices.
+                </div>
+
+                <h2>The Timing of Things</h2>
+
+                <p>I believe in timing in a way that dating apps seem to work against. The right person at the wrong time is still the wrong person, and no algorithm can account for the complex web of circumstances that make someone available for love.</p>
+
+                <p>Meeting someone organically means you're both in the same place, literally and figuratively, at the same time. You're both available to be surprised by connection. That synchronicity feels meaningful to me.</p>
+
+                <p>It's not that I'm opposed to intentionality in dating. I'm just more interested in intentional presence than intentional searching. Being open to connection wherever it might arise rather than hunting for it in designated digital spaces.</p>
+
+                <h2>My Romantic Luddism</h2>
+
+                <p>Maybe I'm a romantic luddite. Maybe I'm limiting myself unnecessarily. Maybe there's someone perfect for me out there right now, looking at their phone, wondering why no one interesting ever messages them.</p>
+
+                <p>But I'd rather err on the side of old-fashioned serendipity than modern efficiency. I'd rather miss out on algorithmic compatibility than lose the magic of unexpected encounter.</p>
+
+                <div class="pull-quote">
+                    "Love is not a problem to be solved or a market to be optimized. It's a mystery to be lived."
+                </div>
+
+                <p>So I keep showing up to life with my eyes open and my phone in my pocket. I keep believing that the right person will cross my path when we're both ready to see each other clearly.</p>
+
+                <p>And if that never happens? Well, at least I'll have spent my time looking at the world instead of looking at a screen, searching for love in all the analog places.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('why-i-write')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Why I Write</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('therapeutic-things')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Things I Find Therapeutic That Are Free</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Things I Find Therapeutic That Are Free -->
+    <article class="article" id="therapeutic-things">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Wellness</span>
+                <h1 class="article-title">Things I Find Therapeutic That Are Free</h1>
+                <p class="article-meta">Self-Care • January 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p>There are days when everything has a price: time, energy, sanity. Even sleep feels like a commodity you have to earn. Those are the days I seek out the quiet, simple things that ask nothing of me but presence.</p>
+
+                <div class="highlight-box">
+                    They are small, easy to overlook. But they save me more often than I'll ever admit.
+                </div>
+
+                <h2>Walking Without Destination</h2>
+
+                <p><span class="large-first-letter">W</span>alking without a destination. Not to exercise. Not to get somewhere. Just to walk. Just to exist in motion. I walk until the noise in my head subsides, until my footfalls find a rhythm that matches something deeper than thought.</p>
+
+                <p>There's something about the repetitive motion that unlocks whatever's been wound tight inside me. Left foot, right foot, breathe. The world moves past at exactly the right speed for processing. Not too fast like driving, not too static like sitting.</p>
+
+                <p>I notice things I never see when I'm walking with purpose: the way light falls between buildings, the sound of wind through different types of trees, the faces of strangers who are also just existing in the world.</p>
+
+                <h2>Water in All Its Forms</h2>
+
+                <p>Standing in the shower longer than necessary, letting hot water run over my shoulders until the tension releases. Not thinking, just feeling the heat penetrate muscle and bone.</p>
+
+                <p>Watching rain from inside - the percussion on the roof, the way it transforms the familiar landscape into something dreamy and new. Rain makes the world feel smaller and safer, like being inside a sound cocoon.</p>
+
+                <blockquote>
+                    "Water has no agenda. It just flows, pools, falls, evaporates. It reminds me that I can be just as adaptive, just as accepting of change."
+                </blockquote>
+
+                <p>Ocean waves, if I'm lucky enough to be near them. The sound that drowns out everything else, the rhythm that's been the same for millennia. Waves remind me of the bigger picture without making me feel insignificant.</p>
+
+                <h2>The Ritual of Tea</h2>
+
+                <p>Making tea with full attention. Not just dunking a bag in hot water, but the whole ritual. Selecting the tea, heating the water to the right temperature, timing the steep, holding the warm mug in both hands.</p>
+
+                <p>The first sip that's too hot, the way the warmth travels from throat to chest to stomach. The permission to sit and do nothing but drink tea. The excuse to pause that society accepts without question.</p>
+
+                <p>Tea time creates a pocket of calm in the day. It's meditation disguised as a beverage break. It's self-care that doesn't announce itself as self-care.</p>
+
+                <h2>Organizing Small Things</h2>
+
+                <p>Arranging books by color or size. Organizing the spice cabinet. Folding laundry with unprecedented care. There's something deeply satisfying about imposing order on small, manageable spaces when the rest of life feels chaotic.</p>
+
+                <p>The control is real, even if it's limited. I can't organize my feelings or my future, but I can organize this drawer. And sometimes that's enough to restore a sense of agency.</p>
+
+                <div class="highlight-box">
+                    External order creates internal calm. Even if it's temporary, even if it's small, it matters.
+                </div>
+
+                <h2>Listening to the Same Song on Repeat</h2>
+
+                <p>Finding one song that matches the frequency of whatever I'm feeling and playing it until I've extracted every bit of emotion from it. Until I know every breath, every pause, every subtle inflection.</p>
+
+                <p>It's musical meditation. The repetition creates space for feelings to move through me rather than getting stuck. By the tenth or fifteenth listen, the song has done its work. The feeling has been honored, processed, released.</p>
+
+                <h2>Writing by Hand</h2>
+
+                <p>The physical act of forming letters, the slight resistance of pen on paper, the way handwriting forces thoughts to slow down to the speed of the hand. No delete key, no backspace. Just forward motion, one word after another.</p>
+
+                <p>Handwriting connects me to something ancient and human. It's the same motion humans have been making for thousands of years to record thoughts, to preserve experiences, to make sense of being alive.</p>
+
+                <p>The pages fill slowly, imperfectly. Crossed-out words and cramped margins tell their own story. It's messier than typing, less efficient, and somehow more real.</p>
+
+                <h2>Watching Light Change</h2>
+
+                <p>Sitting in one spot and watching how light moves through a space over time. Morning light is different from afternoon light, which is different from evening light. The same room becomes multiple rooms as shadows shift and colors warm or cool.</p>
+
+                <p>Light change reminds me that nothing is static, that even stillness contains movement. That beauty is always available if you know how to look for it. That time passing doesn't always mean time lost.</p>
+
+                <blockquote>
+                    "Light teaches patience. It changes slowly enough to notice if you're paying attention, quickly enough to surprise you if you're not."
+                </blockquote>
+
+                <h2>The Therapy of Presence</h2>
+
+                <p>These things work not because they solve anything, but because they create space. Space between me and whatever's troubling me. Space to breathe, to be, to exist without explanation or justification.</p>
+
+                <p>They're free not just because they don't cost money, but because they free me from the pressure to be productive, to improve, to optimize. They ask nothing except that I show up, present and open to whatever arises.</p>
+
+                <div class="pull-quote">
+                    "Sometimes the most therapeutic thing you can do is nothing at all. Nothing but exist, breathe, and trust that this too shall pass."
+                </div>
+
+                <p>In a world that profits from our anxiety, that sells solutions to problems it helped create, these small acts of presence are quietly revolutionary. They remind me that peace doesn't have to be purchased, that healing doesn't require a subscription, that sometimes the best therapy is the simplest.</p>
+
+                <p>Free in every sense of the word.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('dating-apps')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Why I Don't Date on Apps</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('freelance-mistakes')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">17 Ways I Screwed Up My First Year</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Freelance Mistakes -->
+    <article class="article" id="freelance-mistakes">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Career</span>
+                <h1 class="article-title">17 Ways I Screwed Up My First Year as a Freelance Copywriter</h1>
+                <p class="article-meta">Career • February 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p>This isn't one of those "everything's content" posts. I just finally got tired of acting like I knew what I was doing from day one. Here's an honest list of ways I made my first year unnecessarily difficult.</p>
+
+                <h2>The Pricing Disasters</h2>
+
+                <p><strong>1. I undercharged for everything.</strong> Not just a little. Catastrophically. I was so grateful that anyone wanted to pay me for writing that I forgot writing was work that deserved fair compensation.</p>
+
+                <p><strong>2. I didn't track my time.</strong> How can you know if you're making minimum wage if you don't know how many hours you're working? Spoiler alert: I wasn't making minimum wage.</p>
+
+                <p><strong>3. I said yes to every project.</strong> Logo copywriting for a plumbing company? Sure! Technical manual for software I'd never used? Absolutely! Saying yes to everything is saying no to expertise.</p>
+
+                <blockquote>
+                    "Desperation makes terrible business decisions. I was so afraid of not having work that I took all the wrong work."
+                </blockquote>
+
+                <h2>The Client Catastrophes</h2>
+
+                <p><strong>4. I didn't use contracts.</strong> "We're all friends here!" Famous last words before a client disappears without paying for three weeks of work.</p>
+
+                <p><strong>5. I let clients pay me whenever.</strong> No payment terms, no deposits, no consequences. I was basically offering interest-free loans to strangers.</p>
+
+                <p><strong>6. I revised everything to death.</strong> "Could you make it more... punchy?" became seventeen rounds of revisions because I couldn't say when enough was enough.</p>
+
+                <p><strong>7. I worked with anyone who had a pulse and a budget.</strong> Red flags are not suggestions. They're warnings. I ignored all of them.</p>
+
+                <h2>The Professional Pretending</h2>
+
+                <p><strong>8. I pretended to be an expert in things I wasn't.</strong> "Of course I know about cryptocurrency marketing!" I said, frantically googling blockchain during the call.</p>
+
+                <p><strong>9. I tried to be everything to everyone.</strong> My bio read like a grocery list: web copy, social media, technical writing, poetry, grocery lists, divorce papers, NASA communications...</p>
+
+                <div class="highlight-box">
+                    Being a generalist is fine. Being a specialist in everything is impossible. I confused volume with value.
+                </div>
+
+                <p><strong>10. I copied other people's personalities.</strong> I tried to write like the copywriters I admired instead of developing my own voice. My copy sounded like a bad impression of someone more successful.</p>
+
+                <h2>The Business Blindness</h2>
+
+                <p><strong>11. I didn't save money for taxes.</strong> April was a very unpleasant surprise. The government wants their cut, and they don't accept "I forgot" as payment.</p>
+
+                <p><strong>12. I had no business systems.</strong> No CRM, no invoicing system, no file organization. I was running a business like it was a hobby.</p>
+
+                <p><strong>13. I didn't network.</strong> I thought good work would magically find its way to the right people. Turns out visibility requires actual effort.</p>
+
+                <p><strong>14. I treated every inquiry like a lottery ticket.</strong> Instead of qualifying leads, I chased every potential client like they were my last hope for financial survival.</p>
+
+                <h2>The Personal Pitfalls</h2>
+
+                <p><strong>15. I worked from bed.</strong> Professional advice: your workspace affects your mindset. It's hard to feel like a serious business owner when you're in pajamas surrounded by cereal crumbs.</p>
+
+                <p><strong>16. I didn't set boundaries.</strong> Available 24/7, weekends included. "Emergency" became any time a client remembered they needed something.</p>
+
+                <p><strong>17. I compared myself to everyone.</strong> LinkedIn became a torture device. Everyone else seemed to be crushing it while I was barely keeping up with invoices.</p>
+
+                <h2>What I Learned</h2>
+
+                <p>The thing about mistakes is they're only valuable if you learn from them. Looking back, every one of these errors taught me something essential about running a business.</p>
+
+                <blockquote>
+                    "Failure is expensive, but ignorance is more expensive. Every mistake was tuition in the school of freelancing."
+                </blockquote>
+
+                <p>I learned that confidence isn't about knowing everything - it's about knowing what you don't know and being honest about it. That boundaries aren't mean, they're professional. That charging fairly isn't greedy, it's sustainable.</p>
+
+                <p>Most importantly, I learned that everyone figures it out as they go. The successful freelancers aren't the ones who never made mistakes - they're the ones who made mistakes faster, learned quicker, and adjusted their approach accordingly.</p>
+
+                <h2>The Redemption Arc</h2>
+
+                <p>Year two looked different. Higher rates, better clients, actual contracts. Systems that worked, boundaries that held, confidence that wasn't fake.</p>
+
+                <p>I still make mistakes - different ones now, more sophisticated ones. But I make them with intention rather than desperation. With systems in place to catch them before they become disasters.</p>
+
+                <div class="pull-quote">
+                    "Success isn't about avoiding mistakes. It's about making new and better mistakes while you grow."
+                </div>
+
+                <p>If you're starting out as a freelancer, you'll probably make some of these mistakes too. That's okay. That's normal. That's how you learn what works and what doesn't in your specific situation with your specific skills and your specific market.</p>
+
+                <p>Just don't make them all in the same year like I did. Spread them out a little. Give yourself time to recover between disasters.</p>
+
+                <p>And remember: every expert was once a beginner who refused to give up. Even the ones who made really, really expensive mistakes their first year.</p>
+
+                <p>Especially those ones.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('therapeutic-things')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Things I Find Therapeutic That Are Free</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('looking-expensive')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Looking Expensive Without Breaking the Bank</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Looking Expensive -->
+    <article class="article" id="looking-expensive">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Lifestyle</span>
+                <h1 class="article-title">Looking Expensive Without Breaking the Bank</h1>
+                <p class="article-meta">Style • December 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/pexels-ron-lach-8386666.jpg" alt="Looking Expensive Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p>Being chic does not mean blowing your paycheck on designer labels. It's not about spending more money, but about spending it more thoughtfully. It's about understanding what creates the impression of quality and investing in those elements strategically.</p>
+
+                <h2>The Psychology of Expensive-Looking</h2>
+
+                <p><span class="drop-cap">W</span>hat makes something look expensive? It's rarely the price tag itself, but rather a combination of factors: fit, fabric, color coordination, and confidence. The good news is that most of these factors are accessible regardless of budget.</p>
+
+                <p>Expensive-looking doesn't mean flashy or logo-heavy. In fact, the most expensive-looking people often wear the simplest pieces. They understand that luxury whispers; it doesn't shout.</p>
+
+                <blockquote>
+                    "True elegance is about looking effortlessly put-together, like you didn't try too hard but somehow got everything right."
+                </blockquote>
+
+                <h2>The Foundation: Fit is Everything</h2>
+
+                <p>A $30 shirt that fits perfectly will always look more expensive than a $300 shirt that doesn't. This is the most important rule and the one most people ignore.</p>
+
+                <p><strong>Get things tailored.</strong> Yes, even budget pieces. A simple hem or taking in a waist can transform a mediocre garment into something that looks custom-made. Many dry cleaners offer basic alterations for reasonable prices.</p>
+
+                <p><strong>Know your measurements.</strong> Not your size in one particular brand, but your actual body measurements. Sizes vary wildly between brands, but measurements don't lie.</p>
+
+                <div class="highlight-box">
+                    The difference between looking cheap and looking chic often comes down to the difference between the right size and the size you think you wear.
+                </div>
+
+                <h2>The Power of Neutral Colors</h2>
+                <img src="assets/images/articles/pexels-wesleydavi-16354625.jpg" alt="Looking Expensive Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p>Expensive-looking wardrobes tend to be built around neutral colors: black, white, grey, beige, navy, camel. These colors are inherently sophisticated and mix effortlessly with each other.</p>
+
+                <p><strong>Choose a palette and stick to it.</strong> When everything in your wardrobe works together, you always look coordinated. Coordination reads as intentionality, which reads as expense.</p>
+
+                <p><strong>Invest in quality basics in neutral colors.</strong> A well-made white button-down, perfectly fitted black pants, a classic trench coat. These pieces form the backbone of an expensive-looking wardrobe.</p>
+
+                <h2>Fabric Matters More Than Brand</h2>
+
+                <p>Learn to recognize quality fabrics, regardless of where you're shopping. Natural fibers like wool, cotton, silk, and linen generally look and feel more expensive than synthetic alternatives.</p>
+
+                <p><strong>Check the weight of the fabric.</strong> Heavier fabrics tend to drape better and look more substantial. A heavy cotton t-shirt will always look better than a thin, flimsy one.</p>
+
+                <p><strong>Look for details.</strong> French seams, quality buttons, finished hems - these small touches distinguish expensive-looking pieces from obvious budget finds.</p>
+
+                <blockquote>
+                    "Quality is remembered long after price is forgotten. Invest in pieces that will look good after multiple wears and washes."
+                </blockquote>
+
+                <h2>The Art of Strategic Investment</h2>
+
+                <p>You don't need to buy everything at once. Build your wardrobe strategically, investing in one quality piece at a time.</p>
+
+                <p><strong>Shoes first.</strong> People notice shoes, and quality shoes last longer. Invest in classic styles in leather - they'll serve you for years and instantly elevate any outfit.</p>
+
+                <p><strong>Outerwear second.</strong> A quality coat or jacket is worn over everything else and makes a strong first impression. It's worth spending more on something that will be seen frequently.</p>
+
+                <p><strong>Accessories third.</strong> A quality handbag, watch, or belt can make budget clothing look expensive. Choose classic styles that won't date quickly.</p>
+
+                <div class="highlight-box">
+                    Buy the best quality you can afford in pieces that matter most. Compromise on pieces that are less visible or less frequently worn.
+                </div>
+
+                <h2>The Power of Maintenance</h2>
+
+                <p>Expensive-looking people take care of their things. A well-maintained budget piece can look more expensive than a neglected designer item.</p>
+
+                <p><strong>Keep things clean and pressed.</strong> Wrinkled, stained, or pilled clothing immediately reads as cheap, regardless of its original cost.</p>
+
+                <p><strong>Store things properly.</strong> Use hangers for structured pieces, fold knitwear, store shoes with shoe trees. Proper storage maintains shape and extends life.</p>
+
+                <p><strong>Address problems quickly.</strong> Loose buttons, small tears, scuffs on shoes - fix these issues before they become obvious signs of wear.</p>
+
+                <h2>Confidence: The Ultimate Accessory</h2>
+
+                <p>The most expensive-looking people aren't necessarily wearing the most expensive clothes. They're wearing clothes that fit well, that they feel comfortable in, and that they wear with confidence.</p>
+
+                <p><strong>Posture matters.</strong> Stand up straight, shoulders back, head up. Good posture makes everything look better and more expensive.</p>
+
+                <p><strong>Own your choices.</strong> If you feel good in what you're wearing, others will assume you look good too. Confidence is magnetic and makes people less likely to scrutinize details.</p>
+
+                <div class="pull-quote">
+                    "The best-dressed people aren't thinking about their clothes at all. They've found a formula that works and they execute it with confidence."
+                </div>
+
+                <h2>The Minimalist Approach</h2>
+
+                <p>Less is often more when it comes to looking expensive. Expensive-looking people tend to avoid:</p>
+
+                <p><strong>Logo overload.</strong> Obvious branding can actually make you look like you're trying too hard. The most expensive items often have minimal or no visible branding.</p>
+
+                <p><strong>Too many trends at once.</strong> Incorporate trends sparingly. A wardrobe built on classics with occasional trendy accents looks more sophisticated than head-to-toe trend pieces.</p>
+
+                <p><strong>Over-accessorizing.</strong> Choose one or two statement pieces rather than wearing everything at once. Let each piece have room to make an impact.</p>
+
+                <h2>Shopping Strategies</h2>
+
+                <p><strong>Shop your own closet first.</strong> Often we have pieces we've forgotten about or haven't styled in new ways. Try new combinations before buying new items.</p>
+
+                <p><strong>Quality secondhand.</strong> Vintage and consignment shops often have high-quality pieces at fraction of retail prices. Learn to spot quality construction and classic styles.</p>
+
+                <p><strong>End-of-season sales.</strong> Buy winter coats in spring, summer dresses in fall. You'll get better pieces for less money if you can plan ahead.</p>
+
+                <p><strong>Cost per wear.</strong> Calculate how much you'll pay per wear for expensive pieces. A $200 coat worn 100 times costs $2 per wear. A $50 coat worn 10 times costs $5 per wear.</p>
+
+                <img src="assets/images/articles/pexels-gustavo-fring-8770072.jpg" alt="Looking Expensive Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+
+                <h2>The Long Game</h2>
+
+                <p>Looking expensive is a long-term strategy, not a quick fix. It's about building a wardrobe of quality pieces over time, learning what works for your body and lifestyle, and developing a personal style that feels authentic.</p>
+
+                <p>It's about understanding that true style isn't about having the most expensive things - it's about making thoughtful choices that create a cohesive, polished appearance.</p>
+
+                <blockquote>
+                    "Style is knowing who you are, what you want to say, and not giving a single care about anything else."
+                </blockquote>
+
+                <p>The most expensive-looking people often spend less on clothes than those who look obviously budget. They've learned the rules of the game and play it strategically.</p>
+
+                <p>They know that looking expensive is less about the price you pay and more about the thought you put into every choice. From fit to fabric to color to maintenance to confidence - it's all part of creating an impression of quality that has very little to do with what you actually spent.</p>
+
+                <p>That's the real secret of looking expensive: it's not about money at all.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('freelance-mistakes')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">17 Ways I Screwed Up My First Year</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('alone-but-not-alone')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">To the Ones Who Are On Their Own</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+        <!-- Article: Cape Town's Unpredictable Charm -->
+    <article class="article" id="cape-town-charm">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Travel</span>
+                <h1 class="article-title">Cape Town's Unpredictable Charm Will Make You Want to Stay</h1>
+                <p class="article-meta">Travel Essay • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">L</span>et's skip the clichés. You've already scrolled through enough drone footage and have a good idea of Table Mountain from above. You've seen enough photos of aqua-blue water washing up against the flat mountain to have it etched into your brain even when you're asleep.</p>
+
+                <p>But the truth is, Cape Town transcends photography. You have to experience it: walk its streets, feel its throbbing atmosphere, and perhaps get a little sunburned. Allow yourself to get lost on the M3 and arrive somewhere unexpected. That's where the city's magic begins to unfold.</p>
+
+                <p>Or, quite possibly, not at all.</p>
+
+                <blockquote>
+                    "Spoiler alert: You may not understand. That's part of the experience. This place is particularly hard."
+                </blockquote>
+
+                <p>Surf in early mornings at Muizenberg, catching waves, laughing, and doing it again, then sip wine in late afternoons under the oaks of Stellenbosch. Salt on your skin. Cabernet on your lips. That kind of place. All within grasp. All unexpectedly diverse.</p>
+
+                <p>Swim at Clifton, where the cold sea is refreshing, but the view warms everything up. Then proceed to Sea Point. Stroll along the promenade and observe people racing, skating, munching, and flirting. They walk around barefoot. People are not in a hurry at all, and you'll find yourself wondering why you ever were.</p>
+
+                <h2>Do You Want to Escape the City?</h2>
+
+                <p>Platteklip Gorge is your shortest route up Table Mountain. Steep but negotiable. Worth the experience.</p>
+
+                <p>The instant you see it, the summit, the quietness, the wind, you know for sure. No denying it. A different world: still and quiet. And the city down below, framed by clouds and sea? That is your prize.</p>
+
+                <div class="highlight-box">
+                    Take an early morning hike up Lion's Head for a leisurely experience. Wander slowly through Kirstenbosch, where petal-strewn flowers push up through the earth and hills roll off into the distance.
+                </div>
+
+                <p>Rent a bike and ride through Tokai Forest, where the air is thick with the scent of greenness, wetness, and life. Ride south for a dramatic experience. Cape Point is not subtle by any means, with high cliffs, fresh air, and an expansive view of endless ocean.</p>
+
+                <p>These are not bucket list destinations. They are pause buttons.</p>
+
+                <p>For those who travel to the Mother City and desire more than a quick visit, these are the places where you can return to refuel, reflect, and breathe.</p>
+
+                <h2>The Deeper Layers</h2>
+
+                <p>And that is only the view. Expand your stay, and the subtleties will become yours.</p>
+
+                <p>It's a city that roared and whispers remembrance. The city that booms and the one that takes your hand, pointing and saying, 'This happened here.'</p>
+
+                <blockquote>
+                    "Be prepared for an immersive history lesson from those who lived it. Conversations, not plaques or panels, inform our understanding of lived memories."
+                </blockquote>
+
+                <p>As a student, you will have access to more than just a classroom. The individuals you will meet have witnessed Cape Town's transformation, year after hard year. You will meet residents, expats, artists, and activists. You will encounter five different languages before lunch and possibly grasp one.</p>
+
+                <p>It's a space that beckons you to feel, to stretch beyond yourself, to grow, and to discover a home away from home. Not a resort retreat, but a place that compels and challenges you, demanding: 'What are you going to do about it?'</p>
+
+                <div class="pull-quote">
+                    "You don't need to have it all together. It's okay to simply be. Along the way, stay curious."
+                </div>
+
+                <p>Let the city reveal as much as it can. Some days will be easy, and some will not. But it will remain with you. It will haunt you (most likely in a good way). If everything goes well, it will change you a little.</p>
+            <img src="assets/images/articles/cape-town-5109731_1280.jpg" alt="Cape Town Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+            
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('undiagnosed')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Undiagnosed but Something Is Definitely Wrong</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('nfts-sandwich')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">NFTs, Explained with a Sandwich</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: NFTs Explained with a Sandwich -->
+    <article class="article" id="nfts-sandwich">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Tech</span>
+                <h1 class="article-title">NFTs, Explained with a Sandwich</h1>
+                <p class="article-meta">Tech Explainer • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p>Let's address this upfront: NFTs are complicated. Depending on who you ask, they're digital gold, hype jpegs, or an internet scam to trick people and nickel-and-dime for profit. But what if we tried to explain it using a sandwich?</p>
+
+                <p>No, really. Let's break it down, no theory, no techno-speak. Just bread, filling, and a nutty idea that somehow became a billion-dollar idea.</p>
+
+                <h2>The Bread (The File)</h2>
+
+                <p>Start with the sandwich itself. Obtain the bread, the lettuce, tomato, meat, your choice, your preference. That is the digital file: image, video, audio, or sometimes a sleeping tweet some guy had tweeted.</p>
+
+                <p>This is what most of the general public will have had in their minds when they initially hear about NFTs: the Bored Ape (a monkey with sunglasses), or that cartoon cat with a Pop-Tart body.</p>
+
+                <p>The point is, however: owning the sandwich does not mean you own the recipe, or the ingredients themselves.</p>
+
+                <h2>The Pickle on Top (The NFT Itself)</h2>
+
+                <p>NFT is short for 'non-fungible token.' It's not the sandwich itself. Instead, think of it as that one specific pickle with a toothpick in it, dated, stamped, and attached to a virtual trail of owners.</p>
+
+                <p>This pickle has one job: to prove that this exact sandwich, at this moment, belongs to you. Even if everyone else can make copies of it, your pickle says you're the "real" owner. It's a strange kind of ownership that works more like bragging rights than anything else.</p>
+
+                <h2>The Receipt in Your Pocket (The Blockchain)</h2>
+
+                <p>And what, then, is the receipt? Picture a ledger where every sandwich ever created, and who it was sold to, is recorded. That's the blockchain. It's not the sandwich or the pickle; it's the book that everyone agrees is accurate.</p>
+
+                <p>It's an ongoing public ledger that no one can ever close or change.</p>
+
+                <h2>The Trendy Cafe Phenomenon</h2>
+
+                <p>There was a moment when people were willing to pay a thousand just to say, 'Look at my sandwich,' and others who bought it next, expecting it to be worth more someday.</p>
+
+                <p>It all spiralled out of control. The prices went through the roof. People were purchasing sandwiches for the sole reason that they despised sandwiches. And the hype died. The pickle was no longer that genius. Some said it was a hoax. Some said it was a misunderstanding. Some simply slunk away from the entire deli in shame.</p>
+
+                <h2>So. Is It All Over?</h2>
+
+                <p>Not so much. As with all weird food fads, gold-coated donuts, anyone? Charcoal lattes?, NFTs aren't dead. They're just not overflowing into your feed anymore.</p>
+
+                <p>They're still being utilized by artists. They're still being pursued by collectors. They're trying to pair them with a game, music, or a subscription. Will it pan out? Who knows. Maybe they'll come up with some innovative spin that people do want.</p>
+
+                <p>But for now, the sandwich sits in the digital fridge, waiting for someone hungry enough to take another bite.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('cape-town-charm')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Cape Town's Unpredictable Charm</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('smart-home-apartment')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Smart Home Apartment</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Smart Home Apartment -->
+    <article class="article" id="smart-home-apartment">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Tech</span>
+                <h1 class="article-title">How to Convert Your Apartment into a Smart Home Without Breaking the Bank</h1>
+                <p class="article-meta">Tech Guide • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p>Geez, I always thought a "smart home" meant you had to have a three-story house with all the works, mood lights, automated drapes, and a voice control system that would tuck you into bed at night. Me? I live in a one-bedroom apartment where the only "automation" was me yelling "turn on the light!" in the hope that someone would do it for me.</p>
+
+                <p>But after spending some time researching and buying a few gadgets from online sales, I realized you don't have to spend an arm and a leg to live like you're in the future.</p>
+
+                <p>This is how you smartify your flat without depressing (or ruining) it.</p>
+
+                <h2>Start With the Lights. Always the Lights.</h2>
+
+                <p>Smart bulbs are the secret to smart living. They're fairly inexpensive, low-maintenance to install, and make you feel ten times more fabulous than you really are. Change their colors, set them to turn off when you're already in bed, and yes, control them with your phone or voice.</p>
+
+                <p>And the best part? No rewiring. Just plug them in like a lamp, download an app, and voilà, your ceiling lighting will set a movie-like mood.</p>
+
+                <h2>Smart Plugs = Budget Magic</h2>
+
+                <p>Not in the mood to replace all the appliances in your home? Me neither. That's where smart plugs come in.</p>
+
+                <p>These handy devices allow you to control "dumb" appliances, coffee makers, rice cookers, fans, through an app. Low effort, high reward. I once set my coffee maker to brew coffee five minutes before my alarm went off, and I felt like Tony Stark for the rest of the day.</p>
+
+                <p>Bonus: They cost you an awful lot less than buying brand-new "smart" versions of everything.</p>
+
+                <h2>Voice Assistants Aren't a Flex. They're Convenient.</h2>
+
+                <p>You don't need one speaker per room, but one Echo Dot or Google Nest can transform the way you discover your apartment.</p>
+
+                <p>Being able to set an alarm, add something to your grocery list, or ask for the weather, these are small details, but they add up to day-to-day convenience. And it makes you feel high-tech even when you're just instructing it to play sad love songs at 2 a.m.</p>
+
+                <h2>Skip the "Smart Fridge," Smart Routine</h2>
+
+                <p>Newsflash: Your refrigerator doesn't need a touchscreen or Instagram. Nine times out of ten, you just want your food cold and your bills low. Instead of redoing everything, create smart habits with what you have. Automate your lights to match your work schedule. Set your smart plug to turn off your fan at dusk. Group all those items under one app so you don't have to toggle ten different things to 'turn off the house.'</p>
+
+                <p>The idea is less thinking, more living.</p>
+
+                <h2>One Step at a Time. One Paycheck at a Time.</h2>
+
+                <p>I didn't renovate my room overnight. I bought a bulb first, then a plug, then a speaker during an online sale. You build your smart home step by step, there's no need to buy everything at once.</p>
+
+                <p>The reality is your space starts working with you, not against you. Whether waking up, unwinding, or entertaining, on-the small steps ahead add up in terms of convenience you'll be surprised you ever survived without.</p>
+
+                <p>Oh, and your smart devices are only as smart as your internet. Slow internet will make your voice assistant just sit there and stare at you. A slow app might not even register that you've left, leaving your fan running for hours.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('nfts-sandwich')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">NFTs, Explained with a Sandwich</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('mortal-kombat-resilience')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">What Mortal Kombat Taught Me About Resilience</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Mortal Kombat Resilience -->
+    <article class="article" id="mortal-kombat-resilience">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Gaming</span>
+                <h1 class="article-title">What Mortal Kombat Taught Me About Resilience</h1>
+                <p class="article-meta">Gaming Essay • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">I</span> once threw a controller against the wall due to Mortal Kombat. I'm not embarrassed to say it, but if you've ever had Goro body-slam you for the tenth game in a row, you'd do the same. Years and many well-worn buttons later, I've realized one strange thing: this game taught me how to pick myself up.</p>
+
+                <p>And not even in that "press continue in 5 seconds" kind of manner.</p>
+
+                <h2>No One Wins the First Round</h2>
+
+                <p>For most people, your first few rounds are just you getting tossed around like a rag doll. The AI doesn't care if you're new. It capitalizes on your mistakes with no compassion. Gradually, you start learning. You block better, time your combos, and stop button-mashing like your life depends on it.</p>
+
+                <blockquote>
+                    "Like the game, life's problems won't wait for you to be ready, but after sufficient losses, you learn."
+                </blockquote>
+
+                <h2>You'll Fail Again. Probably Soon.</h2>
+
+                <p>Even when you "git gud" somebody else is always better. A cousin. A friend. Or that weird internet dude who knows everything you do like they've searched your soul.</p>
+
+                <p>It's an ego-check. But as soon as the rage clears, you start to look at failure differently. It's part of the process. You lose, you learn, you rematch. Ad infinitum.</p>
+
+                <h2>You've Got to Choose Your Fighter, And Stick with Them</h2>
+
+                <p>There's a temptation to switch characters the moment things don't work out. You might think, 'Maybe this one's faster,' or 'Maybe that one's harder.' But sooner or later, you realize that winning comes from sticking with something and truly learning its strengths, weaknesses, and funny little quirks.</p>
+
+                <div class="highlight-box">
+                    Life is not any different. A dream, a relationship, a career, bailing out every time you hit a speed bump gets you nowhere. You have to figure out how to ride it out. Drill the moves.
+                </div>
+
+                <h2>"Finish Him" Moments Don't Happen Overnight</h2>
+
+                <p>Those knockout moves you see on the screen? They don't capture the real tension. They don't show the dozen shots that didn't land. The timing. The muscle memory it took to get there.</p>
+
+                <p>In life, our "Finish Him" moments, graduation, victory, breakthroughs, require far more behind-the-scenes effort than people ever realize.</p>
+
+                <h2>Bonus Round: You're Allowed to Pause</h2>
+
+                <p>Mortal Kombat isn't just combos and sweat. You can pause the game. Catch your breath. Grab a snack. Or even get up and walk away for a little while. That's not quitting. That's pacing yourself. Same in life. Rest when you need to, and then get back to it.</p>
+
+                <blockquote>
+                    "I used to think that playing Mortal Kombat was simply button-mashing stress relief. Now? I look back at all the life lessons stuffed in between rounds."
+                </blockquote>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('smart-home-apartment')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Smart Home Apartment</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('holyrood-building')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Holyrood</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Holyrood -->
+    <article class="article" id="holyrood-building">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Architecture</span>
+                <h1 class="article-title">Holyrood: Cape Town's Quietly Iconic Residence</h1>
+                <p class="article-meta">Architecture • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/AzRT8xsWDLcAMoH-ZjqHAOmOUNIXmEcsdcRjfpm7V4tDsORE3Dq2lDlLrq91Q4uAshx3Rupf_3IMz4pKNxj1DykRGxOYB2PydlSWqojkgnnTS_Ztn3FQ0Gskhoor.jpeg" alt="Holyrood Building Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+                <p><span class="large-first-letter">H</span>olyrood might not jump out at you from maps, but it possesses a strangely captivating quality.. You'll spot it somewhere at the bottom of Table Mountain, sitting kind of discreetly in the Gardens residential side of Cape Town, not too showy, but still getting your attention if you look properly.</p>
+
+                <p>Standing at the street corner, it's that tall, pale building that looks as if it's wedged between the 1930s and a frayed European postcard. It has mismatched balconies, curving outward in some places, squared off in others. As if their intended design was to keep conversations to a minimum between neighbors.</p>
+
+                <blockquote>
+                    "A faintly faded glamour clings to the place, in a way that can't be replicated, as if it's something that's lived a few lives and isn't fussed about explaining any of them."
+                </blockquote>
+
+                <p>It's not just pretty, though. The place actually radiates stories. You can almost imagine long conversations drifting from those windows. You will see laundry lines, cats staring out, old furniture that was probably hoisted through windows before elevators worked properly, and a few potted plants clinging to life on fourth-floor ledges. That's the kind of everyday magic it offers.</p>
+
+                <p>So, apparently, it's a residential complex. One of those Art Deco-ish (but not actually fully committed) buildings that has hung on long enough to sort of creepily become iconic. It's not flashy or modern or built to impress  with new glass and steel. It still does its own thing.</p>
+
+                <div class="pull-quote">
+                    "The way it leans ever so subtly toward the mountain, and the way it glows when the setting sun hits it. You can't help but pay attention."
+                </div>
+
+                <p>It's the kind of building that doesn't complain about getting Instagrammed but invariably ends up on camera. A little faded. Still beautiful. Very Cape Town.</p>
+                <img src="assets/images/articles/IMG_3562.jpg" alt="Holyrood Building Image 2" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('mortal-kombat-resilience')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">What Mortal Kombat Taught Me About Resilience</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('job-interview-french')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Comment réussir son entretien d'embauche</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Job Interview French -->
+    <article class="article" id="job-interview-french">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Career</span>
+                <span class="article-category">French</span>
+                <h1 class="article-title">Comment réussir son entretien d'embauche (même si tu es un peu perdu)</h1>
+                <p class="article-meta">Career • French • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+            <img src="assets/images/articles/pexels-ron-lach-9870149.jpg" alt="Entretien Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p>Alors voilà, tu es en pleine recherche d'un emploi. Et qui dit recherche, dit forcément entretien d'embauche. Ça fait un peu peur, non ? On imagine des sourires un peu figés, des chemises froissées, des questions qui sortent de nulle part, le tout dans un bureau aux murs blancs.</p>
+
+                <p>Tu veux vraiment le poste ? Il va falloir montrer que tu es motivé. Pas comme si tu en avais désespérément besoin, mais avec un vrai enthousiasme. En d'autres termes, tu dois trouver un équilibre entre motivation et désespoir, même si tu n'as jamais eu à gérer tes émotions en public.</p>
+
+                <p>Voici quelques conseils pour te démarquer, même si tu te sens un peu perdu.</p>
+
+                <h2>Arrive à l'heure, mais pas trop</h2>
+
+                <p>Arriver à l'heure pile peut donner l'impression que tu es stressé. Quant au retard, il est tout simplement à proscrire. Le mieux, c'est d'arriver environ sept minutes avant. Pas six, pas huit, juste sept. Ça te laisse le temps de respirer un coup et de croiser les autres candidats avec un petit sourire.</p>
+
+                <h2>Habille-toi avec soin</h2>
+
+                <p>Mieux vaut donner une impression de fiabilité. Oublie un peu ton style habituel et opte pour quelque chose de plus classique, comme une présentation PowerPoint un peu sobre. Une jolie veste, peut-être, et essaie de cacher tes tatouages si tu as des doutes. Respire profondément !</p>
+
+                <h2>Prépare-toi à la question classique : "Parlez-moi de vous"</h2>
+
+                <p>Ce que l'on te demande réellement, c'est : "Montre-moi que je peux passer une journée avec toi sans avoir envie de changer de boulot." Raconte une petite histoire sur ton enfance, tes études, et une passion que tu n'as pas vraiment eu le temps de pratiquer. Termine par un clin d'œil sur ton goût pour le travail en équipe.</p>
+
+                <h2>Réponds comme si tu étais déjà en poste</h2>
+
+                <p>Quand on te demande comment tu gères les conflits, dis quelque chose comme : "Je préfère prévenir que guérir." Même si tu n'as jamais vraiment eu à gérer ça, ça fait son effet. Pour tes défauts, tu peux opter pour le classique : "Je suis un peu perfectionniste." Regarde bien ton interlocuteur, comme si tu venais de révéler un grand secret.</p>
+
+                <h2>Pose une question à la fin, mais une seule</h2>
+
+                <p>Pas une vraie question, juste un petit truc pour montrer ton engagement sans trop en faire. Par exemple : "Comment décririez-vous la culture de l'entreprise ?" Franchement, tu te fiches un peu de la réponse, mais ça montre que tu es poli.</p>
+
+                <h2>N'écoute pas trop les réponses</h2>
+
+                <p>Ce n'est pas le moment d'apprendre. Tu es là pour convaincre. Garde un regard neutre, hoche la tête de temps en temps comme si tu prenais des notes, et respire calmement.</p>
+
+                <h2>Envoie un petit message après l'entretien</h2>
+
+                <p>Fais-le simple et court, mais avec un message clair. Par exemple : "Merci pour cet échange, j'ai apprécié notre discussion." En gros, ça veut dire : "Je veux ce poste, j'ai fait un effort, et j'ai souri pendant que vous parliez."</p>
+
+                <p>Et voilà ! Même si tu n'as pas toutes les réponses, tu sais comment le faire croire. Au final, le monde du travail, c'est un peu ça : savoir répondre avec assurance, même si tu n'as pas encore tout en tête.</p>
+
+                <h2>PS pour les employeurs qui passent par ici :</h2>
+
+                <p>Oui, cet article a un ton satirique. Mais sachez que la personne derrière ces mots peut écrire, comprendre l'humour, et attirer l'attention. Elle cherche un poste et sait ce qu'est le travail. Si elle peut jongler avec un sujet aussi délicat qu'un entretien, imaginez ce qu'elle pourrait faire pour votre entreprise.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('holyrood-building')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Holyrood</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('versailles-luxury')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Versailles Luxury Suites</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Versailles Luxury -->
+    <article class="article" id="versailles-luxury">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Travel</span>
+                <h1 class="article-title">Versailles Luxury Suites and Apartments: Cape Town's Coastside Chic</h1>
+                <p class="article-meta">Travel Review • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/Versailles4eabf571.jpg" alt="Versailles Luxury Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p>Versailles Luxury Suites and Apartments offers a serene, yet luxurious escape amidst the Atlantic Seaboard, within walking distance of Cape Town's most sought-after attractions. This residence exceeds expectations, gracefully blending old-world charm with modern-day convenience, and offers ample space for oceanfront tranquility and cultural exploration.</p>
+
+                <h2>Location and Accessibility</h2>
+
+                <p>Within walking distance of The Green, Rocklands Beach, and the architectural gem of the Sea Point Hebrew Congregation, this upscale venue places visitors discreetly within a fifteen-minute radius of the city's iconic stadium and seafront promenade. A rooftop deck crowns the experience with dramatic views and a heightened feeling of escape beneath African skies.</p>
+
+                <h2>Accommodations and Amenities</h2>
+
+                <p>All apartments are laid out beautifully for long-term comfort. Thoughtful design includes fully serviced kitchens with microwave ovens and full-size refrigerators, while flat-screen TVs and free WiFi bring relaxation and convenience. In-room safes and air conditioning also create a true home away from home in the city.</p>
+
+                <p>Begin the day with a refreshing dip in the outdoor swimming pool or a workout in the beautifully furnished gymnasium. For visitors who wish to explore more sophisticated cultural gems, the Chavonnes Battery Museum and the Christopher Moller Art Gallery, both winners of prestigious awards, are just a short walk away.</p>
+
+                <h2>Cultural Attractions Nearby</h2>
+
+                <p>The Rockwell Dinner Theatre, a Cape Town tradition, is also an easy walk and offers a light-hearted insight into the city's vibrant theatre scene.</p>
+
+                <p>For day visits or longer stays, Versailles offers an ideal harmony of form and function. On one side, the busy hum of the Clock Tower shopping complex is just a short drive away, while on the other, the cultural depth of the Slave Lodge Museum and stately Cape Town Parliament anchor the city's rich history.</p>
+
+                <h2>Transportation</h2>
+
+                <p>For convenient arrivals and departures, Cape Town International Airport is just 23 kilometers away.</p>
+
+                <h2>At a Glance</h2>
+
+                <p>City and ocean views from rooftop terrace. High-tech fitness center and outdoor pool. Full kitchen facilities in apartments and flat-screen TVs. Air conditioning, in-room safes, and free WiFi. Neighborhood points of interest and Rocklands Beach within walking distance. V&A Waterfront and Cape Town Stadium within easy reach. Galleries, theaters, and cultural landmarks nearby.</p>
+
+                <p>A chic retreat where sea breezes meet city vitality. Versailles welcomes with understated elegance and classic ease.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('job-interview-french')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Comment réussir son entretien d'embauche</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('sustainability-2025')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">What Sustainability Really Means in 2025</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Sustainability 2025 -->
+    <article class="article" id="sustainability-2025">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Environment</span>
+                <h1 class="article-title">What Sustainability Really Means in 2025: No Catchphrases, Just Change</h1>
+                <p class="article-meta">Environment • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">A</span> few years ago, it was an afterthought, a checkbox, something to acknowledge during a pause at the end of a presentation. But now, it's the conversation. It's the litmus test. It's the expectation.</p>
+
+                <p>In 2025, sustainability isn't trend reporting or marketing jargon. It's how you build, how you lead, and how you stay relevant.</p>
+
+                <p>So what is actual sustainability in our time?</p>
+
+                <h2>1. It Begins at the Sketch, Not the Shelf</h2>
+
+                <p>Stop with last-minute efforts like recycling cardboard packaging. That's the bare minimum. Real sustainability begins with the first pencil mark. What are you building with? What happens to this product when its usefulness ends?</p>
+
+                <blockquote>
+                    "The smartest brands think long-term. They consider not just what the shopper will do with the product, but what happens to it next."
+                </blockquote>
+
+                <p>Can you repair it? Recycle it? Break it down and rebuild it?</p>
+
+                <p>In 2025, design is inherently circular. And if your product ends up in a landfill, your process failed.</p>
+
+                <h2>2. Transparency Is Not an Add-on. It Is the Minimum.</h2>
+
+                <p>Green words once sufficed. Qualifications like 'carbon neutral,' 'ethical,' or 'planet friendly' once felt meaningful. Today, they raise expectations. If you say it, you have to prove it.</p>
+
+                <div class="highlight-box">
+                    Consumers want details. They scan QR codes. They read the fine print. They look at where your raw materials come from, who made the product, how far it traveled, and how much energy it used.
+                </div>
+
+                <p>In this climate, greenwashing isn't just risky; it damages your brand. Customers aren't afraid to call it out, and partners won't stick around if your numbers don't match your narrative.</p>
+
+                <h2>3. Reuse Has Become the Flex</h2>
+
+                <p>We're past the stage where new is best. Today, the most intelligent design seeks a second life, and possibly a third.</p>
+
+                <p>Consider multifunctional products. Compostable packaging. Refill systems. Rentals. Shareable wardrobes. Adjustable and adapting furniture over time. Products that last and then last again.</p>
+
+                <p>Reuse is no longer a compromise. It is intelligent. It is sustainable. And it looks good doing it.</p>
+
+                <h2>4. Local Production is the New Luxury</h2>
+
+                <p>Luxury is revolutionized. Distance and provenance no longer define luxury; footprint does. How far did your food travel? Who made your coat? Can you trace the supply chain all the way back to your own hometown?</p>
+
+                <blockquote>
+                    "Proximity is everything in 2025. Local material. Local labor. Local pride."
+                </blockquote>
+
+                <p>And consumers are leaning into that. Whether it's farmers markets, independent labels, or on demand manufacturing, people want to shop with brands that invest in their communities.</p>
+
+                <h2>5. Sustainability Is No Longer a Privilege</h2>
+
+                <p>Sustainability used to cost more. That is changing.</p>
+
+                <p>Sustainability is now integrated into public systems. It's not just for boutique brands and high-end homes, but for school lunches, city planning, and proposals for affordable housing. We're seeing solar panels on roofs in low-income neighborhoods, electric buses on crowded streets, and subsidies that make the right choice a simple one.</p>
+
+                <div class="highlight-box">
+                    Sustainability has left the echo chamber. And that is exactly what needed to happen.
+                </div>
+
+                <h2>The Bottom Line</h2>
+
+                <p>In 2025, sustainability is not a logo. It is not a tagline. It is the baseline.</p>
+
+                <p>If you're a company, this is what your customers and partners are already asking for. If you're a shopper, you have a greater voice now than ever to ask for more.</p>
+
+                <div class="pull-quote">
+                    "The winners of the decade ahead are not the loudmouths. They're the clear ones. They're the ones that back up their values with action."
+                </div>
+
+                <p>Quiet. Consistent. Unwavering.</p>
+
+                <p>And if you're still trying to market sustainability as a feature?</p>
+
+                <p>You're already in arrears.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('versailles-luxury')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Versailles Luxury Suites</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('save-money-economy')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">How to Save Money in This Economy</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Save Money Economy -->
+    <article class="article" id="save-money-economy">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Finance</span>
+                <h1 class="article-title">How to Save Money in This Economy, According to No One Who's Done It</h1>
+                <p class="article-meta">Finance Satire • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/pexels-joslyn-pickens-2185980-3833052.jpg" alt="How to Save Money Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+            
+                <p><span class="drop-cap">A</span>pparently, we're all supposed to be saving money right now. That's the big advice: just save, put something aside, trim a few things here and there, and poof! Financial security. Cute, right?</p>
+
+                <p>Meanwhile, bread is closer than ever to costing R50 and groceries suddenly cost more than rent used to. But sure, let's talk savings. Why not?</p>
+
+                <blockquote>
+                    "Step one: cut out the little luxuries. Coffee? Gone. Streaming? Cancel it. Socks with actual elastic in them? Who do you think you are?!"
+                </blockquote>
+
+                <p>Eat rice. Cold. In the dark. With quiet thoughts.</p>
+
+                <p>Seriously. People online will say, 'Stop ordering takeout and you'll save so much.' Which is hilarious, because we've now entered a societal phase where cooking at home actually costs more, unless you're very into raw oats and sadness.</p>
+
+                <h2>The Side Hustle Trap</h2>
+
+                <p>So then you think, okay, maybe a side hustle. Maybe I could monetize something I used to enjoy before bills took over, like painting, baking, or talking to other humans. But then, somehow, you're working nine hours at your job and five hours selling mildly wonky handmade candles that smell like burned vanilla and regret.</p>
+
+                <div class="highlight-box">
+                    And guess what? Your bank balance still says "try again later".
+                </div>
+
+                <h2>The Budget App Delusion</h2>
+
+                <p>But wait, there's always budgeting. That magical concept where you open an app that looks like a spreadsheet married a mood tracker, input your 'income' and 'expenses,' and it politely informs you that you're spending too much on 'living'.</p>
+
+                <p>Cutting down on food? Already done. Cutting down on electricity? Already freezing. Cutting down on transport? Already walking places never meant to be walked. So the next tip is usually something wild, like, 'Buy in bulk.' But have you ever tried to bulk-buy anything with a hundred rand? You're not getting a box of noodles; you're getting the idea of a box of noodles.</p>
+
+                <h2>The Finance Bro Wisdom</h2>
+
+                <p>And then some finance bro on a podcast says, 'It's not about how much you earn, it's about how much you keep.' Amazing advice for someone who's never accidentally paid two forgotten subscriptions while also choosing between soap or dinner.</p>
+
+                <blockquote>
+                    "Still, there's always hope. You could start growing your own vegetables. On your fire escape. Using recycled yogurt containers and one stubborn basil seed."
+                </blockquote>
+
+                <h2>The Barter System Revival</h2>
+
+                <p>Or you could just start bartering again. Trade your last piece of chocolate for a ride to work. Exchange emotional labor for half a sandwich.</p>
+
+                <p>Or, the boldest move of all: pretend money isn't real. Just go full pirate mode. Accept buttons as currency. Use weird favors as payment. Offer to explain the ending of movies in return for canned goods.</p>
+
+                <div class="highlight-box">
+                    Because honestly, in this economy, the only real way to save money is to already have it. And even then, good luck holding onto it when tomatoes are acting like luxury items.
+                </div>
+
+                <h2>The Real Truth</h2>
+
+                <p>So, if you figure it out, let the rest of us know. In the meantime, I'll be rationing crackers and avoiding eye contact with my bank app.</p>
+
+                <div class="pull-quote">
+                    "The most honest financial advice: we're all just winging it and hoping the groceries don't notice."
+                </div>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('sustainability-2025')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">What Sustainability Really Means in 2025</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('alone-but-not-alone')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">To the Ones Who Are On Their Own</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+    <!-- Article: Disa Park -->
+    <article class="article" id="disa-park">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Architecture</span>
+                <h1 class="article-title">The Towers in the Mist: Taking a Closer Look at Disa Park, Cape Town's Most Misunderstood Landmarks</h1>
+                <p class="article-meta">Architecture • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/DisaPark3.jpg" alt="Mutual Heights Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p><span class="drop-cap">I</span>f you've ever driven along the M3 just as the mist rolls in over Table Mountain, you've probably seen them. Three tall, bold towers, tucked like sentinels against the slopes of Devil's Peak. Some people call them ugly. Others call them iconic. But no one drives past Disa Park without noticing them.</p>
+
+                <p>Residents have nicknamed them. The pepper pots. The Toblerones. The rocket ships. Even the spires that "ruined the mountain." But the more you learn about them, the less you can look away. Not because they're huge, but because they have an aura most buildings don't even try for anymore.</p>
+
+                <h2>A View Like No Other</h2>
+
+                <p>Let's start with the obvious. The views? Stunning. Residents wake up to panoramic views of Cape Town's city bowl, Table Bay, and mountain trails that start virtually at their doorstep. There's something wild about the juxtaposition. Concrete looming over one of the most naturally beautiful areas of the country.</p>
+
+                <p>That is the Disa Park conflict. Man-made walls, situated in a strip of nature that's been left untouched. It doesn't feel like it's there from the outside. From the inside, front row seats to the sky.</p>
+
+                <blockquote>
+                    "The magic of Disa Park isn't the view. It's the fact that it's so handily situated in a national park."
+                </blockquote>
+
+                <h2>A Story Built in the Sixties</h2>
+
+                <p>Disa Park was envisioned in the late 1960s, when modernism still carried a sense of optimism. Architects designed big, bold, geometric. The idea was to marry high density and nature. Stack people up, then open the ground floor to parks, pools, pathways. It worked on paper.</p>
+
+                <p>There is a beauty to the design. Exposed concrete. Circular towers. Evenly spaced balconies. It appears more European than African, and that may be part of the reason why it still generates controversy. This was not what one was used to seeing on top of Table Mountain.</p>
+
+                <h2>Not for Everyone. And That's Part of the Point.</h2>
+
+                <p>Disa Park doesn't mind whether you like it or not. It's stubborn. It's drama. It doesn't try to be popular, and maybe that is just why it keeps appearing in art, photography, and urban myth.</p>
+
+                <p>There are still those who wish them away. There are others who've grown to love them. In any case, they've entered into the city's DNA. Not graceful. Not even perfect. Just present, unapologetic, snagging morning fog like some alien thing.</p>
+
+                <div class="highlight-box">
+                    It gets a reaction. It makes you decide. It makes you wonder why we're so quick to define beauty as simply what blends in.
+                </div>
+
+                <h2>Nature Next Door</h2>
+
+                <p>The magic of Disa Park isn't the view. It's the fact that it's so handily situated in a national park. Seriously, the Devil's Peak and contour trailheads are minutes from the front door. If you reside there, your morning walk can thread through silent pine woods or up to sweeping views without you ever needing to leave your car.</p>
+
+                <p>There's a kind of stillness up there that isn't real. Birds everywhere. All this whisper of wind through rock pines. And then the towers, just rising over the treetops like a gentle reminder that humans are part of the world too.</p>
+
+                <h2>Inside, It's Something Else</h2>
+
+                <p>Get inside the towers and it's a different tale altogether. Internally, they're radically different, depending on their owners. Some are still stuck in the past with retro tile and sixties styling. Others have been rendered modern, with new flooring, open concepts, and minimalist styling. But one thing remains constant. The light.</p>
+
+                <p>Each apartment curves just so to greet the sunrise or watch the city wake up after dark. It's the kind of living room that doesn't need much. A good chair. A cup of tea. A window to gaze out of when your head gets too much. There's a reason people stay.</p>
+
+                <div class="pull-quote">
+                    "Not everything beautiful needs to act. Sometimes presence is enough."
+                </div>
+
+                <h2>Love Letter or Cautionary Tale? Maybe Both.</h2>
+
+                <p>The history behind Disa Park is not simple. It's equal parts architecture, scandal, nostalgia. And either a shining example of visionary urban planning or a blight on the mountain, depending on who you ask.</p>
+
+                <p>And maybe that's the point. It gets a reaction. It makes you decide. It makes you wonder why we're so quick to define beauty as simply what blends in.</p>
+
+                <p>It's not subtle or quiet or easy to overlook. But perhaps that is the intention. Not everything beautiful needs to act.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('lettre-retard')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Lettre ouverte à toi, qui est "en retard"</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('le-cap')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Le Cap</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Le Cap -->
+    <article class="article" id="le-cap">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Travel</span>
+                <span class="article-category">French</span>
+                <h1 class="article-title">Le Cap</h1>
+                <p class="article-meta">Travel • French • February 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">J</span>e suis arrivé, j'ai apprécié, et je suis resté.</p>
+
+                <p>Au début, ce n'était pas du tout prévu comme ça. C'était juste pour des études universitaires, une parenthèse pour apprendre, pour découvrir, avec peut-être, au fond, quelques photos souvenirs pour Facebook en bonus. Et voilà, dix ans plus tard, je suis encore là. Ce qui devait être une étape temporaire s'est doucement transformé en une certitude : ici je me sens chez moi.</p>
+
+                <h2>Les Premiers Clichés</h2>
+
+                <p>Tout a commencé comme un simple catalogue de clichés: lever du soleil, Table Mountain, plages désertes avec des noms poétiques, petits marchés où des musiciens jouent du ukulélé le weekend. On se dit : "C'est joli, c'est différent, on verra bien." Et puis, on reste.</p>
+
+                <p>On ne sait pas vraiment pourquoi, mais tout semble s'aligner. On trouve un logement, puis un autre. On apprend à gérer les coupures d'électricité, on prononce "braai" comme si on avait toujours vécu là, on reconnaît des voix à la radio, on a notre vendeur de légumes, on rigole en parlant de l'administration locale comme si on avait un oncle dans le coin.</p>
+
+                <blockquote>
+                    "Ce n'est plus qu'une expérience ou un détour, ce n'est même plus un 'plan B'. Ça devient la vie, tout simplement."
+                </blockquote>
+
+                <h2>Au-delà des Réseaux Sociaux</h2>
+
+                <p>Rapidement, on comprend que vivre ici, ce n'est pas que pour faire joli sur les réseaux sociaux. C'est dans les conversations dans les minibus, dans ces longues discussions autour d'un plat qui, au départ, n'était censé être qu'un snack rapide. C'est aussi dans les silences, parfois.</p>
+
+                <p>Il faut prendre le temps, s'adapter, apprendre à ne pas tout comprendre tout de suite. Parce que c'est ça qui fait tout le charme. Le Cap n'est pas une ville qu'on peut déchiffrer en un week-end. Il faut du temps, rater des bus, se perdre, s'énerver un peu, puis, soudain, réaliser que ce n'est pas si mal après tout.</p>
+
+                <div class="highlight-box">
+                    Le Cap n'est pas une ville qu'on peut déchiffrer en un week-end. Il faut du temps, rater des bus, se perdre, s'énerver un peu.
+                </div>
+
+                <h2>Et Aujourd'hui ?</h2>
+
+                <p>Aujourd'hui, je travaille ici. Je vis ici. Je paie mes impôts, je râle contre les mêmes choses que tout le monde. Je connais des endroits pour échapper à la foule un dimanche. J'ai mes habitudes, mes repères, mes amis.</p>
+
+                <p>Ce n'est plus qu'une expérience ou un détour, ce n'est même plus un "plan B". Ça devient la vie, tout simplement, celle qu'on construit tranquillement, pas à pas, jour après jour.</p>
+
+                <div class="pull-quote">
+                    "Je n'ai peut-être pas tout conquis. Mais je suis venu, j'ai aimé, et je n'ai plus jamais eu envie de repartir."
+                </div>
+
+                <p>Je n'ai peut-être pas tout conquis. Mais je suis venu, j'ai aimé, et je n'ai plus jamais eu envie de repartir.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('knysna-trip-new')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">A Trip to Knysna</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('franglais')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Franglais pour les nuls</p>
+                </div>
+            </div>
+        </div>
+    </article>
+   
+
+    <!-- Article: Franglais -->
+    <article class="article" id="franglais">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">French</span>
+                <h1 class="article-title">Franglais pour les nuls (et pour ceux qui croient parler bien)</h1>
+                <p class="article-meta">French • February 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">T</span>on cerveau pense en anglais, mais ta bouche improvise en français. Bienvenue dans le grand bain du franglais. Ce moment où tu cherches un mot simple, mais tu ne sais plus dans quelle langue il se trouve.</p>
+
+                <p>Tu voulais dire "je suis motivé" et tu te retrouves à dire "I'm très motivé right now". Tu voulais juste commander un café, et tu finis par un "Can I get un petit noir please with no sugar, thank you so much ok super génial". Et là, tu ne sais même plus si tu dois avoir honte ou envisager d'ouvrir une école.</p>
+
+                <h2>Ce N'est Pas un Choix</h2>
+
+                <p>Ce n'est pas un choix délibéré. C'est un état. Personne ne décide de parler franglais. Ça commence souvent avec un stage à Londres, un Erasmus, ou un job dans un bureau où tout le monde dit "let's touch base" au lieu de "on s'appelle". Et puis, voilà.</p>
+
+                <blockquote>
+                    "Ton français se met à tousser. Ton anglais devient étrangement flou. Et toi, tu es coincé au milieu, comme un clavier mal configuré en QWERTY."
+                </blockquote>
+
+                <p>Ton français se met à tousser. Ton anglais devient étrangement flou. Et toi, tu es coincé au milieu, comme un clavier mal configuré en QWERTY. Tu commences à dire des choses comme :</p>
+
+                <div class="highlight-box">
+                    "Je suis assez busy cette semaine, mais on peut sync Friday."<br>
+                    "Il faut que je check mon agenda, mais ça devrait être doable."<br>
+                    "Ce brief manque de clarity, genre c'est trop flou là, non ?"
+                </div>
+
+                <p>Personne ne t'arrête. Pire, les autres te répondent dans le même dialecte mutant. Et un jour, tu réalises que tu as dit "on va onboard le client cette semaine" sans sourciller. C'est fini. Tu es tombé. Tu fais partie du groupe.</p>
+
+                <h2>Les Situations Délicates</h2>
+
+                <p>En réunion, tu veux faire pro et impressionner. Alors, tu balances un "the thing is que les KPIs ne sont pas aligned". Tu penses que tu passes pour un génie international. En réalité, tu passes pour quelqu'un qui ne sait plus conjuguer.</p>
+
+                <div class="pull-quote">
+                    "Et un jour, tu réalises que tu as dit 'on va onboard le client cette semaine' sans sourciller. C'est fini. Tu es tombé."
+                </div>
+
+                <p>Le franglais, c'est comme un accent qu'on ne peut plus perdre. Ça devient une seconde nature, un réflexe linguistique qui t'échappe avant même que tu puisses le contrôler. Et au final, on s'y habitue. Peut-être même qu'on s'y attache un peu.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('le-cap')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Le Cap</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('dire-non')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Apprenez à dire non</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+
+    <!-- Article: Dire Non -->
+    <article class="article" id="dire-non">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Personal</span>
+                <span class="article-category">French</span>
+                <h1 class="article-title">Apprenez à dire non (sans y laisser votre dignité)</h1>
+                <p class="article-meta">Personal • French • February 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">D</span>ans la vie, il y a des situations où la réponse est évidente. « Voulez-vous un dessert ? » Oui. « Allez-vous assister à cette réunion un mardi à l'aube, pendant vos vacances ? » Non.</p>
+
+                <p>Mais parfois, un simple "non" ne suffit pas. Pas la première fois. Ni la deuxième. Pas même la dixième, celle que vous avez envoyée en majuscules avec trois points d'exclamation.</p>
+
+                <h2>Quand "Non" Glisse</h2>
+
+                <p>Disons que vous avez dit "non" une fois. Puis deux. Puis dix fois, et maintenant il est temps de prendre la situation au sérieux.</p>
+
+                <p>Vous n'essayez pas d'être un magicien ou un humoriste, mais la porte d'entrée du chaos est là, juste devant vous. Vous savez que vous avez déjà dit non, et vous avez la preuve dans votre boîte de courriels envoyés.</p>
+
+                <blockquote>
+                    "On dirait que votre 'non' glisse sur eux. Vous modifiez votre réponse trois fois et la renvoyez."
+                </blockquote>
+
+                <p>On dirait que votre "non" glisse sur eux. Vous modifiez votre réponse trois fois et la renvoyez. Vous avez votre plan B, au cas où. Et pourtant, vous savez qu'ils vont revenir à la charge lundi prochain.</p>
+
+                <h2>La Présentation PowerPoint du "Non"</h2>
+
+                <p>Vous essayez de faire une blague, en espérant que ça passe, mais ça ne marche pas. Vous avez ri. Ils ont ri. C'est le moment de tenir une brève conversation avec eux pour leur dire "non" officiellement, avec une présentation en PowerPoint pour appuyer vos propos. Un pointeur laser, c'est encore mieux.</p>
+
+                <p>C'est assez impressionnant de voir les progrès que vous avez faits. Axe vertical : Taux de motivation. Axe horizontal : Nombre de participants. Tout est à zéro. (Applaudissements polis).</p>
+
+                <div class="highlight-box">
+                    Axe vertical : Taux de motivation. Axe horizontal : Nombre de participants. Tout est à zéro.
+                </div>
+
+                <h2>Les Deux Options</h2>
+
+                <p>"Revenons-en à ce sujet." À ce stade, vous avez deux options :</p>
+
+                <p><strong>Option 1 : La Disparition.</strong> Cessez de répondre. Vérifiez vos courriels avec prudence. Vous êtes devenu un concept, une idée floue. On ne peut rien attendre de quelqu'un qui n'est plus là. Et pourtant, ils insistent.</p>
+
+                <p><strong>Option 2 : La Résilience.</strong> Vous prenez la route et recommencez avec une nouvelle personne. C'est comme apprendre à faire du vélo à nouveau. Au début, vous tremblez, mais avec la pratique, vous vous habituez.</p>
+
+                <div class="pull-quote">
+                    "Ne soyez pas trop dur avec vous-même. Vous pouvez y arriver."
+                </div>
+
+                <p>Ne soyez pas trop dur avec vous-même. Vous pouvez y arriver.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('franglais')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Franglais pour les nuls</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('lettre-retard')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Lettre ouverte à toi</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Lettre Retard -->
+    <article class="article" id="lettre-retard">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Personal</span>
+                <span class="article-category">French</span>
+                <h1 class="article-title">Lettre ouverte à toi, qui est "en retard"</h1>
+                <p class="article-meta">Personal • French • February 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">C</span>her toi,</p>
+
+                <p>Tu n'as pas coché toutes les cases à vingt ans. Tu n'as pas trouvé ta voie en six mois. Tu ne sais pas toujours où tu vas, ni avec qui ni pourquoi. Et tu te dis peut-être que c'est grave.</p>
+
+                <p>Ce n'est pas grave. C'est juste… lent. Parfois flou.</p>
+
+                <h2>Le Décalage</h2>
+
+                <p>Moi aussi, j'ai regardé autour de moi avec l'impression d'être en décalage. Pendant que les autres lançaient leur boîte ou achetaient des pulls beige clair pour des réunions barbantes, moi, j'apprenais encore à me lever sans râler.</p>
+
+                <p>J'ai testé des choses, j'en ai abandonné d'autres, je suis revenu. J'ai cherché des idées qui tiennent la route.</p>
+
+                <blockquote>
+                    "Ce n'est pas une course, même si tout donne cette impression. Même si on t'applaudit quand tu signes tôt ou que tu fonces à fond."
+                </blockquote>
+
+                <h2>On N'est Pas en Compétition</h2>
+
+                <p>Ce n'est pas une course, même si tout donne cette impression. Même si on t'applaudit quand tu signes tôt ou que tu fonces à fond. Les photos de diplômes ou de clés d'appart, ça impressionne. Mais il y a des victoires plus discrètes.</p>
+
+                <p>Répondre à un mail difficile. Oser dire non. Reprendre un projet que tu avais laissé tomber. Arrêter de t'excuser pour ce que tu n'as pas encore fait.</p>
+
+                <div class="highlight-box">
+                    Il y a des victoires plus discrètes. Répondre à un mail difficile. Oser dire non. Reprendre un projet que tu avais laissé tomber.
+                </div>
+
+                <h2>Tu N'es Pas Seul</h2>
+
+                <p>Il y en a d'autres, plein. Des gens qui ont commencé à aimer leur métier à quarante ans. Des gens qui ont découvert ce qu'ils savaient faire après trois carrières différentes. Des gens qui n'ont jamais vraiment su, mais qui avancent quand même.</p>
+
+                <p>On ne les voit pas souvent dans les articles. Ils ne font pas beaucoup de bruit. Mais ils existent. Et ils tiennent bon.</p>
+
+                <h2>Vas-y, Tranquille</h2>
+
+                <p>Alors vas-y, tranquille. Arrive en retard. Entre sans frapper. Prends la place qu'on avait oubliée. Crée la tienne s'il le faut.</p>
+
+                <p>Et si quelqu'un te demande pourquoi tu n'as pas fait ça plus tôt, regarde-le gentiment et réponds : "Parce que maintenant, c'est le bon moment."</p>
+
+                <div class="pull-quote">
+                    "Parce que maintenant, c'est le bon moment."
+                </div>
+
+                <p>Avec toi,<br>
+                Une autre qui a pris son temps<br>
+                Et qui a bien fait.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('dire-non')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Apprenez à dire non</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('disa-park')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">The Towers in the Mist: Disa Park</p>
+                </div>
+            </div>
+        </div>
+    </article>
+                </div>
+                <div class="nav-article next" onclick="showArticle('cape-town-breaking')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Cape Town Is Beautiful</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Cape Town Breaking -->
+    <article class="article" id="cape-town-breaking">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Opinion</span>
+                <h1 class="article-title">Cape Town Is Beautiful. And Sort of Breaking Its Own People</h1>
+                <p class="article-meta">Opinion • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/south-africa-2267795_1280.jpg" alt="Cape Town Breaking Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+                
+                <p><span class="drop-cap">C</span>ape Town is beautiful, that's beyond debate. The mountain alone could quiet a thousand worries. The sea wraps around the city as if protecting something sacred. The streets, the bazaars, the golden hour scenery... It is beautiful in an effortless way that's almost unfair.</p>
+
+                <p>But here's what's more difficult to say aloud: it is also becoming uninhabitable for its own people.</p>
+
+                <p>It is a postcard city. But not everyone is in the photo.</p>
+
+                <h2>It Is Expensive Just to Exist Here</h2>
+
+                <p>Rent increases, and salaries stagnate. Food prices creep higher every week. Petrol eats more of every paycheck. Parking fees spring up on every corner. The price of a sandwich is a joke, some days.</p>
+
+                <p>You look at a mundane existence, not even a refined one, and wonder how anyone manages without support. How do people afford a studio apartment near the city? Eating at a coffeehouse? Going into a store without mentally calculating first, before even touching the price tag?</p>
+
+                <blockquote>
+                    "It starts to feel like a tourist city. A city built for others to enjoy, while its people watch, wondering how long they will last."
+                </blockquote>
+
+                <p>Humans are racing. Living two lives. Working two, three jobs. Sharing rooms with strangers. Secretly giving up on the idea of owning something of their own.</p>
+
+                <h2>Locals Are Being Pushed Out Of Their Own Story</h2>
+
+                <p>Corners you used to visit now seem no longer for you. Restaurants display menus priced in foreign currencies unsuitable for the average local salaried workers. Places feature more real estate signs than residents. Markets are piled high with handwoven and handmade items, yet none of them reflect the value of the hands that created them.</p>
+
+                <p>Cape Town sells its culture as if it were distinct from its people. The same vendors who nourish tourists by day head home at night to suburbs outside the city they helped build.</p>
+
+                <p>It starts to feel like a tourist city. A city built for others to enjoy, while its people watch, wondering how long they will last.</p>
+
+                <div class="highlight-box">
+                    It should not be a luxury to live in your own city.
+                </div>
+
+                <h2>The Gap Widens. And It's Loud</h2>
+
+                <p>Champagne brunch on one corner. A passed-out man under a plastic bag on the next. Rooftop bars and upscale hotels tower higher. So does the pressure. So does the whispered grief of what's vanishing.</p>
+
+                <p>You see it in the grocery store checkout line. You hear it in taxis. You feel it when a diner leaves a restaurant table, shaking their head at the check. Cape Town is not just expensive; it is becoming elite too. And that kind of segregation does something to a city's heart.</p>
+
+                <h2>It Should Not Be a Luxury to Live in Your Own City</h2>
+
+                <p>Others need more than to merely exist here. They need to thrive. To breathe. To create futures. To walk through their neighborhoods without feeling as if they are visiting.</p>
+
+                <p>Cape Town has enough. Enough beauty. Enough history. Enough spirit to fit everyone in. But it needs to remember who it is for. Not the cameras. Not the travel sites. For those who wake up every morning to it. Those who keep its rhythm thumping. Those who remember what it was before everything had a price.</p>
+
+                <div class="pull-quote">
+                    "We're not looking for free. We're looking for fair. We're looking for a city that will love us back."
+                </div>
+
+                <h2>We Still Love It. That Is Why It Hurts</h2>
+
+                <p>It is not bitterness; this is about belonging. We love this place. We know its songs, its food, its moods. We have laughed here. Grown up here. Built memories into the crevices of the pavements.</p>
+
+                <p>That is why it hurts to be priced out. To see spaces transform. To see things that were once common become gated.</p>
+
+                <p>We're not looking for free. We're looking for fair.</p>
+
+                <p>We're looking for a city that will love us back.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('disa-park')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">The Towers in the Mist: Disa Park</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('skipping-breakfast')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">I Keep on Skipping Breakfast</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Skipping Breakfast -->
+    <article class="article" id="skipping-breakfast">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Personal</span>
+                <h1 class="article-title">I Keep on Skipping the One Meal I Oath Is My Favorite</h1>
+                <p class="article-meta">Personal • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">A</span>lright, here's something a little ridiculous. I love breakfast, I mean, I truly, deeply love it. Crispy toast, syrup-drenched pancakes, eggs with just a hint of jiggle, hot chocolate or tea that promises a good time, the whole nine yards. But here's what's totally insane: I steer clear of it. Far too often for someone who calls it their top pick.</p>
+
+                <p>And it's not from a lack of desire. No, I'm contemplating it while brushing my teeth, then immediately abandon it the moment the day calls. Emails, texts, small fires to douse, and before I even realize it, it's two o'clock, and I'm wondering why I feel so ravenous.</p>
+
+                <blockquote>
+                    "If breakfast were a person, it would be offended by now. Imagine being someone's favorite, yet being stood up every single day."
+                </blockquote>
+
+                <h2>The Morning Abandonment</h2>
+
+                <p>It usually starts with the thought that I'll 'just have something quick in a little while.' Something quick like fruit, maybe cereal, or even toast with a banana if I'm feeling fancy. But that 'little while' gets pushed back, lost somewhere among the tabs I've opened but never closed. By the time I even realize it, breakfast is already an afterthought, not a meal I'm eating.</p>
+
+                <p>The worst part is I don't even have a decent excuse. I'm not intermittent fasting or cutting carbs or rescuing the world. I'm just… somehow unable to eat in the morning, though I adore the things that appear on the breakfast plate.</p>
+
+                <p>It's like knowing your favorite song and never, ever singing it. Or texting your best friend and never receiving a text message reply. A little weird, right?</p>
+
+                <div class="highlight-box">
+                    Maybe breakfast demands more than some mornings can offer. Perhaps my brain is just getting started and thinks breakfast is merely an option.
+                </div>
+
+                <h2>Weekend Redemption</h2>
+
+                <p>Weekends, though, I do breakfast. Seriously. There's buttery, melted mess all over scrambled eggs, maybe a soft-boiled egg with salt and that one tiny spoon, coffee that doesn't make me want to die or scald my tongue. The sink is clean, as if I'm a responsible, disciplined person. I take a proper seat, as if I'm getting things done.</p>
+
+                <p>But then Monday comes, and I'm that girl with half a cracker in the sink. Then calls it "something" because the other half is in my stomach.</p>
+
+                <h2>The Failed Strategies</h2>
+
+                <p>I've tried tricks: preparing them on the counter so I won't forget, even the overnight oats jars that look so 'I've got my life together.' And yet, no. The mornings still get the better of me. The spiral persists.</p>
+
+                <p>Maybe breakfast demands more than some mornings can offer. Perhaps my brain is just getting started and thinks breakfast is merely an option, while the rest of the world sees it as the only food that tastes as beautiful as hope.</p>
+
+                <div class="pull-quote">
+                    "Even if I forget again, breakfast will be there anyway. Probably judging me. But also patiently waiting."
+                </div>
+
+                <h2>The Eternal Optimism</h2>
+
+                <p>I'll probably just keep attempting it anyway. Maybe tomorrow I'll remember toasting something. Maybe I will sit down. Maybe my beverage won't be cold by the time I get it. Maybe.</p>
+
+                <p>But even if I forget again, breakfast will be there anyway. Probably judging me. But also patiently waiting.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('cape-town-breaking')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Cape Town Is Beautiful</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('lego-gift')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Why LEGO Could Be the Best Gift</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: LEGO Gift -->
+    <article class="article" id="lego-gift">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Lifestyle</span>
+                <h1 class="article-title">Why LEGO Could Be the Best Gift You Ever Get an Adult</h1>
+                <p class="article-meta">Lifestyle • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/lego-854128_1280.jpg" alt="LEGO Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p><span class="drop-cap">T</span>o most of us, LEGO is synonymous with childhood, post-dinner carpet play with bricks taking over the room, that all-important clicking sound when two pieces unite. But here's the thing: LEGO isn't just for young people. It never was.</p>
+
+                <p>In life, it's likely one of the greatest things you can offer an adult. Not for cuteness, but because it's smart, happy, and creates space for things we no longer permit ourselves: time to play, time to build, time to breathe.</p>
+
+                <h2>The Gift of Focus</h2>
+
+                <p>In a world of distraction, LEGO gives you silent shape. Not figuratively, but literally. Just you, the instructions, and a pile of pieces waiting to be assembled. No notifications. No pages to flip. No one to impress. Just the gentle rhythm of 'find the piece, place the piece, repeat.' And in that rhythm, something shifts. The mind unwinds. The world slows down.</p>
+
+                <blockquote>
+                    "It's not merely calming; it's restoration. For the person balancing deadlines, family, and constant connectivity, LEGO allows you to unplug without disappearing."
+                </blockquote>
+
+                <p>It's not merely calming; it's restoration. For the person balancing deadlines, family, and constant connectivity, LEGO allows you to unplug without disappearing. It's therapy with directions and a measurable end product.</p>
+
+                <h2>This Is Not a Toy. This Is Art in Progress</h2>
+
+                <p>Forget what you imagined. These are not playsets; they're design feats. Engineering masterpieces. Pieces of art that you create piece by piece.</p>
+
+                <p>Think architecture. Think cinema. Think music. There's something for every kind of mind: from the grandeur of NASA's Saturn V rocket to the aerodynamic lines of a Paris cityscape; from cinematic moments of the silver screen to a playable piano that quite literally makes real music. These aren't things you put away when guests come over. These are the things you bring out.</p>
+
+                <div class="highlight-box">
+                    And for the individual who adores detail, order, and the gratification of watching something take shape, LEGO rarely disappoints.
+                </div>
+
+                <h2>Give Permission to Pause</h2>
+
+                <p>This is reality: Most adults need reminders to slow down. To hang up the phone. To choose peace over chaos. LEGO is that reminder.</p>
+
+                <p>It gives people something to do with their hands while their brains are on vacation. It gives a person the ability to lose themselves in something tangible. No screen. No scroll. Tactile purity of focus.</p>
+
+                <p>And maybe most importantly of all, it gives them the ability to experience joy without having to explain it.</p>
+
+                <h2>Craft. Curiosity. Calm. In a Box</h2>
+
+                <img src="assets/images/articles/lego.jpg" alt="LEGO Image 2" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p>We're living in a time of instant content and quick fixes. But LEGO defies that. It requires patience. It requires focus. It cultivates the desire to lean in, not tune out.</p>
+
+                <p>Piece by piece, it brings us back to that feeling we forget to seek out as adults: where time disappears and all that exists is the next step.</p>
+
+                <p>It's not a game. It's active relaxation. It's a calm kind of creativity. And it lasts long after the last brick is laid.</p>
+
+                <div class="pull-quote">
+                    "You are saying: 'You need space.' You are saying: 'It's okay to play.' You are saying: 'Here's something that gives without taking.'"
+                </div>
+
+                <h2>What You're Really Giving</h2>
+
+                <p>When you give LEGO to someone, you're not giving them a bag of bricks. You're giving them a reset button. A couple of hours of peace. A shot of surprise. Something they can build, admire, and be proud of.</p>
+
+                <p>You are saying: 'You need space.' You are saying: 'It's okay to play.' You are saying: 'Here's something that gives without taking.</p>
+
+                <p>And in the world we live in today, that is perhaps the most precious gift of all.</p>
+                <img src="assets/images/articles/pexels-suki-lee-110686949-14823951.jpg" alt="LEGO Image 3" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('skipping-breakfast')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">I Keep on Skipping Breakfast</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('knysna-trip-new')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">A Trip to Knysna</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Knysna Trip New -->
+    <article class="article" id="knysna-trip-new">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Travel</span>
+                <h1 class="article-title">A Trip to Knysna</h1>
+                <p class="article-meta">Travel • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/infamous-knysna-heads.jpg" alt="Knysna Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+                
+                <p><span class="drop-cap">S</span>ome places leave you speechless. Others make you slow down. Knysna does both, gently and consistently, defying typical marketing approaches.</p>
+
+                <p>Stretching along South Africa's Garden Route, Knysna is more than a charming halt on the journey. It's pure, untouched countryside, the kind where you remove your foot from the accelerator, take a firmer look, and enjoy the things you usually whizz by.</p>
+
+                <h2>Arrival Feels Like Exhale</h2>
+
+                <p>The light hits you first. Soft. Honey-colored. Off the water and through the leaves. And then the tranquility: less noise, more breathing, a sweeter rhythm that starts to harmonize with your own.</p>
+
+                <p>Knysna isn't built for pace; it's built for presence. From the design of the lagoon to the silence of the forest, it all presents an open invitation to unwind.</p>
+
+                <blockquote>
+                    "No matter which route you take, by car or tour, the change is immediate. You are not merely driving by. You are arriving."
+                </blockquote>
+
+                <p>No matter which route you take, by car or tour, the change is immediate. You are not merely driving by. You are arriving.</p>
+
+                <h2>Nature Wears the Crown Here</h2>
+
+                <p>And finally, the lagoon. A lake that seems artistically sculpted. Peaceful yet vital. Kayaks. Sailboats. Swimmers, at the earliest hour of morning. It winds quietly between the heads, those famed sandstone cliffs that guard the entrance to the sea.</p>
+
+                <p>Knysna Forest is an escape of a different kind. Dense, subtle, and crisscrossed by footpaths and layers of quiet. You don't merely walk here; you walk through something alive. And if you're fortunate, you'll catch a glimpse of a Knysna loerie exploding out of cover with splashes of red and green.</p>
+
+                <div class="highlight-box">
+                    Knysna repays its wild lovers. Gently but firmly.
+                </div>
+
+                <h2>Local is Not a Word. It is a Lifestyle</h2>
+
+                <p>Markets. Coffee shops. Art supply stores. Residents who call it home don't merely live local; they construct it. Every intersection tells its story: a family recipe, handmade goods, a kid's perspective.</p>
+
+                <p>Pride here never brags; it simply manifests in the niceness. In food that is not only fresh but also homely. In the courtesy that blossoms into conversation. In the fact that people remember your name even when you are just walking by.</p>
+
+                <p>For businesses, this local ethos makes a difference. It is not just about visiting; it is about staying connected. And it will bring you back even before you've left.</p>
+
+                <h2>More Than a Destination. It is an Experience</h2>
+                <img src="assets/images/articles/Derrick_1.jpg.webp" alt="Knysna Image 2" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+
+                <p>Knysna offers no grand spectacle or fast nights. It isn't built on showiness; it's built on balance: sea and bush, rest and run, story and simplicity.</p>
+
+                <p>To the visitor, it is where they discover something softer once more. To commerce, it is where they can tap into authenticity, experience, and sustainability. If you're developing a travel product, establishing local partnerships, or producing content that truly resonates, Knysna is not just a backdrop. It is meaning.</p>
+
+                <div class="pull-quote">
+                    "This type of travel never feels secondhand. This is authentic. And in a world of destinations competing to impress, Knysna simply opens its arms."
+                </div>
+
+                <h2>Why It Stays With You</h2>
+
+                <p>I carry recollections of that trip with me to this day: the fog clinging to the water in the mornings, the silence of the forest path, the generosity of a stranger handing over a loaf of bread as if a gift.</p>
+
+                <p>This type of travel never feels secondhand. This is authentic. And in a world of destinations competing to impress, Knysna simply opens its arms.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('lego-gift')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Why LEGO Could Be the Best Gift</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('mykonos-cape')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">48 heures à Mykonos (celui du Cap, pas celui avec les influenceurs)</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: Employee Resign -->
+    <article class="article" id="employee-resign">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Career</span>
+                <h1 class="article-title">How to Make an Employee Resign: A Manager's Guide</h1>
+                <p class="article-meta">Career Satire • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">L</span>et's say you have someone on your payroll who just… lingers. Not bad enough to terminate. Not worthy enough to promote. Thinks "taking the initiative" is sorting his mail before lunch. You know the guy.</p>
+
+                <p>You can try to lead. Coach. Give feedback. Offer guidance.</p>
+
+                <p>But let's be realistic: you're past that.</p>
+
+                <blockquote>
+                    "You want out. You'd like them to want out. And luckily for you, there's an ancient management trick: make their life ever so slightly worse every week until they draft their own goodbye email."
+                </blockquote>
+
+                <p>It's a gentle, soft opening to the door.</p>
+
+                <p>This is how the experts absolutely do not recommend you do it.</p>
+
+                <h2>1. Change Their Title Until It Disappears</h2>
+
+                <p>Start tiny. 'Project Manager' becomes 'Support Associate.' Then just 'Associate.' Then 'Support.' Soon enough, their signature line is a passive-aggressive request for help. Eventually, they don't even put their name on emails.</p>
+
+                <h2>2. Have Meetings That Could've Been Smoke Signals</h2>
+
+                <p>Mandatory. Daily. Thirty minutes minimum. Don't set an agenda. Don't invite relevant people. Just talk in circles until even the walls give up. Then schedule a follow-up to review tasks undone due to the first meeting.</p>
+
+                <h2>3. Give Feedback Using Only Vague Metaphors</h2>
+
+                <p>"This isn't bad, but we're looking for more …heat." "I'd love to see something with sharper elbows." "Think. Less beige." Bonus points if you scrunch your face up and say, 'Just make it sing.'</p>
+
+                <h2>4. Move Their Desk. Over. And over. And over.</h2>
+
+                <p>Move them one desk to the left. Then to a new floor. Then to the side of the printer. Then into the break room. They'll be asking for a corner cubicle.</p>
+
+                <p>They'll be having meetings on a folding chair in the parking lot, screaming over the leaf blower before you know it.</p>
+
+                <h2>5. Make Praise a Riddle</h2>
+
+                <p>When they do it well, tell them: 'That's the kind of work we used to reward.' Or: 'Just what I wanted you to do, only… sooner.' Or the old standby: 'You've improved so much I can hardly recognize your work.'</p>
+
+                <h2>6. Have a Performance System That Only You Understand</h2>
+
+                <p>Create a scoring matrix. Call it "The Wheel." Measure intangible things like "grit" or "vibe." Give no guidelines. Tell them their grit score is currently 4.2, but what you're really thinking is 6.1. Step away from the situation.</p>
+
+                <h2>7. Make "Optional" Work Look Mandatory and "Mandatory" Work Look Optional</h2>
+
+                <p>"Ah, you didn't stay late for the optional training? Uh-huh."</p>
+
+                <p>"Wow, you prioritized your quarterly goals over re-doing the org chart in Comic Sans? Telling."</p>
+
+                <h2>8. Honor Everyone Else</h2>
+
+                <p>Order cake. Give a speech. Applaud. Not for them, of course. For Dolly, who rearranged the supply closet. Or Ian, who made it through three meetings in a day. Anything to keep attention pinched just a fraction to the left.</p>
+
+                <div class="highlight-box">
+                    By now, you won't need to forward them the exit survey. They'll write their own. It'll be titled "LinkedIn."
+                </div>
+
+                <h2>The Real Issue</h2>
+
+                <p>Do you actually do any of this? Of course not. But you know how a quietly struggling co-worker is often a warning that something's fundamentally broken before they give up? That's the real issue. You should just ask them. Unconventional, I grant.</p>
+
+                <div class="pull-quote">
+                    "The real fix isn't making them leave. It's figuring out why they stopped showing up long before they stopped showing up."
+                </div>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('mykonos-cape')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">48 heures à Mykonos</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('people-great')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">In Fact, People Are Pretty Great Sometimes</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: People Great -->
+    <article class="article" id="people-great">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Personal</span>
+                <h1 class="article-title">In Fact, People Are Pretty Great Sometimes</h1>
+                <p class="article-meta">Personal • February 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <p><span class="drop-cap">W</span>ell, every so often, it feels like everything's falling apart faster than you can keep up. The news won't stop, people are yelling in comments, and everything's too expensive. Seriously, it's easy to get caught up wondering if the whole human experiment went wrong.</p>
+
+                <p>And then, something indescribably beautiful happens. A guy saves a duckling from a drainpipe. The entire block brings food to the woman on the street whose husband died.</p>
+
+                <blockquote>
+                    "We often imagine hope as a great, crashing wave engulfing everyone at once. In fact, it's a gentle whisper in the ear."
+                </blockquote>
+
+                <h2>The Small Moments</h2>
+
+                <p>Someone behind you at the grocery store holds the door open a fraction longer than necessary. Someone on the bus gives up their seat without a word. A clerk hands you change with a smile that says, 'I can tell it's been a day.' That's the kind of thing that stays with you.</p>
+
+                <p>An anecdote once circulated (maybe it still does) about a guy who came into a coffee shop with nothing but change in his pocket, clearly expecting it to be enough. The barista simply smiled and handed him the drink anyway. No sermon, no sympathy. Just handed it to him as if it were nothing remarkable. That's not front-page news, but it might have saved that guy's afternoon, or week, or something more.</p>
+
+                <h2>Even Online</h2>
+
+                <p>Even on the internet, where it can seem fake, chaotic, or impersonal, people still watch out for each other. Someone posts about feeling isolated, and a whole thread of strangers comments 'me too' or 'you're not as invisible as you feel.' It isn't perfect, but it's something. And sometimes, that something is exactly what's needed.</p>
+
+                <div class="highlight-box">
+                    You might think you're the only one trying to be decent, but others are out there doing the same thing. Quietly. Without applause. They're simply preventing things from falling apart further.
+                </div>
+
+                <p>Yes, the world is ugly. It's harsh, violent, and sometimes stone-cold blind. But in all the noise, humans still find ways to surprise one another with unnecessary kindness, and perhaps that's the most poignant truth. Someone goes out of their way to care when they don't have to, when no one's watching.</p>
+
+                <h2>What Matters</h2>
+
+                <p>That's the kind of thing that gives all of us something to hold on to when the rest becomes overwhelming. Not because it makes everything perfectly better, but because it reminds you that, amidst everything, some are simply trying to do right by others. In little ways. In quiet ways. In ways that matter.</p>
+
+                <div class="pull-quote">
+                    "Someone goes out of their way to care when they don't have to, when no one's watching. That's the kind of thing that matters."
+                </div>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('employee-resign')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">How to Make an Employee Resign</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('undiagnosed')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Undiagnosed but Something Is Definitely Wrong</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Article: osed -->
+    <article class="article" id="undiagnosed">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Personal</span>
+                <h1 class="article-title">Undiagnosed but Something Is Definitely Wrong</h1>
+                <p class="article-meta">Personal • February 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/citation-amusante-undiagnosed-something-definitely-wrong-t-shirt-20250310034652-acj23lee-s6.webp" alt="Undiagnosed but Something Is Definitely Wrong 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+                <p><span class="drop-cap">I</span> met someone wearing a shirt that plainly, simply, and boldly read across the chest: 'Undiagnosed but something is definitely wrong.'</p>
+
+                <p>I laughed initially, that uncomfortable, knowing laugh that slips out when something hits a little too close to home. But it stayed with me, not just because it was funny or true for her, but for its quiet, profound message.</p>
+
+                <p>Many of us could wear that shirt. Quietly. Silently. Perhaps not aloud. But we could.</p>
+
+                <h2>Because Sometimes You Know Before Anyone Else Does</h2>
+
+                <p>You feel it before you can put it into words: something is off. Not dramatically, not necessarily in a way anyone else can witness. But enough so that you start to walk differently. You grow tired in ways sleep doesn't fix. You react to things as if your edges are raw. You lose focus. You forget what calm used to feel like.</p>
+
+                <p>And no one can really tell you why.</p>
+
+                <blockquote>
+                    "So you go through the motions. You show up. You smile when you have to. You keep things moving. But a part of you feels like it's watching from behind glass."
+                </blockquote>
+
+                <p>Numb but stir crazy. Not broken, just not quite alright.</p>
+
+                <h2>It's Hard When There's No Name for It</h2>
+
+                <p>If you had a diagnosis, then maybe people would understand. Maybe you would understand. You'd have words, a plan, something to point to and say: 'Here it is; this is what's been happening.'</p>
+
+                <p>But when it's not diagnosed, when it hides just beneath the surface, it's harder. You start to wonder if you're imagining it. If maybe you're just weak. Or dramatic. Or not trying hard enough.</p>
+
+                <div class="highlight-box">
+                    You second-guess your feelings because it has no name. No neat category. Just this amorphous, constant hum of unease.
+                </div>
+
+                <h2>It Made Me Realize How Many People Are Walking Around Like That</h2>
+
+                <p>Holding things they cannot explain. Carrying unseen weight. Surviving without answers. Still trying to navigate life. Still trying to be present. Still trying to act as if they're not quietly falling apart.</p>
+
+                <p>It's devastating, yet somehow lovely, the sheer power it takes to keep going when your own body or mind feels like a stranger.</p>
+
+                <p>So many of us live in that in-between space. Not sick. Not sick enough to quit. Just trying to manage our daily lives alongside a shadow we can't name.</p>
+
+                <h2>I Don't Know Her Story. But I Know the Feeling</h2>
+
+                <p>The woman in the shirt? She was standing close enough for my eyes to spot her, beverage in hand. She looked as if she had somewhere to be, even though she was exactly where she was supposed to be. As if she didn't know her shirt had just opened something inside a stranger nearby.</p>
+
+                <p>And maybe that's the thing: how often we communicate volumes in subtle ways. How often we wear our truth. A line on a T-shirt. A sigh we can't hold back. The way we say 'I'm fine' a little too soon.</p>
+
+                <h2>So, If This Is You Too</h2>
+
+                <p>If you're reading this and thinking, 'Yes, that sounds familiar'. You're not alone.</p>
+
+                <p>No matter if it has a name. No matter if anyone else sees it. Your experience is real. Your feelings are valid. And it's okay to be tired of holding it all together.</p>
+
+                <div class="pull-quote">
+                    "It is okay to talk about it. To write about it. To not have words yet but still try to reach for them."
+                </div>
+
+                <p>Sometimes, the mere fact that someone else understands is enough to feel slightly more visible.</p>
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('people-great')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">In Fact, People Are Pretty Great Sometimes</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('cape-town-charm')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Cape Town's Unpredictable Charm</p>
+                </div>
+            </div>
+        </div>
+    </article>
+    <!-- Article: 48 heures à Mykonos -->
+    <article class="article" id="mykonos-cape">
+        <div class="container">
+            <div class="article-header">
+                <span class="article-category">Travel</span>
+                <span class="article-category">French</span>
+                <h1 class="article-title">48 heures à Mykonos 
+                    <p>(celui du Cap, pas celui avec les influenceurs)</p>
+                </h1>
+                <p class="article-meta">Travel • French • March 2024</p>
+            </div>
+            
+            <div class="article-content">
+                <img src="assets/images/articles/8559-Club-Mykonos-Langebaan-BEACH-31-1533638241.jpg" alt="Mykonos Image 1" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p>Pas besoin de passeport. Pas besoin de convertir ta monnaie. Et surtout, pas besoin de prétendre aimer les clubs chics à ciel ouvert. Club Mykonos, c’est l’autre Mykonos. Celui où tu te réveilles avec une vue sur un lagon tranquille. Celui où tu croises des mouettes au petit déjeuner. Celui où tu peux respirer sans avoir l’impression de devoir partager chaque instant sur les réseaux sociaux.</p>
+
+               <h2>Jour 1 : poser les valises, enlever les chaussures, respirer</h2>
+
+                <p>L’arrivée est simple. Une route serpentant le long des collines, une petite entrée sans chichi. Tu prends tes clés et trouves ton hébergement (studio, appart, maison selon ton humeur ou ton budget). En ouvrant la porte, tu ne fais pas “wow”, tu fais mieux : “ah, voilà”. Les couleurs sont claires, la mer n’est pas loin, et tu sais que tu vas bien dormir, même sans t’être encore allongé.</p>
+
+                <p>Tu passes l’après-midi à marcher lentement, sans but. Tu repères la plage, goûtes un truc frit avec du citron, et t’installes sur une chaise qui craque un peu, avec une boisson fraîche, tout en observant les gens. Des enfants courent, des adultes feignent de lire. Tu ne fais rien, et tu fais ça très bien.</p>
+
+                <p>Le soir, tu manges. Trop. Poisson frais, riz, légumes grillés. Un dessert que tu ne finis pas, mais que tu recommanderais quand même. Tu dors comme quelqu’un qui n’a pas d’agenda.</p>
+
+                <h2>Jour 2 : activités, flânerie, et le fameux “je pourrais rester ici, non ?”</h2>
+                <img src="assets/images/articles/West-Coast-Way-Club-Mykonos-12.jpg" alt="Mykonos Image 2" style="width: 100%; margin-bottom: 2rem; border-radius: 4px;">
+
+                <p>Tu te lèves sans alarme et prends ton café dehors. Puis tu décides de “faire quelque chose”. </p>
+
+                <p>Tu peux :
+                        <p>&#x2022; Louer un vélo</p>
+                        <p>&#x2022; Réserver une virée en bateau</p>
+                        <p>&#x2022; T’inscrire à une session de ski nautique si tu te sens brave</p>
+                        <p>&#x2022; Ou marcher jusqu’au port pour discuter avec un pêcheur qui a mille histoires à raconter</p>
+                </p>
+
+                <p>Tu choisis une activité et t’y mets. Tu ris un peu, t’étonnes de toi-même, et prends une photo – sans la poster. Juste pour toi.</p>
+
+                <p>L’après-midi, tu fais la sieste. Oui, une vraie. Celle qui s’impose sans planification. Ensuite, piscine ou plage. Ou les deux. Tu découvres que le silence n’est pas un vide, mais un luxe.</p>
+
+                <p>Le soir, tu explores un peu plus. Tu marches jusqu’à un autre resto, commandes au hasard, et engages la conversation avec quelqu’un qui vient ici chaque année. Tu comprends pourquoi.</p>
+
+                <p>Club Mykonos n’est pas une destination de prestige. C’est un endroit où les choses simples retrouvent leur valeur. Un lieu qui ne te demande rien, sauf peut-être de ralentir.</p>
+
+                <p>Tu repars sans bronzage tape-à-l’œil, sans photo spectaculaire. Mais tu repars avec un peu de calme en toi. Et parfois, c'est exactement ce qu'il te fallait.</p>
+
+                <div class="pull-quote">
+                    "C’est un endroit où les choses simples retrouvent leur valeur."
+                </div>
+
+            </div>
+
+            <div class="article-navigation">
+                <div class="nav-article prev" onclick="showArticle('le-cap')">
+                    <p class="nav-label">Previous</p>
+                    <p class="nav-title">Le Cap</p>
+                </div>
+                <div class="nav-article" onclick="showArticleList()">
+                    <p class="nav-label">All Articles</p>
+                    <p class="nav-title">View All</p>
+                </div>
+                <div class="nav-article next" onclick="showArticle('lettre-retard')">
+                    <p class="nav-label">Next</p>
+                    <p class="nav-title">Lettre ouverte à toi, qui est "en retard"</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Sarah T. All rights reserved. Crafting words that work.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Show/hide articles
+        function showArticle(articleId) {
+            // Hide all articles and article list
+            document.querySelectorAll('.article').forEach(article => {
+                article.classList.remove('active');
+            });
+            document.getElementById('articleList').style.display = 'none';
+            
+            // Show selected article
+            document.getElementById(articleId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function showArticleList() {
+            // Hide all articles
+            document.querySelectorAll('.article').forEach(article => {
+                article.classList.remove('active');
+            });
+            
+            // Show article list
+            document.getElementById('articleList').style.display = 'block';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize - show article list by default
+        document.addEventListener('DOMContentLoaded', function() {
+            showArticleList();
+        });
+
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(e) {
+            if (e.state && e.state.article) {
+                showArticle(e.state.article);
+            } else {
+                showArticleList();
+            }
+        });
+
+        // Update browser history when showing articles
+        const originalShowArticle = showArticle;
+        showArticle = function(articleId) {
+            originalShowArticle(articleId);
+            history.pushState({article: articleId}, '', `#${articleId}`);
+        };
+
+        // Check URL hash on load
+        if (window.location.hash) {
+            const articleId = window.location.hash.substring(1);
+            if (document.getElementById(articleId)) {
+                showArticle(articleId);
+            }
+        }
+    </script>
+</body>
+</html>

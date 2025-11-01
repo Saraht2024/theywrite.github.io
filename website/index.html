@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah T - Copywriter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: rgb(37, 37, 37);
+            background: rgb(255, 255, 255);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .narrow-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgb(255, 255, 255);
+            border-bottom: 1px solid rgba(170, 170, 170, 0.3);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: rgb(37, 37, 37);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: rgb(37, 37, 37);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: rgb(119, 119, 119);
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid #aaa;
+            padding: 8px 16px;
+            color: #777;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: #252525;
+            color: #fff;
+            border-color: #252525;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: rgb(37, 37, 37);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page States */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: rgb(255, 255, 255);
+            color: rgb(37, 37, 37);
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.35) 100%);
+            z-index: 1;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            font-weight: 300;
+            letter-spacing: -2px;
+        }
+
+        .hero .tagline {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            color: rgb(119, 119, 119);
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: rgb(37, 37, 37);
+            color: rgb(255, 255, 255);
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            border: 2px solid rgb(37, 37, 37);
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: rgb(37, 37, 37);
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: rgb(37, 37, 37);
+            position: relative;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 1px;
+            background: rgb(170, 170, 170);
+            margin: 20px auto;
+        }
+
+        /* About Section */
+        .about {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .about-image img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgb(170, 170, 170);
+            filter: grayscale(100%);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgb(119, 119, 119);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Services Section */
+        .services {
+            background: rgb(255, 255, 255);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(170, 170, 170, 0.2);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            background: rgb(255, 255, 255);
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            color: rgb(37, 37, 37);
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: rgb(37, 37, 37);
+            font-weight: 500;
+        }
+
+        .service-card p {
+            color: rgb(119, 119, 119);
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .portfolio-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .portfolio-item {
+            background: rgb(255, 255, 255);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(170, 170, 170, 0.2);
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            border-color: rgb(37, 37, 37);
+        }
+
+        .portfolio-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(255, 255, 255);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+
+        .portfolio-content h3 {
+            color: rgb(37, 37, 37);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1.3rem;
+            line-height: 1.4;
+        }
+
+        .portfolio-content p {
+            color: rgb(119, 119, 119);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: rgba(37, 37, 37, 0.08);
+            color: rgb(119, 119, 119);
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .portfolio-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: rgb(170, 170, 170);
+            font-weight: 500;
+        }
+
+        .view-all-btn {
+            display: inline-block;
+            background: transparent;
+            color: rgb(37, 37, 37);
+            border: 2px solid rgb(37, 37, 37);
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .view-all-btn:hover {
+            background: rgb(37, 37, 37);
+            color: rgb(255, 255, 255);
+        }
+
+        .portfolio-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-categories {
+                flex-direction: column;
+                align-items: stretch;
+            }
+    
+            .portfolio-categories .view-all-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* MAGAZINE STYLE ARTICLES SECTION */
+        .magazine-articles {
+            background: rgb(255, 255, 255);
+            padding: 80px 0;
+        }
+
+        .magazine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        /* Style 1 - Drop Cap with Quotes */
+        .article-style-1 {
+            background: #fff;
+            padding: 2.5rem;
+            border: 1px solid rgba(170, 170, 170, 0.2);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .article-style-1:hover {
+            transform: translateY(-3px);
+        }
+
+        .article-style-1 .article-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #252525;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-style-1 .article-meta {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .article-style-1 .drop-cap {
+            float: left;
+            font-size: 4.5rem;
+            line-height: 1;
+            padding-right: 8px;
+            padding-top: 4px;
+            font-weight: bold;
+            color: #252525;
+        }
+
+        .article-style-1 blockquote {
+            background: #252525;
+            color: white;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            font-style: italic;
+            border-left: 4px solid #777;
+        }
+
+        .article-style-1 .read-more {
+            color: #252525;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid #252525;
+            padding-bottom: 2px;
+        }
+
+        /* Other article styles... */
+        .article-style-2, .article-style-3, .article-style-4 {
+            background: #fff;
+            padding: 2.5rem;
+            border: 1px solid rgba(170, 170, 170, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .article-style-2:hover, .article-style-3:hover, .article-style-4:hover {
+            transform: translateY(-3px);
+        }
+
+        .article-style-2 .article-title,
+        .article-style-3 .article-title,
+        .article-style-4 .article-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #252525;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-style-2 .article-meta,
+        .article-style-3 .article-meta,
+        .article-style-4 .article-meta {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: #252525;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box {
+            background: #252525;
+            color: white;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .large-first-letter {
+            float: left;
+            font-size: 3.5rem;
+            line-height: 1;
+            padding-right: 8px;
+            padding-top: 4px;
+            color: #999;
+            font-weight: 300;
+        }
+
+        .read-more {
+            color: #252525;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid #252525;
+            padding-bottom: 2px;
+        }
+
+        /* Blog Section */
+        .blog {
+            background: rgb(255, 255, 255);
+        }
+
+        .blog-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .blog-search {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .blog-search input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid rgb(170, 170, 170);
+            font-size: 1rem;
+            color: rgb(37, 37, 37);
+            background: rgb(255, 255, 255);
+        }
+
+        .blog-search input:focus {
+            outline: none;
+            border-color: rgb(37, 37, 37);
+        }
+
+        .blog-categories {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: transparent;
+            border: 1px solid rgb(170, 170, 170);
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: rgb(119, 119, 119);
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: rgb(37, 37, 37);
+            color: rgb(255, 255, 255);
+            border-color: rgb(37, 37, 37);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-article {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(170, 170, 170, 0.2);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .blog-article:hover {
+            transform: translateY(-3px);
+            background: rgb(255, 255, 255);
+        }
+
+        .blog-article-image {
+            height: 180px;
+            background: linear-gradient(45deg, rgb(170, 170, 170), rgb(119, 119, 119));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(255, 255, 255);
+            font-weight: 500;
+        }
+
+        .blog-article-content {
+            padding: 1.5rem;
+        }
+
+        .blog-article-date {
+            color: rgb(119, 119, 119);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-article h3 {
+            color: rgb(37, 37, 37);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 1.3rem;
+            line-height: 1.4;
+        }
+
+        .blog-article p {
+            color: rgb(119, 119, 119);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .blog-article-category {
+            display: inline-block;
+            background: rgb(37, 37, 37);
+            color: rgb(255, 255, 255);
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: rgb(37, 37, 37);
+            color: rgb(255, 255, 255);
+        }
+
+        .testimonials .section-title {
+            color: rgb(255, 255, 255);
+        }
+
+        .testimonials .section-title::after {
+            background: rgb(170, 170, 170);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(170, 170, 170, 0.2);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: rgb(255, 255, 255);
+        }
+
+        .testimonial-role {
+            font-size: 0.9rem;
+            color: rgb(170, 170, 170);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h3 {
+            color: rgb(37, 37, 37);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .contact-info p {
+            color: rgb(119, 119, 119);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item i {
+            color: rgb(37, 37, 37);
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 1px solid rgb(170, 170, 170);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: rgb(255, 255, 255);
+            color: rgb(37, 37, 37);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: rgb(37, 37, 37);
+        }
+
+        .submit-btn {
+            background: rgb(37, 37, 37);
+            color: rgb(255, 255, 255);
+            padding: 15px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: rgb(119, 119, 119);
+        }
+
+        /* Footer */
+        footer {
+            background: rgb(37, 37, 37);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: rgb(170, 170, 170);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: rgb(255, 255, 255);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgb(255, 255, 255);
+                flex-direction: column;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(170, 170, 170, 0.3);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-categories {
+                justify-content: flex-start;
+            }
+
+            .blog-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .blog-search {
+                max-width: 100%;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .magazine-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .portfolio-preview {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container, .narrow-container {
+                padding: 0 15px;
+            }
+
+            .hero {
+                padding: 120px 0 80px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .magazine-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-preview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo" onclick="showPage('home')">Sarah T</div>
+            
+            <!-- Main Navigation -->
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="showPage('home')">Home</a></li>
+                <li><a onclick="scrollToSection('about')">About</a></li>
+                <li><a onclick="scrollToSection('services')">Services</a></li>
+                <li><a href="portfolio.html">Work</a></li>
+                <li><a href="technicalwriting.html">Technical Writing</a></li>
+                <li><a href="articles.html">Articles</a></li>
+                <li><a onclick="scrollToSection('contact')">Contact</a></li>
+            </ul>
+            
+            <!-- Articles Page Navigation -->
+            <div class="back-btn" id="backBtn" onclick="showPage('home')" style="display: none;">← Back to Home</div>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </nav>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Words That Work</h1>
+                <p class="tagline">Crafting compelling copy that converts browsers into buyers</p>
+                <a class="cta-button" onclick="scrollToSection('contact')">Let's Create Something Amazing</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section about">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="assets/images/STLogo.png" width="250" height="250" alt="Sarah T">
+                    </div>
+                    <div class="about-text">
+                        <p>I'm Sarah T, a versatile writer who bridges commercial copywriting, technical documentation, and editorial content. Whether it's persuasive product copy, complex technical reports, or engaging personal essays, I bring clarity and creativity to every project.</p>
+
+                        <p>My work spans e-commerce platforms, tourism campaigns, real estate listings, technical whitepapers on emerging technologies, and editorial pieces exploring travel, architecture, and culture. I write in both English and French, adapting voice and style to suit each audience and purpose.</p>
+
+                        <p>From conversion-focused website copy to in-depth industry reports on AI healthcare and quantum computing, from social media campaigns to personal essays about life and travel—I craft words that inform, persuade, and resonate. The common thread? A commitment to clear, compelling communication that serves both business goals and human connection.</p>
+                        
+                        <p>Let's create something that works—whether it's driving sales, explaining complex concepts, or simply making someone pause and think.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section services">
+            <div class="container">
+                <h2 class="section-title">My Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">✍</div>
+                        <h3>Copywriting</h3>
+                        <p>Website copy, product descriptions, email campaigns, and social media content that converts browsers into buyers. From e-commerce to tourism and real estate.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📄</div>
+                        <h3>Technical Writing</h3>
+                        <p>Industry reports, whitepapers, technical documentation, and research papers spanning healthcare technology, cybersecurity, biotechnology, and emerging tech.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">✉</div>
+                        <h3>Editorial & Content</h3>
+                        <p>Long-form articles, personal essays, travel writing, architecture reviews, and thought leadership pieces that engage and inform.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🌐</div>
+                        <h3>Multilingual Content</h3>
+                        <p>French and English content creation for international audiences, including translations, adaptations, and culturally-aware messaging.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📊</div>
+                        <h3>Brand Voice & Strategy</h3>
+                        <p>Comprehensive brand voice guidelines, content strategies, and messaging frameworks that align with your business goals.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🎯</div>
+                        <h3>Newsletter & Email Marketing</h3>
+                        <p>Engaging newsletters and email sequences that nurture leads, build relationships, and drive conversions for wellness, bridal, and lifestyle brands.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="section portfolio">
+            <div class="container">
+                <h2 class="section-title">Portfolio Highlights</h2>
+                
+                <!-- Portfolio Categories -->
+                <div class="portfolio-categories" style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap;">
+                    <a href="portfolio.html" class="view-all-btn" style="display: inline-block;">Copywriting Portfolio</a>
+                    <a href="technicalwriting.html" class="view-all-btn" style="display: inline-block;">Technical Writing</a>
+                    <a href="articles.html" class="view-all-btn" style="display: inline-block;">Editorial Articles</a>
+                </div>
+
+                <!-- Portfolio Preview Grid -->
+                <div class="portfolio-preview">
+                    <!-- Copywriting Sample -->
+                    <div class="portfolio-item" onclick="window.location.href='portfolio.html'">
+                        <div class="portfolio-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            Copywriting Projects
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>Commercial Copywriting</h3>
+                            <p>E-commerce websites, tourism campaigns, real estate listings, email newsletters, and social media content across diverse industries.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">E-Commerce</span>
+                                <span class="tag">Tourism</span>
+                                <span class="tag">Real Estate</span>
+                                <span class="tag">Social Media</span>
+                            </div>
+                            <div class="portfolio-meta">
+                                <span>11 Projects</span>
+                                <span>View Portfolio →</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technical Writing Sample -->
+                    <div class="portfolio-item" onclick="window.location.href='technicalwriting.html'">
+                        <div class="portfolio-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            Technical Reports
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>Technical Writing & Research</h3>
+                            <p>Industry reports on AI healthcare, quantum cryptography, sustainable cashmere, precision fermentation, 6G geopolitics, and emerging technologies.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Whitepapers</span>
+                                <span class="tag">Industry Reports</span>
+                                <span class="tag">Tech Explainers</span>
+                                <span class="tag">Policy Papers</span>
+                            </div>
+                            <div class="portfolio-meta">
+                                <span>15+ Reports</span>
+                                <span>View Portfolio →</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Editorial Sample -->
+                    <div class="portfolio-item" onclick="window.location.href='articles.html'">
+                        <div class="portfolio-image" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                            Editorial Articles
+                        </div>
+                        <div class="portfolio-content">
+                            <h3>Editorial & Personal Essays</h3>
+                            <p>Travel essays, architecture reviews, personal reflections, lifestyle pieces, and cultural commentary spanning multiple themes and languages.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Travel</span>
+                                <span class="tag">Personal Essays</span>
+                                <span class="tag">Architecture</span>
+                                <span class="tag">French</span>
+                            </div>
+                            <div class="portfolio-meta">
+                                <span>30+ Articles</span>
+                                <span>View All →</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Magazine Style Articles Section -->
+        <section id="magazine" class="section magazine-articles">
+            <div class="container">
+                <h2 class="section-title">Featured Writing</h2>
+                <div class="magazine-grid">
+                    
+                    <!-- Featured Article 1 -->
+                    <article class="article-style-1" onclick="window.open('articles.html#alone-but-not-alone', '_blank')">
+                        <div class="article-category">Personal</div>
+                        <h3 class="article-title">To the Ones Who Are On Their Own (But Not Alone)</h3>
+                        <div class="article-meta">Personal Essay • 5 min read</div>
+                        <div class="article-excerpt">
+                            <span class="drop-cap">H</span>ello to you. This is for the nights when it's too quiet. When the world seems made for two and you find yourself there, only you. When every couple walking hand in hand makes your chest ache a little.
+                            
+                            <blockquote>
+                                "You have not been overlooked. You have not wasted your time. You are not too much. And you are most definitely not 'not enough'."
+                            </blockquote>
+                            
+                            Being single is not a waiting room. It is not the in-between nor the pause that precedes the actual thing happening. It is the thing itself. It's real. It counts. It's yours.
+                        </div>
+                        <a class="read-more">Read Full Article →</a>
+                    </article>
+
+                    <!-- Featured Article 2 -->
+                    <article class="article-style-2" onclick="window.open('articles.html#asia-hurts', '_blank')">
+                        <div class="article-category">Travel</div>
+                        <h3 class="article-title">I Want to Go to Asia So Bad, It Hurts</h3>
+                        <div class="article-meta">Travel Essay • March 2024</div>
+                        <div class="article-excerpt">
+                            <p>There are moments when it comes like a wave: this gentle, relentless ache to go away. Not just anywhere, but Asia. The places I hear about all the time. The places I dream about without even realizing it.</p>
+                            
+                            <div class="highlight-box">
+                                It's not escape. Not really. It's something else. Something deeper. A pull. A desire.
+                            </div>
+                            
+                            <p>I yearn to eat soup on a plastic stool in a hot alley with the city thrumming in my ear. I yearn to lose myself on purpose in Tokyo alleys, camera strap around my neck, heart beating faster than usual.</p>
+                        </div>
+                        <a class="read-more">Continue Reading →</a>
+                    </article>
+
+                    <!-- Featured Article 3 -->
+                    <article class="article-style-3" onclick="window.open('articles.html#mutual-heights', '_blank')">
+                        <div class="article-category">Architecture</div>
+                        <h3 class="article-title">Mutual Heights: Cape Town's Stone Monolith</h3>
+                        <div class="article-meta">Architecture Review • February 2024</div>
+                        <div class="article-excerpt">
+                            <p>At the very heart of Cape Town's city centre, you'll discover a stone monolith. It rises with an unmanufactured self-confidence, devoid of glass curtain walls or gleaming polished chrome. Only strength, detail, and a commanding presence define Mutual Heights.</p>
+                            
+                            <p>Constructed in 1940 as Old Mutual's headquarters, this building was never meant to be subdued. Once the continent's tallest, it wore that title like a badge of pride. Every detail is measured: the carved panels, the shining brass, the marble foyer that still retains its reputation decades later.</p>
+                        </div>
+                        <a class="read-more">Read More →</a>
+                    </article>
+
+                    <!-- Featured Article 4 -->
+                    <article class="article-style-4" onclick="window.open('articles.html#why-i-write', '_blank')">
+                        <div class="article-category">Personal</div>
+                        <h3 class="article-title">Why I Write: Some Feelings Just Can't Be Expressed in Conversation</h3>
+                        <div class="article-meta">Published January 2024</div>
+                        <div class="article-excerpt">
+                            <span class="large-first-letter">S</span>ome prefer to hash things out. Some cry. Some sprint until their legs ache. Me? I write.
+                            
+                            <p>I do it when <em>the silence is too loud</em>. When words in my head start to stack up like books on the nightstand. When something small happens and, for no apparent reason, it won't leave me alone.</p>
+                            
+                            <p><strong>Writing gives shape to feelings that conversations can't always hold.</strong> It slows everything down, allowing me to catch up with myself. Some days it's just one sentence. Some days it's everything I couldn't say out loud.</p>
+                        </div>
+                        <a class="read-more">Continue Reading →</a>
+                    </article>
+
+                    <!-- Featured Article 5 -->
+                    <article class="article-style-1" onclick="window.open('articles.html#dating-apps', '_blank')">
+                        <div class="article-category">Lifestyle</div>
+                        <h3 class="article-title">Why I Don't Date on Apps</h3>
+                        <div class="article-meta">Relationships • 4 min read</div>
+                        <div class="article-excerpt">
+                            <span class="drop-cap">L</span>et's start there: I'm not better than you. I'm not smarter, or holding onto some outdated, pre-swipe ideal of love for moral high ground. I just never downloaded one.
+                            
+                            <blockquote>
+                                "I like the mess of real life. I like bumping into someone when I least expect it, even if it doesn't go anywhere."
+                            </blockquote>
+                            
+                            Apps fulfill their purpose. You tap the page. You look at a face. You select based on an image and maybe six words honed over three lattes. But to me, dating websites have always been like trying to read someone through the peephole of their profile.
+                        </div>
+                        <a class="read-more">Read Full Story →</a>
+                    </article>
+
+                    <!-- Featured Article 6 -->
+                    <article class="article-style-2" onclick="window.open('articles.html#therapeutic-things', '_blank')">
+                        <div class="article-category">Wellness</div>
+                        <h3 class="article-title">Things I Find Therapeutic That Are Free</h3>
+                        <div class="article-meta">Self-Care • January 2024</div>
+                        <div class="article-excerpt">
+                            <p>There are days when everything has a price: time, energy, sanity. Even sleep is a commodity you earn. Those are the days I seek out the quiet, simple things.</p>
+                            
+                            <div class="highlight-box">
+                                They are small, easy to overlook. But they save me more often than I'll ever admit.
+                            </div>
+                            
+                            <p>Walking without a destination. Not to exercise. Not to travel somewhere. Just to walk. Just to exist. I walk until the ringing in my head subsides, until my footfalls resonate with a steady crunch-crunch-crunch.</p>
+                        </div>
+                        <a class="read-more">Explore More →</a>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog/Articles Section -->
+        <section id="blog" class="section blog">
+            <div class="container">
+                <h2 class="section-title">Latest Articles</h2>
+                
+                <div class="blog-controls">
+                    <div class="blog-search">
+                        <input type="text" id="blogSearch" placeholder="Search articles...">
+                    </div>
+                    <div class="blog-categories">
+                        <button class="category-btn active" data-category="all">All</button>
+                        <button class="category-btn" data-category="lifestyle">Lifestyle</button>
+                        <button class="category-btn" data-category="travel">Travel</button>
+                        <button class="category-btn" data-category="personal">Personal</button>
+                        <button class="category-btn" data-category="career">Career</button>
+                        <button class="category-btn" data-category="architecture">Architecture</button>
+                        <button class="category-btn" data-category="wellness">Wellness</button>
+                        <button class="category-btn" data-category="tech">Tech</button>
+                        <button class="category-btn" data-category="gaming">Gaming</button>
+                        <button class="category-btn" data-category="environment">Environment</button>
+                        <button class="category-btn" data-category="finance">Finance</button>
+                        <button class="category-btn" data-category="opinion">Opinion</button>
+                        <button class="category-btn" data-category="french">French</button>
+                    </div>
+                </div>
+
+                <div class="blog-grid" id="blogGrid">
+                    
+                    <!-- French Articles with proper data-categories attribute -->
+                    
+                    <article class="blog-article" data-categories="travel,french" data-title="48 heures mykonos celui du cap pas celui avec les influenceurs" data-date="2024-03-19" onclick="window.open('articles.html#mykonos-cape', '_blank')">
+                        <div class="blog-article-image">Club Mykonos</div>
+                        <div class="blog-article-content">
+                            <div class="blog-article-date">March 19, 2024</div>
+                            <span class="blog-article-category">Travel</span>
+                            <span class="blog-article-category">French</span>
+                            <h3>48 heures à Mykonos (celui du Cap, pas celui avec les influenceurs)</h3>
+                            <p>Pas besoin de passeport. Club Mykonos, c'est l'autre Mykonos. Celui où tu te réveilles avec une vue sur un lagon tranquille...</p>
+                            <a class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-article" data-categories="travel,french" data-title="le cap" data-date="2024-03-13" onclick="window.open('articles.html#le-cap', '_blank')">
+                        <div class="blog-article-image">Le Cap Story</div>
+                        <div class="blog-article-content">
+                            <div class="blog-article-date">March 13, 2024</div>
+                            <span class="blog-article-category">Travel</span>
+                            <span class="blog-article-category">French</span>
+                            <h3>Le Cap</h3>
+                            <p>Je suis arrivé, j'ai apprécié, et je suis resté. Au début, ce n'était pas du tout prévu comme ça...</p>
+                            <a class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-article" data-categories="architecture" data-title="the towers in the mist taking a closer look at disa park" data-date="2024-03-20" onclick="window.open('articles.html#disa-park', '_blank')">
+                        <div class="blog-article-image">Disa Park Towers</div>
+                        <div class="blog-article-content">
+                            <div class="blog-article-date">March 20, 2024</div>
+                            <span class="blog-article-category">Architecture</span>
+                            <h3>The Towers in the Mist: Taking a Closer Look at Disa Park</h3>
+                            <p>If you've ever driven along the M3 just as the mist rolls in over Table Mountain, you've probably seen them. Three tall, bold towers...</p>
+                            <a class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="blog-article" data-categories="travel" data-title="cape towns unpredictable charm will make you want to stay" data-date="2024-03-18" onclick="window.open('articles.html#cape-town-charm', '_blank')">
+                        <div class="blog-article-image">Cape Town Magic</div>
+                        <div class="blog-article-content">
+                            <div class="blog-article-date">March 18, 2024</div>
+                            <span class="blog-article-category">Travel</span>
+                            <h3>Cape Town's Unpredictable Charm Will Make You Want to Stay</h3>
+                            <p>Let's skip the clichés. You've seen enough drone footage of Table Mountain. The truth is, Cape Town transcends photography...</p>
+                            <a class="read-more">Read More →</a>
+                        </div>
+                    </article>
+
+                    <!-- Continue with more articles... -->
+                    
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="cta-button" onclick="window.open('articles.html', '_blank')">View All Articles</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="section testimonials">
+            <div class="container">
+                <h2 class="section-title">What Clients Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial">
+                        <p class="testimonial-text">"Sarah transformed our entire brand voice. Her copy doesn't just sell – it connects. Our conversion rates increased by 200% in just three months."</p>
+                        <div class="testimonial-author">Leonne M.</div>
+                        <div class="testimonial-role">CEO, Leo Roses Skincare</div>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">"Working with Sarah was a game-changer. She understood our brand personality immediately and delivered copy that felt authentically us."</p>
+                        <div class="testimonial-author">Felly and Deosa</div>
+                        <div class="testimonial-role">Founders, Ndao</div>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">"Sarah's email campaigns generated more revenue in one quarter than our previous year combined. Her strategic approach to copywriting is unmatched."</p>
+                        <div class="testimonial-author">Pearly S.</div>
+                        <div class="testimonial-role">Marketing Director, Idyle Studio</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section contact">
+            <div class="container">
+                <h2 class="section-title">Let's Work Together</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Ready to transform your message?</h3>
+                        <p>I'm here to help you craft copy that converts. Whether you need website content, email campaigns, or a complete brand voice overhaul, let's create something amazing together.</p>
+                        
+                        <div class="contact-item">
+                            <i>✉</i>
+                            <span>stombani@gmail.com</span>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i>📍</i>
+                            <span>Cape Town, South Africa</span>
+                        </div>
+                    </div>
+                    
+                    <form class="contact-form">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="text" placeholder="Subject">
+                        <textarea rows="6" placeholder="Tell me about your project..." required></textarea>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#">📧</a>
+                <a href="#">📱</a>
+                <a href="#">💼</a>
+                <a href="#">🐦</a>
+            </div>
+            <p>&copy; 2024 Sarah T. All rights reserved. Crafting words that work.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functions
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            if (pageId === 'home') {
+                document.getElementById('navLinks').style.display = 'flex';
+                document.getElementById('backBtn').style.display = 'none';
+            } else {
+                document.getElementById('navLinks').style.display = 'none';
+                document.getElementById('backBtn').style.display = 'block';
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        function scrollToSection(sectionId) {
+            showPage('home');
+            setTimeout(() => {
+                document.getElementById(sectionId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 100);
+        }
+
+        // Portfolio filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // FIXED: Blog category filter functionality with multi-category support
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const blogArticles = document.querySelectorAll('.blog-article');
+
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const category = btn.getAttribute('data-category');
+
+                    blogArticles.forEach(article => {
+                        const categories = article.getAttribute('data-categories');
+                        
+                        if (category === 'all') {
+                            article.style.display = 'block';
+                        } else if (categories && categories.includes(category)) {
+                            // Check if the article's categories include the selected category
+                            article.style.display = 'block';
+                        } else {
+                            article.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Blog search functionality
+            const blogSearch = document.getElementById('blogSearch');
+            if (blogSearch) {
+                blogSearch.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+
+                    blogArticles.forEach(article => {
+                        const title = article.getAttribute('data-title');
+                        const content = article.querySelector('p').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                            article.style.display = 'block';
+                        } else {
+                            article.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Contact form submission
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Thank you for your message! I\'ll get back to you soon.');
+                    contactForm.reset();
+                });
+            }
+        });
+
+        showPage('home');
+    </script>
+</body>
+</html>

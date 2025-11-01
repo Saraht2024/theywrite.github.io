@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah T - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #252525;
+            background: #fff;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            border-bottom: 1px solid rgba(170, 170, 170, 0.3);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #252525;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid #aaa;
+            padding: 8px 16px;
+            color: #777;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: #252525;
+            color: #fff;
+            border-color: #252525;
+        }
+
+        /* Hero Section */
+        .portfolio-hero {
+            background: linear-gradient(135deg, #f5f5f5 0%, #fff 100%);
+            padding: 150px 40px 80px;
+            text-align: center;
+        }
+
+        .portfolio-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: #252525;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+        }
+
+        .portfolio-hero p {
+            font-size: 1.2rem;
+            color: #777;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .project {
+            margin-bottom: 100px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .project:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .project-header {
+            margin-bottom: 30px;
+        }
+
+        .project-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #252525;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            font-size: 1.1rem;
+            color: #777;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: #252525;
+            color: #fff;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Project Content Layouts */
+        .project-content {
+            background: #fafafa;
+            border: 1px solid rgba(170, 170, 170, 0.2);
+            overflow: hidden;
+        }
+
+        /* Single Image Layout */
+        .single-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Multi-Image Grid */
+        .image-grid {
+            display: grid;
+            gap: 2px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Video Layout */
+        .video-container {
+            position: relative;
+            width: 100%;
+            background: #000;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* HTML Preview Layout */
+        .html-preview {
+            position: relative;
+            background: #fff;
+        }
+
+        .html-preview iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+        }
+
+        .view-live-btn {
+            display: inline-block;
+            background: #252525;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            margin: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .view-live-btn:hover {
+            background: #444;
+            transform: translateY(-2px);
+        }
+
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img,
+        .lightbox-content video {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            font-size: 2rem;
+            padding: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: #252525;
+            color: #fff;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .portfolio-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .portfolio-hero {
+                padding: 120px 20px 60px;
+            }
+
+            .portfolio-container {
+                padding: 40px 20px;
+            }
+
+            .project {
+                margin-bottom: 60px;
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+            }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Sarah T</a>
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="portfolio-hero">
+        <h1>Portfolio</h1>
+        <p>A collection of copywriting projects spanning e-commerce, tourism, real estate, social media, and editorial content.</p>
+    </section>
+
+    <!-- Portfolio Projects -->
+    <div class="portfolio-container">
+
+        <!-- Project 1: E-Commerce Website -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">E-Commerce Website Copy</h2>
+                <p class="project-description">Complete website copywriting for an e-commerce platform, including product descriptions, homepage content, and conversion-focused messaging that drives sales.</p>
+                <div class="project-tags">
+                    <span class="tag">E-Commerce</span>
+                    <span class="tag">Website Copy</span>
+                    <span class="tag">Conversion</span>
+                </div>
+            </div>
+            <div class="project-content html-preview">
+                <iframe src="assets/htmlFile/e-com/index.html"></iframe>
+                <a href="assets/htmlFile/e-com/index.html" target="_blank" class="view-live-btn">View Live Site →</a>
+            </div>
+        </div>
+
+        <!-- Project 2: Leo Spring Sale Newsletter -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Wellness Brand Newsletter</h2>
+                <p class="project-description">Engaging email newsletter for Leo Roses wellness brand's spring sale campaign, designed to drive engagement and conversions while maintaining brand voice.</p>
+                <div class="project-tags">
+                    <span class="tag">Email Marketing</span>
+                    <span class="tag">Wellness</span>
+                    <span class="tag">Newsletter</span>
+                </div>
+            </div>
+            <div class="project-content html-preview">
+                <iframe src="assets/htmlFile/Leospringsale/index.html"></iframe>
+                <a href="assets/htmlFile/Leospringsale/index.html" target="_blank" class="view-live-btn">View Live Newsletter →</a>
+            </div>
+        </div>
+
+        <!-- Project 3: Prad Experience Tourism Website -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Tourism Company Website Copy</h2>
+                <p class="project-description">Compelling website copy for Prad Experience tourism company, crafted to inspire travelers and showcase unique experiences with persuasive, adventure-driven messaging.</p>
+                <div class="project-tags">
+                    <span class="tag">Tourism</span>
+                    <span class="tag">Website Copy</span>
+                    <span class="tag">Travel</span>
+                </div>
+            </div>
+            <div class="project-content html-preview">
+                <iframe src="assets/htmlFile/Pradxperience/index.html"></iframe>
+                <a href="assets/htmlFile/Pradxperience/index.html" target="_blank" class="view-live-btn">View Live Site →</a>
+            </div>
+        </div>
+
+        <!-- Project 4: Emeliad Website -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Emeliad Website Copy</h2>
+                <p class="project-description">Professional website copywriting for Emeliad, creating compelling content that communicates brand value and engages visitors with clear, persuasive messaging.</p>
+                <div class="project-tags">
+                    <span class="tag">Website Copy</span>
+                    <span class="tag">Brand Messaging</span>
+                    <span class="tag">Professional Services</span>
+                </div>
+            </div>
+            <div class="project-content html-preview">
+                <iframe src="https://emeliad.com"></iframe>
+                <a href="https://emeliad.com" target="_blank" class="view-live-btn">View Live Site →</a>
+            </div>
+        </div>
+
+        <!-- Project 5: Ndoa Pack About Us -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Ndoa Pack - About Us Page</h2>
+                <p class="project-description">Engaging 'About Us' page copywriting for Ndoa Pack, telling the brand story with authenticity and creating emotional connection with visitors through strategic storytelling.</p>
+                <div class="project-tags">
+                    <span class="tag">About Page</span>
+                    <span class="tag">Brand Story</span>
+                    <span class="tag">Website Copy</span>
+                </div>
+            </div>
+            <div class="project-content html-preview">
+                <iframe src="https://ndoapack.com/about-us.html"></iframe>
+                <a href="https://ndoapack.com/about-us.html" target="_blank" class="view-live-btn">View Live Site →</a>
+            </div>
+        </div>
+
+        <!-- Project 6: Real Desperate Stylists Closet Sale -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">The Real Desperate Stylists of Cape Town</h2>
+                <p class="project-description">Creative and humorous copywriting for a closet sale campaign, playing on popular reality TV themes to create engaging, shareable content that drives sales.</p>
+                <div class="project-tags">
+                    <span class="tag">Social Media</span>
+                    <span class="tag">Campaign</span>
+                    <span class="tag">Creative Copy</span>
+                </div>
+            </div>
+            <div class="project-content">
+                <div class="image-grid grid-3 clickable-gallery" data-gallery="stylists">
+                    <img src="assets/images/The real desperate stylists of Cape town/1.png" alt="Stylists Campaign 1">
+                    <img src="assets/images/The real desperate stylists of Cape town/2.png" alt="Stylists Campaign 2">
+                    <img src="assets/images/The real desperate stylists of Cape town/3.png" alt="Stylists Campaign 3">
+                    <img src="assets/images/The real desperate stylists of Cape town/4.png" alt="Stylists Campaign 4">
+                    <img src="assets/images/The real desperate stylists of Cape town/5.png" alt="Stylists Campaign 5">
+                    <img src="assets/images/The real desperate stylists of Cape town/6.png" alt="Stylists Campaign 6">
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 7: Lodge Welcome Letter -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Lodge Welcome Letter</h2>
+                <p class="project-description">Warm and inviting welcome letter for lodge guests, setting the tone for their stay with personalized, hospitable messaging that enhances the guest experience.</p>
+                <div class="project-tags">
+                    <span class="tag">Hospitality</span>
+                    <span class="tag">Editorial</span>
+                    <span class="tag">Guest Experience</span>
+                </div>
+            </div>
+            <div class="project-content single-image">
+                <img src="assets/images/lodge letter/lodge letter.png" alt="Lodge Welcome Letter" class="clickable" data-gallery="lodge">
+            </div>
+        </div>
+
+        <!-- Project 6: Herotel Social Media -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Social Media Copywriting</h2>
+                <p class="project-description">Engaging social media copy for small businesses such as Herotel telecommunications company, creating scroll-stopping content that builds brand awareness and drives engagement.</p>
+                <div class="project-tags">
+                    <span class="tag">Social Media</span>
+                    <span class="tag">Telecommunications</span>
+                    <span class="tag">Brand Voice</span>
+                </div>
+            </div>
+            <div class="project-content">
+                <div class="image-grid grid-2 clickable-gallery" data-gallery="herotel">
+                    <img src="assets/images/Herotel/Screenshot 2025-09-11 at 17.24.36.png" alt="Herotel Social 1">
+                    <img src="assets/images/Herotel/zeoob.com_l022iepsc4_photo.png" alt="Herotel Social 2">
+                    <img src="assets/images/Herotel/zeoob.com_otpsnqhmz6_photo.png" alt="Herotel Social 3">
+                    <img src="assets/images/Herotel/zeoob.com_utp4vprr0c_photo.png" alt="Herotel Social 4">
+                    <img src="assets/images/smallbusiness/zeoob.com_xwrz9us9le_photo.png" alt="Social Media 1">
+                    <img src="assets/images/smallbusiness/zeoob.com_3l0u2gaqwc_photo.png" alt="Social Media 2">
+                    <img src="assets/images/smallbusiness/zeoob.com_zqho71iu6d_photo.png" alt="Social Media 3">
+                    <img src="assets/images/smallbusiness/zeoob.com_yd72lkffi4_photo.png" alt="Social Media 4">
+                    <img src="assets/images/smallbusiness/zeoob.com_jua6u64sju_photo.png" alt="Social Media 5">
+                    <img src="assets/images/smallbusiness/zeoob.com_5j1nqevxy5_photo.png" alt="Social Media 6">
+                    <img src="assets/images/smallbusiness/Screenshot 2025-10-29 at 22.09.38.png" alt="Social Media 7">
+                    <img src="assets/images/smallbusiness/Screenshot 2025-10-29 at 17.07.35.png" alt="Social Media 8">
+                    <img src="assets/images/smallbusiness/zeoob.com_vfyttqxoek_photo.png" alt="Social Media 9">
+                    <img src="assets/images/smallbusiness/zeoob.com_6az48wuzpx_photo.png" alt="Social Media 10">
+                    <img src="assets/images/smallbusiness/Screenshot 2025-10-30 at 13.47.44.png" alt="Social Media 11">
+                    <img src="assets/images/smallbusiness/Screenshot 2025-10-30 at 15.33.38.png" alt="Social Media 12">
+                    <img src="assets/images/smallbusiness/facebook-ad-mockup.png" alt="Social Media 13">
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 7: MH Newsletter -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Building Newsletter Copy</h2>
+                <p class="project-description">Professional newsletter copywriting for a residential building, keeping residents informed and engaged with clear, friendly communication.</p>
+                <div class="project-tags">
+                    <span class="tag">Newsletter</span>
+                    <span class="tag">Real Estate</span>
+                    <span class="tag">Community</span>
+                </div>
+            </div>
+            <div class="project-content">
+                <div class="image-grid grid-2 clickable-gallery" data-gallery="mh">
+                    <img src="assets/images/MHNewsletter/1.png" alt="MH Newsletter 1">
+                    <img src="assets/images/MHNewsletter/2.png" alt="MH Newsletter 2">
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 8: Green Point Home -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Green Point Property Listing</h2>
+                <p class="project-description">Compelling real estate copywriting for a Green Point property, highlighting features and lifestyle benefits to attract potential buyers and renters.</p>
+                <div class="project-tags">
+                    <span class="tag">Real Estate</span>
+                    <span class="tag">Property Listing</span>
+                    <span class="tag">Residential</span>
+                </div>
+            </div>
+            <div class="project-content">
+                <div class="image-grid grid-3 clickable-gallery" data-gallery="greenpoint">
+                    <img src="assets/images/GreenPointHome/1.png" alt="Green Point 1">
+                    <img src="assets/images/GreenPointHome/2.png" alt="Green Point 2">
+                    <img src="assets/images/GreenPointHome/3.png" alt="Green Point 3">
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 9: Versailles Apartment -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Versailles Luxury Apartment Listing</h2>
+                <p class="project-description">Sophisticated copywriting for luxury apartment listing, emphasizing premium features, location benefits, and upscale lifestyle appeal.</p>
+                <div class="project-tags">
+                    <span class="tag">Real Estate</span>
+                    <span class="tag">Luxury</span>
+                    <span class="tag">Property Listing</span>
+                </div>
+            </div>
+            <div class="project-content">
+                <div class="image-grid grid-3 clickable-gallery" data-gallery="versailles">
+                    <img src="assets/images/VersaillesApartment/1.png" alt="Versailles 1">
+                    <img src="assets/images/VersaillesApartment/2.png" alt="Versailles 2">
+                    <img src="assets/images/VersaillesApartment/3.png" alt="Versailles 3">
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 10: Video Projects -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Video Copywriting Projects</h2>
+                <p class="project-description">Script writing and creative direction for various video projects, including promotional content and brand storytelling.</p>
+                <div class="project-tags">
+                    <span class="tag">Video</span>
+                    <span class="tag">Script Writing</span>
+                    <span class="tag">Creative Direction</span>
+                </div>
+            </div>
+            <div class="project-content">
+                <div class="image-grid grid-3">
+                    <div class="video-container">
+                        <video controls>
+                            <source src="assets/videos/VID-20251004-WA0000.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-container">
+                        <video controls>
+                            <source src="assets/videos/WhatsApp Video 2025-10-21 at 20.06.48.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-container">
+                        <video controls>
+                            <source src="assets/videos/New work for @airstudiojhb _Production- @deboovstudios Creative Direction- @scottvaughnkleinschm.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 11: Ndoa Bridal -->
+        <div class="project">
+            <div class="project-header">
+                <h2 class="project-title">Ndoa Bridal Newsletter</h2>
+                <p class="project-description">Engaging newsletter copy for Ndoa Bridal, designed to captivate brides-to-be with inspiring content, expert tips, and exclusive offers.</p>
+                <div class="project-tags">
+                    <span class="tag">Bridal</span>
+                    <span class="tag">Newsletter</span>
+                    <span class="tag">Copywriting</span>
+                </div>
+            </div>
+            <div class="project-content html-preview">
+                <iframe src="assets/htmlFile/Ndoa/index.html"></iframe>
+                <a href="assets/htmlFile/Ndoa/index.html" target="_blank" class="view-live-btn">View Live Site →</a>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <span class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">‹</span>
+        <div class="lightbox-content" id="lightboxContent"></div>
+        <span class="lightbox-nav lightbox-next" onclick="changeImage(1)">›</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div>
+            <p>&copy; 2024 Sarah T. All rights reserved. Crafting words that work.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentGallery = [];
+        let currentIndex = 0;
+
+        // Make images clickable
+        document.addEventListener('DOMContentLoaded', function() {
+            // Single clickable images
+            document.querySelectorAll('.clickable').forEach(img => {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', function() {
+                    currentGallery = [this.src];
+                    currentIndex = 0;
+                    openLightbox();
+                });
+            });
+
+            // Gallery images
+            document.querySelectorAll('.clickable-gallery').forEach(gallery => {
+                const images = gallery.querySelectorAll('img');
+                images.forEach((img, index) => {
+                    img.style.cursor = 'pointer';
+                    img.addEventListener('click', function() {
+                        currentGallery = Array.from(images).map(i => i.src);
+                        currentIndex = index;
+                        openLightbox();
+                    });
+                });
+            });
+        });
+
+        function openLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const content = document.getElementById('lightboxContent');
+            
+            content.innerHTML = `<img src="${currentGallery[currentIndex]}" alt="Portfolio Image">`;
+            lightbox.classList.add('active');
+            
+            // Hide nav buttons if only one image
+            if (currentGallery.length <= 1) {
+                document.querySelector('.lightbox-prev').style.display = 'none';
+                document.querySelector('.lightbox-next').style.display = 'none';
+            } else {
+                document.querySelector('.lightbox-prev').style.display = 'block';
+                document.querySelector('.lightbox-next').style.display = 'block';
+            }
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            
+            if (currentIndex < 0) {
+                currentIndex = currentGallery.length - 1;
+            } else if (currentIndex >= currentGallery.length) {
+                currentIndex = 0;
+            }
+            
+            document.getElementById('lightboxContent').innerHTML = 
+                `<img src="${currentGallery[currentIndex]}" alt="Portfolio Image">`;
+        }
+
+        // Close lightbox on background click
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') changeImage(-1);
+                if (e.key === 'ArrowRight') changeImage(1);
+            }
+        });
+    </script>
+</body>
+</html>
