@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Writing Portfolio - Sarah T</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #252525;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            border-bottom: 1px solid rgba(170, 170, 170, 0.3);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #252525;
+            text-decoration: none;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid #aaa;
+            padding: 8px 16px;
+            color: #777;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: #252525;
+            color: #fff;
+            border-color: #252525;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 150px 0 100px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 80px 0;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #252525;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #777;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Project Preview Cards */
+        .project-preview {
+            background: #fff;
+            border: 1px solid rgba(170, 170, 170, 0.2);
+            margin-bottom: 40px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .project-preview-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 30px;
+        }
+
+        .project-category {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .project-preview-header h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .project-preview-body {
+            padding: 30px;
+        }
+
+        .project-preview-body p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            background: #667eea;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+
+        .read-more-btn:hover {
+            background: #764ba2;
+        }
+
+        /* Full Article Modal */
+        .article-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .article-modal.active {
+            display: block;
+        }
+
+        .article-modal-content {
+            background: #fff;
+            max-width: 1000px;
+            margin: 50px auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        .article-modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 40px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .article-modal-body {
+            padding: 50px;
+        }
+
+        .article-modal-body img {
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid rgba(170, 170, 170, 0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .article-modal-body h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #252525;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .article-modal-body h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #252525;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .article-modal-body h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .article-modal-body p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .article-modal-body ul, .article-modal-body ol {
+            margin: 20px 0 20px 30px;
+            color: #555;
+        }
+
+        .article-modal-body li {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+
+        .article-modal-body blockquote {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 20px 30px;
+            margin: 30px 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        .article-modal-body strong {
+            color: #252525;
+            font-weight: 600;
+        }
+
+        .article-modal-body em {
+            color: #667eea;
+        }
+
+        .highlights-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .highlights-box h4 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        .highlights-box ul, .highlights-box p {
+            color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        thead tr {
+            background: #667eea;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* Footer */
+        footer {
+            background: #252525;
+            color: #fff;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .project-preview-header,
+            .project-preview-body,
+            .article-modal-body {
+                padding: 25px;
+            }
+
+            .article-modal-content {
+                margin: 20px 10px;
+            }
+
+            .close-modal {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Sarah T</a>
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Technical Writing Portfolio</h1>
+            <p>Transforming complex technical concepts into clear, compelling narratives</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="content container">
+
+        <!-- Section Introduction -->
+        <div class="section-header">
+            <h2 class="section-title">Industry Reports & Technical Documentation</h2>
+            <p class="section-subtitle">A collection of technical writing projects spanning healthcare technology, environmental sustainability, cybersecurity, and workplace innovation</p>
+        </div>
+
+        <!-- Project 1: Pearson Study Preview -->
+        <div class="project-preview" onclick="openArticle('pearson-study')">
+            <div class="project-preview-header">
+                <span class="project-category">Tech Report</span>
+                <h3>Role Redesign for Improved Workplace Productivity</h3>
+                <p>Pearson Study - Organizational Transformation & Efficiency Analysis</p>
+            </div>
+            <div class="project-preview-body">
+                <p>A comprehensive technical report examining organizational role redesign strategies and their impact on workplace productivity metrics. This study analyzes transformation initiatives, efficiency improvements, and best practices for modern workplace optimization.</p>
+                <button class="read-more-btn">View Full Report →</button>
+            </div>
+        </div>
+
+        <!-- Project 2: Post-Quantum Cryptography Preview -->
+        <div class="project-preview" onclick="openArticle('quantum-crypto')">
+            <div class="project-preview-header">
+                <span class="project-category">Technical Whitepaper</span>
+                <h3>Post-Quantum Cryptography: Preparing for the Next Security Frontier</h3>
+                <p>Comprehensive analysis of quantum computing threats and cryptographic solutions</p>
+            </div>
+            <div class="project-preview-body">
+                <p>An in-depth technical whitepaper exploring the emerging threats posed by quantum computing to current encryption standards. This document examines post-quantum cryptographic algorithms, implementation strategies, and the roadmap for transitioning to quantum-resistant security systems.</p>
+                <button class="read-more-btn">View Full Whitepaper →</button>
+            </div>
+        </div>
+
+        <!-- Project 3: Everbloom Preview -->
+        <div class="project-preview" onclick="openArticle('everbloom')">
+            <div class="project-preview-header">
+                <span class="project-category">Environment Report</span>
+                <h3>Everbloom's Sustainable Cashmere Revolution</h3>
+                <p>Environmental impact assessment and sustainability initiatives in luxury fashion</p>
+            </div>
+            <div class="project-preview-body">
+                <p>A detailed environmental report documenting sustainable practices in luxury cashmere production. This study evaluates ecological impact, ethical sourcing methods, carbon footprint reduction strategies, and the business case for environmental stewardship in high-end fashion manufacturing.</p>
+                <button class="read-more-btn">View Full Report →</button>
+            </div>
+        </div>
+
+        <!-- Project 4: AI Healthcare Preview -->
+        <div class="project-preview" onclick="openArticle('ai-healthcare')">
+            <div class="project-preview-header">
+                <span class="project-category">Industry Report</span>
+                <h3>AI in Healthcare: Balancing Technology with Values</h3>
+                <p>Exploring ethical considerations and practical implementations of artificial intelligence in medical practice</p>
+            </div>
+            <div class="project-preview-body">
+                <p>An industry-spanning report examining the integration of artificial intelligence in healthcare systems. This analysis covers ethical frameworks, implementation challenges, patient privacy considerations, diagnostic accuracy improvements, and the future landscape of AI-assisted medical care.</p>
+                <button class="read-more-btn">View Full Report →</button>
+            </div>
+        </div>
+
+        <!-- Additional Technical Writing Samples -->
+        <div class="section-header" style="margin-top: 100px;">
+            <h2 class="section-title">Technical Explainers & Specialized Content</h2>
+            <p class="section-subtitle">Deep-dive technical documentation spanning cybersecurity, biotechnology, emerging technologies, and environmental innovation</p>
+        </div>
+
+        <!-- Tech Explainer 1: Disinformation Security Preview -->
+        <div class="project-preview" onclick="openArticle('disinformation')">
+            <div class="project-preview-header">
+                <span class="project-category">Cybersecurity</span>
+                <h3>Disinformation Security: Protection from AI-Generated Misinformation</h3>
+                <p>Technical analysis of AI-driven threats to information integrity</p>
+            </div>
+            <div class="project-preview-body">
+                <p>In 2025, the new enemy of truth is AI-generated lies. This explainer examines how generative AI has transformed misinformation production and consumption, creating a new field of disinformation security that defends perception, upholds trust, and protects democracy itself. From deepfakes to synthetic chatbots, explore the threat landscape and defense strategies...</p>
+                <button class="read-more-btn">Read Full Article →</button>
+            </div>
+        </div>
+
+        <!-- Tech Explainer 2: 6G Geopolitics Preview -->
+        <div class="project-preview" onclick="openArticle('6g-geopolitics')">
+            <div class="project-preview-header">
+                <span class="project-category">Telecommunications</span>
+                <h3>6G Geopolitics & Standards: Open RAN Risks of Fragmentation</h3>
+                <p>The intersection of next-generation connectivity and global politics</p>
+            </div>
+            <div class="project-preview-body">
+                <p>With 6G on the horizon, it's not technology competition, it's geopolitics. This technical explainer analyzes how telecommunications standards have become political tools, examining the risks of fragmentation as competing nations race to define 6G infrastructure. Discover how Open RAN technology factors into global digital sovereignty...</p>
+                <button class="read-more-btn">Read Full Article →</button>
+            </div>
+        </div>
+
+        <!-- Tech Explainer 3: Metaverse Storytelling Preview -->
+        <div class="project-preview" onclick="openArticle('metaverse')">
+            <div class="project-preview-header">
+                <span class="project-category">Entertainment Technology</span>
+                <h3>The Metaverse Storytelling Technologies: From Unreal Engine to AI Avatars</h3>
+                <p>Virtual production and the future of immersive entertainment</p>
+            </div>
+            <div class="project-preview-body">
+                <p>Entertainment is being transformed at its roots. This whitepaper provides a technical perspective on metaverse storytelling infrastructure, contrasting real-time rendering engines, volumetric capture, and AI-generated characters with current production pipelines. Explore opportunities and challenges for artists, studios, and tech companies in this converging landscape...</p>
+                <button class="read-more-btn">Read Full Article →</button>
+            </div>
+        </div>
+
+        <!-- Tech Explainer 4: Cultured Meat Preview -->
+        <div class="project-preview" onclick="openArticle('cultured-meat')">
+            <div class="project-preview-header">
+                <span class="project-category">Biotechnology</span>
+                <h3>The Technology of Cultured Meat and Precision Fermentation</h3>
+                <p>Cell biology and bioprocess engineering behind alternative proteins</p>
+            </div>
+            <div class="project-preview-body">
+                <p>Behind the promise of cultured meat and precision fermentation lies sophisticated cell biology, food technology, and bioprocess engineering. This technical explainer dissects the cellular basis of lab-grown meat, bioreactor challenges, and how precision fermentation trains microbes to become molecular factories producing animal-identical proteins...</p>
+                <button class="read-more-btn">Read Full Article →</button>
+            </div>
+        </div>
+
+        <!-- Tech Explainer 5: Policy Framework Preview -->
+        <div class="project-preview" onclick="openArticle('policy-framework')">
+            <div class="project-preview-header">
+                <span class="project-category">Regulatory Policy</span>
+                <h3>Precision Fermentation and Cultured Meat: Policymakers' Vision of Regulation</h3>
+                <p>Regulatory frameworks for cellular agriculture</p>
+            </div>
+            <div class="project-preview-body">
+                <p>Cellular agriculture is no longer science fiction—it's reality. This policy paper provides an overview of technical regulation, employs indicative definitions, and analyzes the scope for harmonizing global frameworks. Explore how different jurisdictions approach food safety, labeling, and international trade for these emerging technologies...</p>
+                <button class="read-more-btn">Read Full Article →</button>
+            </div>
+        </div>
+
+        <!-- Tech Explainer 6: Solar Paint Preview -->
+        <div class="project-preview" onclick="openArticle('solar-paint')">
+            <div class="project-preview-header">
+                <span class="project-category">Clean Energy</span>
+                <h3>Solar Paint: The Science Behind Powering Walls and Buildings</h3>
+                <p>Nanotechnology transforming surfaces into power generators</p>
+            </div>
+            <div class="project-preview-body">
+                <p>Imagine all exposed walls generating electricity—no panels, no installations, just paint. This technical explainer explores the science behind solar paint technology, from perovskite crystals to quantum dots and hydrogen-producing formulas. Discover how light-absorbing nanomaterials in liquid form could revolutionize clean energy generation...</p>
+                <button class="read-more-btn">Read Full Article →</button>
+            </div>
+        </div>
+
+        <!-- Tech Explainer 7: Quantum Computing Preview -->
+        <div class="project-preview" onclick="openArticle('quantum-risk')">
+            <div class="project-preview-header">
+                <span class="project-category">Cybersecurity</span>
+                <h3>When All Locks Can Be Picked Simultaneously: The Quantum Computing Risk</h3>
+                <p>Understanding the encryption crisis on the horizon</p>
+            </div>
+            <div class="project-preview-body">
+                <p>What if all locks worldwide could be opened simultaneously? This explainer uses vivid metaphors to explain how quantum computers will revolutionize technology while threatening current digital security. Explore the "harvest now, decrypt later" threat, post-quantum cryptography solutions, and why the danger is already at our doorstep...</p>
+                <button class="read-more-btn">Read Full Article →</button>
+            </div>
+        </div>
+
+        <!-- Tech Explainer 8: Blockchain Preview -->
+        <div class="project-preview" onclick="openArticle('blockchain')">
+            <div class="project-preview-header">
+                <span class="project-category">Distributed Technology</span>
+                <h3>Blockchain Beyond Bitcoin: The World "Notebook" That's Upending More Than Money</h3>
+                <p>Understanding blockchain applications beyond cryptocurrency</p>
+            </div>
+            <div class="project-preview-body">
+                <p>Blockchain is far more than electronic money—it's a data storage system transforming identity, supply chains, and intellectual property. Using the analogy of a giant notebook in town square, this explainer makes blockchain technology accessible, covering applications from digital identity to supply chain transparency and creative rights management...</p>
+                <button class="read-more-btn">Read Full Article →</button>
+            </div>
+        </div>
+
+        <!-- Press Release Preview -->
+        <div class="project-preview" onclick="openArticle('press-release')">
+            <div class="project-preview-header">
+                <span class="project-category">Press Release</span>
+                <h3>Marine AI Analytics Receives NOAA Contract</h3>
+                <p>AI implementation for Steller sea lion conservation tracking</p>
+            </div>
+            <div class="project-preview-body">
+                <p>Professional press release announcing Marine AI Analytics' NOAA contract award to implement AI-driven image processing for Steller sea lion population tracking. This release demonstrates technical writing for corporate communications, highlighting project significance, technological innovation, and environmental impact...</p>
+                <button class="read-more-btn">Read Full Press Release →</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Article Modals (Hidden by default) -->
+    
+    <!-- Pearson Study Modal -->
+    <div id="pearson-study" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('pearson-study')">×</button>
+                <span class="project-category">Tech Report</span>
+                <h2>Role Redesign for Improved Workplace Productivity</h2>
+                <p>Pearson Study - Organizational Transformation & Efficiency Analysis</p>
+            </div>
+            <div class="article-modal-body">
+                <img src="assets/technical writing/Pearson Study tech report/1.png" alt="Pearson Study Report Page 1">
+                <img src="assets/technical writing/Pearson Study tech report/2.png" alt="Pearson Study Report Page 2">
+                <img src="assets/technical writing/Pearson Study tech report/3.png" alt="Pearson Study Report Page 3">
+                <img src="assets/technical writing/Pearson Study tech report/4.png" alt="Pearson Study Report Page 4">
+                <img src="assets/technical writing/Pearson Study tech report/5.png" alt="Pearson Study Report Page 5">
+                <img src="assets/technical writing/Pearson Study tech report/6.png" alt="Pearson Study Report Page 6">
+            </div>
+        </div>
+    </div>
+
+    <!-- Quantum Crypto Modal -->
+    <div id="quantum-crypto" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('quantum-crypto')">×</button>
+                <span class="project-category">Technical Whitepaper</span>
+                <h2>Post-Quantum Cryptography: Preparing for the Next Security Frontier</h2>
+            </div>
+            <div class="article-modal-body">
+                <img src="assets/technical writing/Technical whitepaper Post/1.png" alt="Post-Quantum Cryptography Page 1">
+                <img src="assets/technical writing/Technical whitepaper Post/2.png" alt="Post-Quantum Cryptography Page 2">
+                <img src="assets/technical writing/Technical whitepaper Post/3.png" alt="Post-Quantum Cryptography Page 3">
+                <img src="assets/technical writing/Technical whitepaper Post/4.png" alt="Post-Quantum Cryptography Page 4">
+                <img src="assets/technical writing/Technical whitepaper Post/5.png" alt="Post-Quantum Cryptography Page 5">
+                <img src="assets/technical writing/Technical whitepaper Post/6.png" alt="Post-Quantum Cryptography Page 6">
+                <img src="assets/technical writing/Technical whitepaper Post/7.png" alt="Post-Quantum Cryptography Page 7">
+                <img src="assets/technical writing/Technical whitepaper Post/8.png" alt="Post-Quantum Cryptography Page 8">
+                <img src="assets/technical writing/Technical whitepaper Post/9.png" alt="Post-Quantum Cryptography Page 9">
+                <img src="assets/technical writing/Technical whitepaper Post/10.png" alt="Post-Quantum Cryptography Page 10">
+                <img src="assets/technical writing/Technical whitepaper Post/11.png" alt="Post-Quantum Cryptography Page 11">
+                <img src="assets/technical writing/Technical whitepaper Post/12.png" alt="Post-Quantum Cryptography Page 12">
+                <img src="assets/technical writing/Technical whitepaper Post/13.png" alt="Post-Quantum Cryptography Page 13">
+            </div>
+        </div>
+    </div>
+
+    <!-- Everbloom Modal -->
+    <div id="everbloom" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('everbloom')">×</button>
+                <span class="project-category">Environment Report</span>
+                <h2>Everbloom's Sustainable Cashmere Revolution</h2>
+            </div>
+            <div class="article-modal-body">
+                <img src="assets/technical writing/Environment Report Everbloom's Sustainable Cashmere Revolution/1.png" alt="Everbloom Report Page 1">
+                <img src="assets/technical writing/Environment Report Everbloom's Sustainable Cashmere Revolution/2.png" alt="Everbloom Report Page 2">
+                <img src="assets/technical writing/Environment Report Everbloom's Sustainable Cashmere Revolution/3.png" alt="Everbloom Report Page 3">
+                <img src="assets/technical writing/Environment Report Everbloom's Sustainable Cashmere Revolution/4.png" alt="Everbloom Report Page 4">
+                <img src="assets/technical writing/Environment Report Everbloom's Sustainable Cashmere Revolution/5.png" alt="Everbloom Report Page 5">
+                <img src="assets/technical writing/Environment Report Everbloom's Sustainable Cashmere Revolution/6.png" alt="Everbloom Report Page 6">
+                <img src="assets/technical writing/Environment Report Everbloom's Sustainable Cashmere Revolution/7.png" alt="Everbloom Report Page 7">
+                <img src="assets/technical writing/Environment Report Everbloom's Sustainable Cashmere Revolution/8.png" alt="Everbloom Report Page 8">
+                <img src="assets/technical writing/Environment Report Everbloom's Sustainable Cashmere Revolution/9.png" alt="Everbloom Report Page 9">
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Healthcare Modal -->
+    <div id="ai-healthcare" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('ai-healthcare')">×</button>
+                <span class="project-category">Industry Report</span>
+                <h2>AI in Healthcare: Balancing Technology with Values</h2>
+            </div>
+            <div class="article-modal-body">
+                <img src="assets/technical writing/Modern report/1.png" alt="AI Healthcare Report Page 1">
+                <img src="assets/technical writing/Modern report/2.png" alt="AI Healthcare Report Page 2">
+                <img src="assets/technical writing/Modern report/3.png" alt="AI Healthcare Report Page 3">
+                <img src="assets/technical writing/Modern report/4.png" alt="AI Healthcare Report Page 4">
+                <img src="assets/technical writing/Modern report/5.png" alt="AI Healthcare Report Page 5">
+                <img src="assets/technical writing/Modern report/6.png" alt="AI Healthcare Report Page 6">
+                <img src="assets/technical writing/Modern report/7.png" alt="AI Healthcare Report Page 7">
+                <img src="assets/technical writing/Modern report/8.png" alt="AI Healthcare Report Page 8">
+                <img src="assets/technical writing/Modern report/9.png" alt="AI Healthcare Report Page 9">
+                <img src="assets/technical writing/Modern report/10.png" alt="AI Healthcare Report Page 10">
+                <img src="assets/technical writing/Modern report/11.png" alt="AI Healthcare Report Page 11">
+                <img src="assets/technical writing/Modern report/12.png" alt="AI Healthcare Report Page 12">
+                <img src="assets/technical writing/Modern report/13.png" alt="AI Healthcare Report Page 13">
+                <img src="assets/technical writing/Modern report/14.png" alt="AI Healthcare Report Page 14">
+                <img src="assets/technical writing/Modern report/15.png" alt="AI Healthcare Report Page 15">
+                <img src="assets/technical writing/Modern report/16.png" alt="AI Healthcare Report Page 16">
+                <img src="assets/technical writing/Modern report/17.png" alt="AI Healthcare Report Page 17">
+                <img src="assets/technical writing/Modern report/18.png" alt="AI Healthcare Report Page 18">
+            </div>
+        </div>
+    </div>
+
+    <!-- Disinformation Security Modal -->
+    <div id="disinformation" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('disinformation')">×</button>
+                <span class="project-category">Cybersecurity</span>
+                <h2>Disinformation Security: Protection from AI-Generated Misinformation</h2>
+            </div>
+            <div class="article-modal-body">
+                <p><strong>In 2025, the new enemy of truth is AI-generated lies.</strong></p>
+
+                <p>Generative AI has transformed the manner in which information is both produced and consumed. Something that was once human effort—creating fake news websites, video editing, running troll farms—can now be mechanized, mass-produced to a global level, and tailored in real-time by machines. From artificially created chatbots and deepfake videos to computer-generated news articles, disinformation in today's world is quicker, more economical, and even more completely realistic than at any previous time of disinformation.</p>
+
+                <p>One of the consequences of this is the creation of a new field: <em>disinformation security</em>. It is different from traditional cybersecurity, whose task is to isolate networks and information. Disinformation security is more a matter of defending perception, upholding trust and, by extension, defending democracy itself.</p>
+
+                <h3>The AI-Driven Misinformation Landscape</h3>
+
+                <p>The threat landscape is both complex and multifaceted, with many different formats and platforms. The most common ones we are currently facing are:</p>
+
+                <ul>
+                    <li><strong>Deepfakes:</strong> Extremely realistic audio and video fabrications used in political campaigns, financial fraud, or reputation destruction.</li>
+                    <li><strong>Synthetic Text & Chatbots:</strong> They quickly generate disinformation stories and huge volumes of pre-written social media postings. They also generate auto-responses that closely mimic human speech.</li>
+                    <li><strong>Targeted Lies:</strong> AI can also be employed to generate messages that are directly targeted towards an individual's established biases, with the message tailored in line with their online and browsing history.</li>
+                    <li><strong>Cheapfakes:</strong> Effortless, low-effort alterations or misleading captions that are then extensively amplified through bot networks.</li>
+                    <li><strong>Bot Armies:</strong> Organized networks of AI accounts designed to simulate human users. They besiege the platforms with the intention of spreading propaganda or influencing public opinions.</li>
+                </ul>
+
+                <h3>Why This Matters So Much</h3>
+
+                <p>Disinformation is no longer a sideshow. It's a security threat with ramifications that destabilize entire systems:</p>
+
+                <ul>
+                    <li><strong>Democracy:</strong> AI-forged speeches or deepfake candidate videos can completely flip voter minds and public opinion on election eve.</li>
+                    <li><strong>National Security:</strong> Propaganda generated artificially is now a significant component of cyber warfare and modern psychological operations.</li>
+                    <li><strong>Financial Costs:</strong> AI-generated press releases already induced short-term changes in stock prices, costing companies millions.</li>
+                    <li><strong>Public Safety:</strong> Bogus health information or spoofed emergency broadcasts can rapidly cause mass panic.</li>
+                    <li><strong>Erosion of Trust:</strong> With false media everywhere, public distrust is pervasive. People are struggling to trust even real journalism.</li>
+                </ul>
+
+                <h3>Defense Tools and Strategies</h3>
+
+                <p>Security researchers are fighting back with a multi-layered defense strategy:</p>
+
+                <ul>
+                    <li><strong>Detection AI:</strong> We need algorithms specifically trained to detect subtle inconsistencies in patterns of language, sounds, or pixels.</li>
+                    <li><strong>Watermarking and Provenance:</strong> It involves putting hidden markers within genuine AI content to ascertain where it originated.</li>
+                    <li><strong>Blockchain Verification:</strong> It includes employing immutable logs to certify the authentic source of a media item.</li>
+                    <li><strong>Platform Governance:</strong> This demands real-time removal systems combined with improved fact-checking collaborations.</li>
+                    <li><strong>Digital Literacy:</strong> First and foremost, citizens need to be made capable of recognizing manipulation themselves, especially within images and sound-based media.</li>
+                </ul>
+
+                <p>There is no single solution. Effective defense will be a matter of combining technical countermeasures with institutional cooperation and astute end-users.</p>
+
+                <div class="highlights-box">
+                    <h4>Real-World Impact Examples</h4>
+                    <ul>
+                        <li><strong>Elections (2024–25):</strong> Deepfakes were spread in European and Asian elections. AI-generated videos of candidate remarks went viral millions of times before proper refutations could even be issued.</li>
+                        <li><strong>Finance:</strong> AI-generated news announcements temporarily influenced global stock prices, exposing deep vulnerabilities in robot trading systems.</li>
+                        <li><strong>Military Warfare:</strong> Deepfakes were employed to demoralize civilian crowds in some cyber-enabled conflicts.</li>
+                        <li><strong>Business Fraud:</strong> Employees were tricked into transferring huge sums of money after receiving very convincing AI-generated voices impersonating top managers.</li>
+                    </ul>
+                </div>
+
+                <h3>The Roadblocks Ahead</h3>
+
+                <p>Regardless of our new weapons, the defense is still extremely difficult:</p>
+
+                <ul>
+                    <li><strong>The Detection Arms Race:</strong> Generative models are simply overpowering the models designed to detect them.</li>
+                    <li><strong>False Positives:</strong> Overzealous filters risk misidentifying legitimate content.</li>
+                    <li><strong>Free Speech:</strong> Governments need to tread carefully in regulating disinformation without spilling into censorship.</li>
+                    <li><strong>Global Inconsistency:</strong> Disparity of national law delays a global response.</li>
+                    <li><strong>The Human Element:</strong> Even confronted with the truth, a person's inherent cognitive biases will naturally lead them to continue holding on to the original untruth.</li>
+                </ul>
+
+                <h3>The Future Landscape</h3>
+
+                <p>In the future, several separate trends are arising:</p>
+
+                <ul>
+                    <li><strong>AI vs. AI:</strong> More and more, we'll see defensive software that fights back against artificial content in real time.</li>
+                    <li><strong>Legal Mandates:</strong> Governments will enact legislations that require watermarking or ban harmful deepfakes altogether.</li>
+                    <li><strong>Corporate Defenses:</strong> Corporate brands will need strong defenses against AI-driven smear campaigns, a major new threat.</li>
+                    <li><strong>Digital Literacy as a Fundamental Skill:</strong> Knowing how to critically analyze media will be a fundamental skill in education, every bit as important as mathematics or computer programming.</li>
+                </ul>
+
+                <blockquote>
+                    <strong>Closing Thought:</strong> Verifying the truth is as central as achieving the data. For cyber security experts, the fight is no longer between encryption and firewalls. The new front is the human mind, and the enemy is artificial information that intentionally blurs the line between fact and fiction. No longer is the question whether disinformation will evolve, but whether our defenses can effectively keep pace.
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6G Geopolitics Modal -->
+    <div id="6g-geopolitics" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('6g-geopolitics')">×</button>
+                <span class="project-category">Telecommunications</span>
+                <h2>6G Geopolitics & Standards: Open RAN Risks of Fragmentation</h2>
+            </div>
+            <div class="article-modal-body">
+                <p><strong>With 6G on the horizon, it's not technology competition, it's geopolitics.</strong></p>
+
+                <p>6G deployments, circa 2030 or thereabouts, will revolutionize global connectivity. The ambitions are high: microsecond latency, artificial intelligence end-to-end embedded in network functions, and infrastructure to enable holographic communication, tactile internet, and world-scale autonomous systems.</p>
+
+                <p>But that is only half the story. More crucially, it is who authors the basic 6G standards books. Telecommunications standards are not technical specifications; they are political tools. The institutions which enact them into existence—3GPP, ITU, IEEE—are operating under the guise of multilateral cooperation, but always commercial and national interests fuel the process. For 6G, those interests converge when geopolitics are crystallizing and the stakes are far greater than engineering.</p>
+
+                <h3>What is 6G?</h3>
+
+                <p>6G is 5G, but broader and deeper. Besides raw speed, the next generation will see networks emerge as smart platforms. Some of the likely highlights include:</p>
+
+                <ul>
+                    <li><strong>Ultra-low latency (&lt;1 millisecond):</strong> Essential for remote surgery, industrial automation, and high-frequency trading in finance.</li>
+                    <li><strong>AI-native networks:</strong> Networks that can learn and optimize themselves, potentially with the capability to predict demand, route around it, and even protect themselves in real time.</li>
+                    <li><strong>New applications:</strong> From holographic interactive meetings to decentralized autonomous systems with near-immediate coordination.</li>
+                </ul>
+
+                <p>The standards process won't simply decide whose technologies get in, but whose vendors, nations, and ecosystems will become major forces on the world stage.</p>
+
+                <h3>The Geopolitical Landscape</h3>
+
+                <h4>China</h4>
+                <p>China is heavily investing in 6G R&D, emphasizing infrastructure and standards leadership. It is leveraging the size of its local telecom market and scope of Belt and Road partnerships.</p>
+
+                <h4>United States and Allies</h4>
+                <p>The US, with allies such as Japan, South Korea, and Australia, is leading 6G as a national security goal. The group is committed to establishing trusted vendor ecosystems and secure supply chains.</p>
+
+                <h4>Europe</h4>
+                <p>The European Union is aiming at digital infrastructure sovereignty. Efforts such as Hexa-X are centered on making Europe competitive without relying on a single foreign supplier for open standards.</p>
+
+                <h4>Global South</h4>
+                <p>These are the battleground markets, where who controls the ecosystem in markets that don't have sufficient power to control standards will be a matter of affordability, investment, and supply availability.</p>
+
+                <h3>Risk of Fragmentation</h3>
+
+                <p>Fragmentation is a major risk for 6G: the risk that the next generation of mobile connectivity develops on parallel tracks.</p>
+
+                <ul>
+                    <li><strong>Two Internets Problem:</strong> Competing technical standards, East and West, can result in redundant infrastructure, reduced interoperability.</li>
+                    <li><strong>Supply Chain Stress:</strong> Political estrangement of suppliers slows deployment and contributes to customers' and operators' costs.</li>
+                    <li><strong>Security & Trust:</strong> Overseas-built infrastructure will be unacceptable to governments because of the risk of espionage and cyber threats.</li>
+                    <li><strong>Innovation Slowdown:</strong> Divergent solo efforts quash the network effect of common standards.</li>
+                </ul>
+
+                <h3>Open RAN: Solution or Complication?</h3>
+
+                <p>Open Radio Access Networks (Open RAN) are a replacement for vertically integrated telecommunication infrastructure. The splitting of the hardware and software layer creates room for interoperability among multiple vendors.</p>
+
+                <h4>Prospective Benefits</h4>
+                <ul>
+                    <li>Minimization of single vendor reliance</li>
+                    <li>Creating opportunities for new entrants, including smaller players, that encourage competition</li>
+                    <li>Enhanced security transparency, utilizing open interfaces rather than proprietary systems</li>
+                </ul>
+
+                <h4>Potential Downsides</h4>
+                <ul>
+                    <li>Less effective than built-in solutions, especially for high-density city deployments</li>
+                    <li>Mutually incompatible Open RAN standards may bake in fragmentation rather than remove it</li>
+                    <li>Incumbent vendors are concerned that openness will dilute their market influence</li>
+                </ul>
+
+                <div class="highlights-box">
+                    <h4>Case Studies & Recent Updates</h4>
+                    <ul>
+                        <li><strong>US & Japan:</strong> Multilateral initiatives are backing Open RAN trials, making openness a commercial and strategic insurance policy against Chinese infrastructure hegemony.</li>
+                        <li><strong>China:</strong> Developing a homegrown RAN ecosystem, prioritizing stack mastery over openness.</li>
+                        <li><strong>Europe:</strong> Deutsche Telekom and Vodafone, among other operators, are testing Open RAN but have kept quiet about performance.</li>
+                        <li><strong>International Standard Bodies:</strong> ITU and 3GPP are attempting to harmonize but are already subject to political challenge.</li>
+                    </ul>
+                </div>
+
+                <h3>Challenges Ahead</h3>
+
+                <ul>
+                    <li><strong>Standard Wars:</strong> Unless standardizers compromise on core technical differences, the world will be divided into "6G blocs."</li>
+                    <li><strong>Security Risks:</strong> Open RAN introduces new risks if interoperability is not strictly ensured.</li>
+                    <li><strong>Economic Divide:</strong> With increasing cost through traditional replication, the emerging economies will lag behind.</li>
+                    <li><strong>Diplomatic Competition:</strong> The Quad or the EU–US Trade and Technology Council illustrate how telecommunication infrastructure can no longer be delinked from geopolitics.</li>
+                </ul>
+
+                <h3>The Horizon of the Future</h3>
+
+                <p>There are two futures that pertain:</p>
+                
+                <p><strong>Unified Global 6G Standard:</strong> One standard encourages faster innovation, maintains costs under control, and facilitates cross-border interconnection.</p>
+
+                <p><strong>Fragmented 6G Landscape:</strong> Incompatible standards create a fragmented internet with consumers and business caught in the middle between incompatible infrastructures.</p>
+
+                <p>Somewhere between is the most likely path. 6G building blocks will be standardized globally, but ecosystems will diverge where security and political interests intervene.</p>
+
+                <blockquote>
+                    <strong>Closing Thought:</strong> 6G won't just string together the dots, it will string together national strategy, alliances, and rivalries. Whether it builds world integration, or merely increases digital divides, will hinge less on bandwidth or latency, and more on the politics of standards.
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Metaverse Modal -->
+    <div id="metaverse" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('metaverse')">×</button>
+                <span class="project-category">Entertainment Technology</span>
+                <h2>The Metaverse Storytelling Technologies: From Unreal Engine to AI Avatars</h2>
+            </div>
+            <div class="article-modal-body">
+                <h3>Executive Summary</h3>
+                <p>Entertainment is being transformed at its roots. Virtual production, interactive storytelling, and metaverse worlds are converging into a new type of content where the viewer is not passive but an active co-creator. The technologies making this revolution possible are real-time rendering engines, volumetric capture, AI-generated characters, and networked 3D worlds.</p>
+
+                <p>This whitepaper gives a technical perspective of the underlying metaverse storytelling infrastructure, worlds in which these tools are contrasted with current production pipelines, as well as opportunities and issues for artists, studios, and tech companies.</p>
+
+                <h3>1. Introduction: Why Metaverse Storytelling Matters in 2025</h3>
+                <p>Storytelling has traditionally been limited to linear narrative and static screens.</p>
+
+                <p>The metaverse is immersive, multi-world environments where people can move around, make decisions, and engage with characters and worlds in real-time.</p>
+
+                <p><strong>Market Momentum:</strong> Outlay for virtual production technology will be over $5B worldwide by 2030, driven by entertainment, video games, and live events.</p>
+
+                <p>Not about replacing movies, video games, and concerts, but dissolving their boundaries into experience-based entertainment.</p>
+
+                <h3>2. Virtual Production: Pillars of Digital Story Worlds</h3>
+                
+                <h4>2.1 Green Screens to LED Volumes</h4>
+                <p><strong>Dinosaur Method:</strong> Actors perform action before greenscreens; backgrounds are added in post-production.</p>
+
+                <p><strong>New Process:</strong> Actors perform in front of huge HD 3D LED backdrops in real time. Cameras capture the scene, achieving parallax and real-world lighting simultaneously.</p>
+
+                <p><strong>Benefits:</strong> Director and actor receive immediate feedback; reduced travel and set build cost; and more control of creativity, avoiding the "compositing uncanny valley."</p>
+
+                <h4>2.2 Core Tools</h4>
+                <ul>
+                    <li><strong>Unreal Engine (Epic Games):</strong> Industry standard for photoreal real-time rendering and the union of VFX, physics, and AI into live production.</li>
+                    <li><strong>Unity:</strong> First developed for interactive and mobile AR/VR viewing.</li>
+                    <li><strong>Camera Tracking Systems (Mo-Sys, Ncam):</strong> Critical to obtaining accurate alignment of the virtual world with the actual camera angle.</li>
+                    <li><strong>Lighting Integration:</strong> Virtual lighting from LED walls back-projected onto actors and foreground for lock-tight lighting.</li>
+                </ul>
+
+                <h3>3. Immersive Storytelling Across Platforms</h3>
+                
+                <h4>3.1 Key Features</h4>
+                <ul>
+                    <li><strong>Non-linear:</strong> The ending of the story is left up to the audience themselves.</li>
+                    <li><strong>Cross-platform:</strong> Stories are mirrored between VR headsets, AR overlays, social worlds, and mobile applications.</li>
+                    <li><strong>Persistent Worlds:</strong> Worlds and stories change continually even when unobserved.</li>
+                </ul>
+
+                <h4>3.2 Core Tools</h4>
+                <ul>
+                    <li><strong>Volumetric Capture Studios:</strong> Capture actors and objects in real 3D space for holographic or VR applications.</li>
+                    <li><strong>Digital Twins:</strong> Real-time representations of real-world places or objects to be utilized for immersion maximization.</li>
+                    <li><strong>Cloud Streaming:</strong> Technologies like NVIDIA Omniverse and AWS stream compute-intensive, server-side scene rendering to low-power clients.</li>
+                </ul>
+
+                <h3>4. AI Avatars & Synthetic Characters</h3>
+                
+                <h4>4.1 Conversational AI</h4>
+                <ul>
+                    <li><strong>Large Language Models (LLMs):</strong> Enable dynamic, real-time dialogue with characters.</li>
+                    <li><strong>Integration with NPCs:</strong> Characters evolve from executing a script to responding contextually and dynamically to player/viewer input.</li>
+                </ul>
+
+                <h4>4.2 Generative AI for Assets</h4>
+                <ul>
+                    <li><strong>AI Face/Voice Synthesis:</strong> Produces hyper-realistic or stylized characters in quantity.</li>
+                    <li><strong>Procedural Worldbuilding:</strong> Procedurally generated assets construct worlds, cities, or props in a manner that eliminates manual labor.</li>
+                </ul>
+
+                <h4>4.3 Motion & Performance Capture</h4>
+                <ul>
+                    <li><strong>Markerless Mocap (Move.ai):</strong> Computer vision captures performance without extra expense of motion-capture suits.</li>
+                    <li><strong>AI Retargeting:</strong> Intelligent algorithms can scale and retarget actor performance onto new digital avatars automatically.</li>
+                </ul>
+
+                <h3>5. Infrastructure: Networks & Standards</h3>
+                
+                <h4>5.1 Interconnectivity</h4>
+                <ul>
+                    <li><strong>5G/6G Networks:</strong> Supporting high-bandwidth, low-latency infrastructure for multi-user metaverse experiences.</li>
+                    <li><strong>Edge Computing:</strong> Relying on decentralized processing at the user location for low-latency responsiveness.</li>
+                </ul>
+
+                <h4>5.2 Standards for Interoperability</h4>
+                <ul>
+                    <li><strong>USD (Universal Scene Description):</strong> Open Pixar 3D asset interoperability standard.</li>
+                    <li><strong>glTF:</strong> 3D format optimized for the web and mobile.</li>
+                    <li><strong>OpenXR:</strong> Enabling cross-platform AR/VR device interoperability.</li>
+                </ul>
+
+                <p>Standardization is the path to victory over the 'metaverse silos' currently restricting creators and users in walled gardens.</p>
+
+                <h3>6. Case Studies</h3>
+                <ul>
+                    <li><strong>Disney's The Mandalorian:</strong> First large-scale commercial use of virtual production with LED volumes and Unreal Engine.</li>
+                    <li><strong>Fortnite & Travis Scott Concert (2020):</strong> Engaged over 12 million concurrent players in a participant music festival experience.</li>
+                    <li><strong>Gucci Garden in Roblox:</strong> Luxury fashion brand using immersive worlds for branding and storytelling.</li>
+                    <li><strong>Smart Museums & Education:</strong> Interactive historical walks where one can "walk" in ancient Rome or virtualized battlefields.</li>
+                </ul>
+
+                <h3>7. Opportunities & Benefits</h3>
+                <ul>
+                    <li><strong>Creative Freedom:</strong> Ability to construct impossible worlds in real world.</li>
+                    <li><strong>Sustainability:</strong> Less travel, fewer physical sets, lower carbon footprint.</li>
+                    <li><strong>Revenue Streams:</strong> Virtual tickets, digital tokens, and cross-over franchises.</li>
+                    <li><strong>Audience Engagement:</strong> Flips the paradigm from passive consumption to active co-creation.</li>
+                </ul>
+
+                <h3>8. Threats & Challenges</h3>
+                <ul>
+                    <li><strong>Hardware Limitations:</strong> VR/AR headsets presently too costly for actual mass-market adoption.</li>
+                    <li><strong>Security:</strong> Immersive worlds expose new surface area to attack, with greater hacking or identity theft risk.</li>
+                    <li><strong>IP Rights:</strong> Uncertainty surrounding ownership of fan-AI co-created works and digital avatars.</li>
+                    <li><strong>Ethics:</strong> Immersive creation of traumatic or sensitive content raises questions about emotional manipulation.</li>
+                    <li><strong>Oversaturation:</strong> Risk of 'metaverse fatigue' if novelty overwhelms the depth of narrative.</li>
+                </ul>
+
+                <h3>9. Future Prospect</h3>
+                <ul>
+                    <li><strong>AI-Driven Worlds:</strong> Worlds dynamically shape based on user real-time activity in an effort to generate narrative and world.</li>
+                    <li><strong>Persistent Universes:</strong> Franchises become eternally unfolding, never-ending virtual theme parks.</li>
+                    <li><strong>Co-Creation Models:</strong> User-generated content becomes part of canon narrative.</li>
+                    <li><strong>Invisible Interfaces:</strong> Gesture, biometric, and voice interfaces eliminate screens and physical controllers.</li>
+                </ul>
+
+                <h3>10. Conclusion</h3>
+                <p>Story in the Metaverse is the fusion of the art of cinema, real-time tech, immersive environments, and AI. The new tech stack, Unreal Engine, volumetric capture, AI avatars, and interoperability standards, is building a new entertainment model wholesale.</p>
+
+                <blockquote>
+                    <strong>Closing Thought:</strong> This decade's greatest stories won't be played or watched; they'll be lived, shared, and co-lived in smart, interactive environments.
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cultured Meat Modal -->
+    <div id="cultured-meat" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('cultured-meat')">×</button>
+                <span class="project-category">Biotechnology</span>
+                <h2>The Technology of Cultured Meat and Precision Fermentation</h2>
+            </div>
+            <div class="article-modal-body">
+                <p>Precision fermentation and cultured meat are bandied about in debates on food ethics and sustainability. Behind the promise stand the technology of cell biology, food technology, and bioprocess engineering. To accurately assess their technical and commercial worth, it is essential to understand the underlying processes.</p>
+
+                <h3>From Traditional to Cultivated: The Cellular Basis of Cultured Meat</h3>
+                <p>Cell or lab-grown meat, or cultured meat, is not derived from whole animals but from cell lines. Cattle cell biopsy or cell isolation is where it begins. Satellite cells, myoblasts, or induced pluripotent stem cells (iPSCs) are common starting cells. These cells are prompted to grow and differentiate into muscle tissue.</p>
+
+                <h4>Critical steps</h4>
+                <ul>
+                    <li><strong>Cell Line Establishment:</strong> Stable lines are established to accommodate growth, reducing the need for serial animal biopsies.</li>
+                    <li><strong>Growth Medium:</strong> Cells require a growth medium for nutrients. FBS was originally used, but more recent methods employ serum-free preparations containing amino acids, glucose, growth factors, and lipids.</li>
+                    <li><strong>Proliferation Phase:</strong> Cells proliferate and proliferate in suspension cultures or adherent cultures under controlled, sterile environments.</li>
+                    <li><strong>Differentiation Phase:</strong> Cells are mechanically and biochemically challenged to form muscle fibers.</li>
+                </ul>
+
+                <p>The result is muscle tissue very close to conventional meat at the cellular level, with no conventional animal husbandry.</p>
+
+                <h3>The Bioreactor Challenge</h3>
+                <p>Scale-up of cultured meat depends on bioreactor engineering. Bioreactors need to be able to:</p>
+                <ul>
+                    <li><strong>Nutrient Delivery:</strong> Oxygen, glucose, and amino acid delivery to high cell densities continuously.</li>
+                    <li><strong>Removal of Waste:</strong> Toxic waste products, such as lactate, must be efficiently removed.</li>
+                    <li><strong>Shear Stress Control:</strong> Fragility of the cells needs to be traded off against agitation blending.</li>
+                    <li><strong>Scaffold Integration:</strong> Engineered meat employs scaffolds too, digestible or edible matrices that promote adhesion of cells and in vivo tissue formation.</li>
+                </ul>
+
+                <p>Industrial firms are adapting stirred-tank bioreactors borrowed from the pharmaceutical industry, but cost and scale are significant barriers.</p>
+
+                <h3>Precision Fermentation: Proteins by Design</h3>
+                <p>While cultured meat gets cells to construct tissue, precision fermentation trains microbes to be molecular factories. Yeast, fungi, or bacteria are supplied with genes that force them to manufacture a target protein, such as casein, whey, or heme, that would otherwise be derived from an animal source.</p>
+
+                <h4>Most critical process:</h4>
+                <ul>
+                    <li><strong>Gene Selection:</strong> Genomic parts encoding the target protein are isolated and replicated.</li>
+                    <li><strong>Host Engineering:</strong> Microbial hosts (commonly Saccharomyces cerevisiae or Trichoderma reesei) are engineered to carry and express the gene.</li>
+                    <li><strong>Fermentation:</strong> The microbe is fermented in fermenters, consuming sugar and nutrients to yield the protein of interest.</li>
+                    <li><strong>Downstream Processing:</strong> Proteins are recovered, separated, and processed into food.</li>
+                </ul>
+
+                <p>The technology is already producing commercial products: animal-free dairy proteins, egg white proteins, and flavor-enabling molecules.</p>
+
+                <h3>Differentiating the Two Strategies</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Cultured Meat</th>
+                            <th>Precision Fermentation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Biological Basis</td>
+                            <td>Animal cells → muscle tissue</td>
+                            <td>Microbes to protein</td>
+                        </tr>
+                        <tr>
+                            <td>End Product</td>
+                            <td>Ground meat, comminuted cuts, or simple tissue structures</td>
+                            <td>Isolated proteins, additives, e.g., dairy proteins (casein, whey)</td>
+                        </tr>
+                        <tr>
+                            <td>Scale Bottleneck</td>
+                            <td>Bioreactor cell density</td>
+                            <td>Downstream purification</td>
+                        </tr>
+                        <tr>
+                            <td>Regulatory Path</td>
+                            <td>Food safety + novel food frameworks</td>
+                            <td>GMO/microbial control, food safety</td>
+                        </tr>
+                        <tr>
+                            <td>Commercial Status</td>
+                            <td>Early pilot-scale plants, small-scale commercialization</td>
+                            <td>Dozens of products available today</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>The technologies are not proprietary. Hybrid solutions, recombining cultured tissue with proteins or lipids through fermentation, are already underway to advance sensory quality and economics of cost of production.</p>
+
+                <h3>Technical and Commercial Challenges</h3>
+                <ul>
+                    <li><strong>Media Cost:</strong> The cultured meat growth promoter and nutrient remain expensive. Low-media cell culture scale-up is one of the research priorities.</li>
+                    <li><strong>Scale-Up Physics:</strong> Scaling up from milliliter cultures to thousands of liters incorporates aeration, mixing, and contaminant control solutions into reality.</li>
+                    <li><strong>Texture and Structure:</strong> Replicating marbling, connective tissue, and complex cuts remains difficult. A largely ground-meat analogue has been achieved so far.</li>
+                    <li><strong>Regulatory Heterogeneity:</strong> Currently approved in limited jurisdictions (US, Israel, Singapore), awaiting broader international acceptance.</li>
+                    <li><strong>Consumer Perception:</strong> Beyond technical success, public trust and acceptance will determine adoption.</li>
+                </ul>
+
+                <h3>Future Outlook</h3>
+                <p>Both precision fermentation and clean meat represent a transition from animal agriculture to microbial and cellular systems. Precision fermentation is more business-oriented with commercially viable functional proteins. Cultured meat is more scientifically complex and faces greater engineering challenges, but it offers higher fidelity simulation of traditional meat.</p>
+
+                <p>The likely trajectory is convergence: fermentation supplying growth factors and functional nutrients to sustain cultured meat, blended foods filling sensor gaps. While bioreactor technology, synthetic biology, and automation innovation will determine if these technologies remain niche or go mainstream as part of the food value chain.</p>
+
+                <blockquote>
+                    <strong>Closing Thought:</strong> The question now isn't whether we can make meat or protein without animals: it's whether we can do it economically, reliably, and safely at scale. We already possess the technology; it's the integration and engineering challenge that we have to be willing to solve at the scale of global food systems.
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <!-- Policy Framework Modal -->
+    <div id="policy-framework" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('policy-framework')">×</button>
+                <span class="project-category">Regulatory Policy</span>
+                <h2>Precision Fermentation and Cultured Meat: Policymakers' Vision of Regulation</h2>
+            </div>
+            <div class="article-modal-body">
+                <h3>Introduction</h3>
+                <p>Cellular agriculture, courtesy of cultured meat and precision fermentation, is no longer a tale of science fiction, it is a reality. Pilot plants are in operation, first products have been approved for sale in big markets, and foreign investment is pouring in. Policymakers have a choice to make: cultivate innovation and enjoy the dividend of public health, consumer confidence, and competitive advantage.</p>
+
+                <p>This paper provides an overview of technical regulation, employs indicative definitions, and analyzes the scope for harmonizing of global frameworks.</p>
+
+                <h3>1. Definitions of Technology</h3>
+                <ul>
+                    <li><strong>Cultured Meat:</strong> Animal cells harvested, cultured in bioreactors, and differentiated into muscle or other edible tissue for human consumption.</li>
+                    <li><strong>Precision Fermentation:</strong> Genetically modified microorganisms and fermented for producing animal-identical proteins (whey, casein, egg proteins), isolated and processed as food.</li>
+                </ul>
+
+                <p>Both struggle to fit neatly into mainline conceptions of regulation, neither 'conventional biotechnology' nor 'traditional agriculture' does them justice.</p>
+
+                <h3>2. New Global Regulatory Framework</h3>
+                <ul>
+                    <li><strong>Singapore:</strong> Cultured meat was first legalized in 2020 as a new food safety regime for the Singapore Food Agency (SFA).</li>
+                    <li><strong>United States:</strong> FDA co-regulation (safety before harvest) and USDA-FSIS (inspection after harvest, labeling). First approvals in 2023.</li>
+                    <li><strong>European Union:</strong> To comply with Regulation on Novel Foods; EFSA seeking complete dossiers of safety, allergenicity, and comparability to nutrition. Approvals are pending.</li>
+                    <li><strong>Israel, Qatar, China:</strong> Guideline procedures underway; Israel also seeking pre-approvals in advance, and China had specially earmarked cultured meat as strategic priority innovation.</li>
+                </ul>
+
+                <p>Such fragmentation and variation in regulation pose multinational launch challenges to companies.</p>
+
+                <h3>3. Most Major Issues: Regulatory Issues</h3>
+                
+                <h4>Food Safety</h4>
+                <ul>
+                    <li><strong>Cultured Meat:</strong> Contamination of cell culture, growth factor, and scaffold material are concerns.</li>
+                    <li><strong>Precision Fermentation:</strong> Microbial host, residual DNA/protein, and downstream recovery in purification are concerns.</li>
+                </ul>
+
+                <h4>Labeling & Consumer Transparency</h4>
+                <p>Would "meat," "milk," or "egg" suffice? Governments prefer qualifiers (e.g., 'cultured meat,' 'animal-free dairy'), but industry associations require equivalence-based names with the implication of minimal difference from conventional products.</p>
+
+                <h4>Environmental Claims</h4>
+                <p>Default values can easily become a regulatory condition precedent in order to take advantage of the sustainability arguments.</p>
+
+                <h4>Intellectual Property & Competition</h4>
+                <p>Patented microbe strains, growth media, and concentration of the cell line present risks of market concentration. Antitrust and licensing terms will likely require re-formulation.</p>
+
+                <h4>Cross-Border Trade</h4>
+                <p>Global complexity due to heterogeneity of definition between "novel food" and GMO. Approval is simpler in America than in the EU.</p>
+
+                <h3>4. Policy Gaps and Risks</h3>
+                <ul>
+                    <li><strong>Harmonization:</strong> The risk is a collapse of mutual acceptance of mass market acceptability, and continued bifurcated approaches to approval.</li>
+                    <li><strong>Safety Testing Standards:</strong> Global lack of standard for cell-cultured food toxicology and allergenicity testing.</li>
+                    <li><strong>Regulatory Capability:</strong> Food safety regulators often lack bioprocess and cell biology skills, creating a gap in regulatory capability.</li>
+                    <li><strong>Consumer Confidence:</strong> Mislabeling or inadequate disclosure risks fueling public outcry and replicating the controversy over GM acceptance.</li>
+                </ul>
+
+                <h3>5. Policymaker Recommendations</h3>
+                
+                <h4>Define Clearly:</h4>
+                <p>Make certain clear-as-crystal legal definitions for plant-based foods, precision fermentation products, and cultured meat to facilitate regulatory communication.</p>
+
+                <h4>Break Down International Guidelines</h4>
+                <p>Negotiate with Codex Alimentarius and OECD to design default labeling and safety regulation.</p>
+
+                <h4>Build Regulatory Capability</h4>
+                <p>Train cell biology, fermentation, and bioprocess food safety regulators.</p>
+
+                <h4>Require Transparency</h4>
+                <p>Disclosure of growth medium, manufacturing process, and microbial host to create consumer confidence.</p>
+
+                <h4>Adjustive Risk-Based Regulation</h4>
+                <p>Re-evaluate pre-established approval regimes, and aim for adaptive surveillance technologies that adapt as new technology emerges.</p>
+
+                <h3>6. Future Projections</h3>
+                <p>Successful fermentation and cultured meat would be the answer to food security, protein diversification, and climate change. Success requires harmonizing innovation and trust: commercialize responsibly, but do not compromise consumers' interests and consciousness.</p>
+
+                <p>Adoption stand-offs and asymmetric regulation are the cause of non-harmonization globally. Innovative leadership is needed to drive the up-scaling of these technologies toward sustainability and the transformation of global protein supply chains.</p>
+
+                <blockquote>
+                    <strong>Last Reflection:</strong> The first challenge is not scientific, but organizational and administrative. When cell agriculture becomes ready to transition from the laboratory to commercial application, policymakers must act swiftly and create structures that are scientifically sound, harmonized globally, and appropriate for the global scale.
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solar Paint Modal -->
+    <div id="solar-paint" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('solar-paint')">×</button>
+                <span class="project-category">Clean Energy</span>
+                <h2>Solar Paint: The Science Behind Powering Walls and Buildings</h2>
+            </div>
+            <div class="article-modal-body">
+                <h3>Introduction</h3>
+                <p>Imagine that all the exposed walls in the world could generate electricity. No big roof panels. No additional installations. A fresh coat of paint to turn your home or office building into a local mini power plant.</p>
+
+                <p>That's the future of solar paint, a revolution in clean energy science that promises to change our energy generation approach dramatically. But how?</p>
+
+                <p>Let's explore the science.</p>
+
+                <h3>1. The Science Behind Solar Energy</h3>
+                <p>It's the same technology used by solar panels:</p>
+                <ul>
+                    <li>Sunlight strikes a surface.</li>
+                    <li>Special material traps photons (light particles).</li>
+                    <li>This energizes electrons and generates electric current.</li>
+                </ul>
+
+                <p>Traditional solar panels do this using silicon-based photovoltaic (PV) cells. Solar paint replaces solid panels with light-absorbing nanomaterials in liquid form.</p>
+
+                <h3>2. What is the composition of Solar Paints?</h3>
+                <p>Solar paints are not generic, but panel alternatives exist in three formats:</p>
+
+                <h4>Perovskite Solar Paints:</h4>
+                <ul>
+                    <li>Utilizes mineral crystals (perovskite) which are identified by their extremely high light absorption.</li>
+                    <li>May be sprayed thinly on glass, metal, or even walls.</li>
+                    <li>Efficiency comparable to that of a silicon plate in a lab.</li>
+                </ul>
+
+                <h4>Quantum Dot Paints</h4>
+                <ul>
+                    <li>Tiny semiconducting crystals (nanocrystals) that absorb sunlight in multiple different wavelengths.</li>
+                    <li>Adjustable and flexible, scientists can design them to trap more of the sun's spectrum.</li>
+                </ul>
+
+                <h4>Hydrogen-Producing Paints</h4>
+                <ul>
+                    <li>Paints that absorb water vapor and light, energizing water vapor to emit hydrogen.</li>
+                    <li>The hydrogen is collected and burned as a clean-burning fuel.</li>
+                    <li>Experimental to date, but an intriguing two-for-one energy solution.</li>
+                </ul>
+
+                <h3>3. How Electricity Is Collected</h3>
+                <p>After being painted, the wall is wired to an electric regulator that manages the power.</p>
+                <ul>
+                    <li>The painted wall acts as a giant electric surface, wired to a converter and storage unit.</li>
+                    <li>The electricity is stored for powering the house, charging batteries, or feeding the grid.</li>
+                </ul>
+
+                <h3>4. Why Solar Paint Is So Exciting</h3>
+                <ul>
+                    <li><strong>Low cost:</strong> Maybe even lower to install than panels.</li>
+                    <li><strong>Flexible:</strong> Operates on rooftops, walls, automobiles, and complex, curved surfaces beyond inflexible panel capabilities.</li>
+                    <li><strong>Aesthetic:</strong> Look like normal paint, no clunky machinery.</li>
+                    <li><strong>Scalable:</strong> Imagine skyscrapers, bridges, and city blocks of buildings creating power through nothing more than a coat of paint.</li>
+                </ul>
+
+                <h3>5. Current Limitations</h3>
+                <ul>
+                    <li><strong>Efficiency:</strong> Existing best solar paints are ~10–15% sunlight-to-electricity efficient (versus 20–25% for panels).</li>
+                    <li><strong>Durability:</strong> Weather resistance and UV stability remain an issue.</li>
+                    <li><strong>Integration:</strong> Requires internal wiring to be integrated into the surface structure itself, thus making retrofitting already constructed, completed walls challenging.</li>
+                    <li><strong>Commercial Readiness:</strong> Pilot and lab scale, product availability could be years away.</li>
+                </ul>
+
+                <h3>6. Real-World Research & Experiments</h3>
+                <ul>
+                    <li><strong>University of Melbourne:</strong> Developed a paint which decomposes sunlight and water into fuel hydrogen.</li>
+                    <li><strong>European Labs:</strong> Conducted outdoor testing of perovskite-based paint for use on building facades.</li>
+                    <li><strong>Startups:</strong> Experimenting with hybrid paints with pigmented visibility of color and energy harvesting.</li>
+                </ul>
+
+                <h3>7. Future Vision</h3>
+                <p>Solar paint is not quite ready to make panels obsolete but it's a good addition to the arsenal of green energy. One day not long from now:</p>
+                <ul>
+                    <li>Cities will incorporate solar paints into building design as part of their green plan.</li>
+                    <li>Homeowners will be able to 'paint on' renewable power and keep utility costs low.</li>
+                    <li>Cityscapes will become power plants that no one will ever need to give a moment's thought to.</li>
+                </ul>
+
+                <p>Walls which shield us from the weather will in the future do more than exclude rain and breeze, they will power our lives.</p>
+
+                <div class="highlights-box">
+                    <h4>Key Takeaways</h4>
+                    <ul>
+                        <li>Solar paint is liquid solar panel technology in light-harvesting nanomaterial-based paint.</li>
+                        <li>Three general categories: perovskite, quantum dots, hydrogen-generating paint.</li>
+                        <li>Strengths: versatile, aesthetical, scalable.</li>
+                        <li>Weaknesses: efficiency, durability, integration.</li>
+                        <li>Future: widespread use in buildings, infrastructure, and transportation.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quantum Risk Modal -->
+    <div id="quantum-risk" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('quantum-risk')">×</button>
+                <span class="project-category">Cybersecurity</span>
+                <h2>When All Locks Can Be Picked Simultaneously: The Quantum Computing Risk</h2>
+            </div>
+            <div class="article-modal-body">
+                <h3>Introduction</h3>
+                <p>Wake up one morning in the future and find that all locks worldwide can now be opened simultaneously, your front door, bank vaults, government safes, phone digital locks. The keys are still there, but the locks are no longer useful.</p>
+
+                <p>That's the metaphor that comes to mind for what quantum computers will do to our current digital security measures. Quantum computers will revolutionize medicine, climate simulation, and materials science on the one hand. But they'll be able to crack the encryption that protects our data.</p>
+
+                <h3>What's the "lock and key" of the digital world?</h3>
+                <p>Each time you send an email, log onto an internet banking account, or make a purchase online, you are utilizing the power of encryption. You can think of encryption as being such a tough lock: it scrambles your data in a manner that can only be unscrambled by a person with the right 'key.'</p>
+
+                <p>These locks are now extremely secure. The world's fastest supercomputers would take millennia trying to brute-force the key. And that's why you can depend upon your bank app or your encrypted messaging app.</p>
+
+                <h3>Step in Quantum Computing: The Master Lockpick</h3>
+                
+                <p>Quantum computers are not bigger and badder versions of our current computers. They're distinct in how they operate, using qubits (quantum bits) as opposed to binary bits.</p>
+
+                <p>Here's the metaphor: A traditional computer is like testing one key at a time. A quantum computer would test unimaginably large numbers of keys all at once, like a locksmith who can test them all simultaneously.</p>
+
+                <p>Shor's algorithm and other formulas illustrate that a sufficiently powerful quantum computer can break the most widely used kinds of encryption (RSA, ECC) in hours, not millennia.</p>
+
+                <h3>Why it matters today (even if big quantum isn't yet)</h3>
+                <p>You're objecting: "But we only have small quantum computers thus far, isn't that so?" That's true, we haven't yet built a machine powerful enough to break the locks we use. But then, there is the surprise:</p>
+
+                <ul>
+                    <li><strong>Harvest Now, Decrypt Later:</strong> Governments or cybercriminals will raid currently encrypted information and just wait for the quantum computers to catch up. It's like having your diary stolen this day with the assurance that in 10 years they can open it.</li>
+                    <li><strong>Critical Infrastructure:</strong> Banks, hospitals, power stations, and government bureaucracies all rely on encryption. A widespread failure of these locks could lead to apocalyptic ripple effects.</li>
+                </ul>
+
+                <h3>The Good News: They're Making New Locks</h3>
+                <p>Researchers have already begun working on post-quantum cryptography (PQC), new types of encryption that are quantum-attack proof. You can envision a means of creating a next-generation lock that even a quantum locksmith won't be able to pick.</p>
+
+                <p>Standards bodies like NIST (National Institute of Standards and Technology) already are in the process of developing these algorithms to a standard, and businesses around the globe are preparing for the transition.</p>
+
+                <h3>What You Should Keep In Mind</h3>
+                <ul>
+                    <li>Quantum computers are not yet here, but the danger is at the doorstep. Data compromised today can be decrypted tomorrow.</li>
+                    <li>Encryption is the basis for trust on the Internet. Losing that would mean the loss of the fundamental concept of digital security.</li>
+                    <li>There are options. Post-quantum cryptography is the future, but governments, business, and tech sectors need to look to it now.</li>
+                </ul>
+
+                <blockquote>
+                    <strong>Closing Thought:</strong> Quantum computing is a two-sided sword: it will heal disease and fix the planet, but it will also open the gates that guard our digital existence. The challenge for society is ensuring our new locks are in place before the master key arrives. Because in an era where locks can be picked, safety will no longer be an assurance, it'll be unthinkable.
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blockchain Modal -->
+    <div id="blockchain" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('blockchain')">×</button>
+                <span class="project-category">Distributed Technology</span>
+                <h2>Blockchain Beyond Bitcoin: The World "Notebook" That's Upending More Than Money</h2>
+            </div>
+            <div class="article-modal-body">
+                <h3>Introduction</h3>
+                <p>We all associate the term blockchain with Bitcoin and cryptocurrency exchange. But blockchain is far more than electronic money, it's a data storage and communication system that can transform identity, supply chains, and intellectual property rights for the better.</p>
+
+                <p>Let's use an analogy to understand it.</p>
+
+                <h3>The Analogy: A Ginormous Notebook in the Town Square</h3>
+                <p>Suppose your town had this ginormous notebook in the center of town.</p>
+
+                <ul>
+                    <li>You can just stop by and add an entry.</li>
+                    <li>When appended, it cannot be erased or altered, it is a done deal.</li>
+                    <li>Everyone has a copy of the notebook, so no one can modify their copy without everyone else being aware.</li>
+                    <li>Instead of anyone being able to manipulate what is written there, everyone must agree to append the next entry.</li>
+                </ul>
+
+                <p>That's blockchain: a book of immutable information that is trusted precisely because everyone shares the same, verifiable copy.</p>
+
+                <h3>Other Applications for the World Notebook other than Bitcoin</h3>
+
+                <h4>1. Identity: Your Virtual Passport</h4>
+                <p>Currently, confirming your identity online is done through the storage of passwords, logins, and accounts in standalone databases. They can all be copied or hacked.</p>
+
+                <p>With blockchain, your identity would be an entry in the notebook, verified by cryptographic signatures. You won't need 20 separate accounts, you'll have one encrypted, digital passport, cryptographically signed and transferable.</p>
+
+                <h4>2. Supply Chain: Follow that Honey</h4>
+                <p>Imagine the honey you purchase at the supermarket. Did it really begin on organic farms? Or did some add-ins get slipped in along the way?</p>
+
+                <p>Blockchain is like pages in a notebook chained together step by step, recording each move: farm → distributor → store. Indelibly at each step. You, the consumer, can scan a code and verify the origin of your honey, shoes, or medication, eliminating mystery and substitution.</p>
+
+                <h4>3. Intellectual Property: Proof of Creation</h4>
+                <p>Artists, inventors, and musicians often struggle to prove rights to their creations. Copyright wars last for decades.</p>
+
+                <p>With blockchain, when you create something, you just record it in the ledger. No one can easily challenge that record, creating an unbreakable timestamp of your creation. That is why blockchain is already being used in digital art (NFTs), patents, and music rights management.</p>
+
+                <h3>Why This Matters</h3>
+                <p>The actual power of blockchain isn't currency, it's middleman-less trust. It brings the authenticity guarantee that previously relied on banks, governments, and notaries. Blockchain allows the notebook itself to be the trusted middleman.</p>
+
+                <ul>
+                    <li><strong>For consumers:</strong> Fewer middlemen, fewer passwords, more digital identity.</li>
+                    <li><strong>For business:</strong> Transparent supply chains, quicker audits, less bluffing.</li>
+                    <li><strong>For artists:</strong> A tool for being able to say "this is mine" on the net without lawyers leading the way.</li>
+                </ul>
+
+                <h3>The Caveat: Not a Magic Notebook</h3>
+                <p>Yes, blockchain is not perfect. It cannot prevent rubbish data from being entered into it (garbage in, garbage out). It will be slow or power-hungry depending on the configuration. And it's not consumer-ready yet.</p>
+
+                <p>But the analogy holds: if we adopt a read-only notebook, we can eliminate much of the friction, dishonesty, and distrust of the digital era.</p>
+
+                <blockquote>
+                    <strong>Final Thought:</strong> So the next time someone mentions blockchain, don't automatically think of Bitcoin. Instead think of that huge notebook in the town square. Not a ledger of money, but of trust itself. Because when it comes to the digital world, trust is the most valuable currency of all.
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+    <!-- Press Release Modal -->
+    <div id="press-release" class="article-modal">
+        <div class="article-modal-content">
+            <div class="article-modal-header">
+                <button class="close-modal" onclick="closeArticle('press-release')">×</button>
+                <span class="project-category">Press Release</span>
+                <h2>Marine AI Analytics Receives NOAA Contract</h2>
+            </div>
+            <div class="article-modal-body">
+                <p><strong>Date:</strong> October 25, 2025</p>
+                
+                <h3>Marine AI Analytics Receives NOAA Contract to Implement AI to Track Steller Sea Lions, Enhancing Accuracy for Conservation.</h3>
+                
+                <p><em>Seattle, WA — October 25, 2025</em> — Marine AI Analytics, Inc., a company designing artificial intelligence-enabled solutions for environmental science, was awarded a NOAA contract to support the Steller Sea Lion Artificial Intelligence Image Processing and Counting Project (Opportunity Number: 1305M325C0032).</p>
+
+                <p>Through this award, Marine AI Analytics will create and deploy leading-edge computer vision software that enables NOAA scientists to analyze aerial images of Steller sea lions. The project will automate image analysis, reduce the reliance on manual counts, and improve the accuracy of marine conservation policy's population estimates.</p>
+
+                <blockquote>
+                    "This collaboration with NOAA is an illustration of the benefit of applying AI in a responsible manner in environmental science," said Dr. Evelyn Torres, Chief Executive Officer at Marine AI Analytics. "Freeing up biologists from time-consuming image processing allows them to devote their time to interpretation and decision-making, which translates to more timely and effective marine conservation."
+                </blockquote>
+
+                <p>The Steller sea lion is a declining marine mammal and robust population monitoring is a high-priority activity to assist in the preservation of sustainable fishery management, ecosystem balance, and federal conservation policy compliance. Time-consuming traditional manual methods consume significant staff hours, while AI approaches have the capability to process thousands of images at high speed, providing timely, consistent, and open-source data streams.</p>
+
+                <p>The project represents the culmination of Marine AI Analytics' previous work developing AI solutions for environmental monitoring, including auto-wildlife detection, maritime vessel tracking, and environmental data analysis for government and research customers, most notably with the NSF and the DHS.</p>
+
+                <h4>About Marine AI Analytics</h4>
+                <p>Marine AI Analytics, Inc. develops artificial intelligence and cloud platforms that support environmental science, conservation, and government research. The company focuses on developing products that allow organizations to gain more timely and precise information from challenging-to-analyze data.</p>
+
+                <div class="highlights-box">
+                    <h4>Media Contact:</h4>
+                    <p><strong>Daniel Brooks</strong><br>
+                    Director of Federal Programs<br>
+                    [hidden]<br>
+                    [hidden]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Sarah T. All rights reserved. Crafting technical narratives that inform and inspire.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Open article modal
+        function openArticle(articleId) {
+            document.getElementById(articleId).classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        // Close article modal
+        function closeArticle(articleId) {
+            document.getElementById(articleId).classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal when clicking outside content
+        document.querySelectorAll('.article-modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeArticle(this.id);
+                }
+            });
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.article-modal.active').forEach(modal => {
+                    closeArticle(modal.id);
+                });
+            }
+        });
+
+        // Smooth scroll and fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(20px)';
+                    entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-preview').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
